@@ -2,140 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2d964b44-c0be-4683-9935-0e04831a3555" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/fonts/FontAwesome.otf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/fonts/fontawesome-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/fonts/fontawesome-webfont.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/fonts/fontawesome-webfont.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/fonts/fontawesome-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/fonts/glyphicons-halflings-regular.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/fonts/glyphicons-halflings-regular.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/fonts/glyphicons-halflings-regular.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/css/images/spinner.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/css/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.htaccess" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/FileSaver.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Optimise.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/clinicalEvent/adverseEvent.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/angular-resource.min.js.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/angular-resource.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/angular.min.js.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/angular.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/css/angular.rangeSlider.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/angular.rangeSlider.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/associatedPerson/associatedPersonMedicalHistory.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/laboratory/bloodChemistry.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/css/bootstrap-datepicker.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/bootstrap-datepicker.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/css/bootstrap.css.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/css/bootstrap.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/bootstrap.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/laboratory/cerebrospinal.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/laboratory/cerebrospinal.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/clinicalEvent/clinicalEvent.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/communication/communication.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/communication/communication.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/header/config.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/view/config.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/view/config.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/view/configurations.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/XNAT/connectivity.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/cornerstone.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/cornerstoneMath.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/cornerstoneTools.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/cornerstoneWADOImageLoader.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/d3.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/deviceInUse/deviceInUse.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/dicomParser.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/test/edss.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/event/event.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/event/event.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/laboratory/evokedPotentials.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/exposure/exposure.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/exposure/exposure.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/findingAbout/findingAbout.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/css/font-awesome.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/fonts/fontawesome-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/view/glasgow.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/fonts/glyphicons-halflings-regular.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/laboratory/haematology.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/header/header.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/ImmunogenicitySpecimenAssessment/isa.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/jpx.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/jquery.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/jspdf.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/laboratory/laboratory.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/laboratory/laboratory.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/laboratory/laboratoryTests.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/main.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/medicalHistory/medicalHistory.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/morphology/morphology.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/laboratory/mri.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/laboratory/mri.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/questionnaire/msqol12.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/questionnaire/msqol54.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/nervousSystemFindings/nervousSystemFindings.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/css/ng-table.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/ng-table.min.js.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/ng-table.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/optimise.appcache" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/css/images/optimise_logo.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/patient/patient.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/patient/patient.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/questionnaire/pdds.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/procedure/procedure.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/questionnaire/questionnaire.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/questionnaire/questionnaire.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/record/record.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/relapse/relapse.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/relapse/relapse.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/clinicalEvent/relapseSigns.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/clinicalEvent/relapseSymptoms.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/relationship/relationship.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/laboratory/serological.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/clinicalEvent/signs.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/subjectCharacteristic/subjectCharacteristic.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/subjectVisit/subjectVisit.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/substanceUse/substanceUse.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/clinicalEvent/symptoms.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/clinicalEvent/symptomsDraggable.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/css/testLayout.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/textAngular-rangy.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/textAngular-sanitize.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/css/textAngular.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/textAngular.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/css/timeline.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/timeline/timeline.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/timeline/timeline.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/css/tree.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/ui-bootstrap-tpls-0.12.0.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vendor/ui-bootstrap-tpls-1.2.5.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/questionnaire/vas.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/view/view.module.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/subjectVisit/visit.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/clinicalEvent/visitSigns.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/clinicalEvent/visitSymptoms.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/js/vitalSigns/vitalSigns.module.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.html" afterPath="$PROJECT_DIR$/main.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimise.appcache" afterPath="$PROJECT_DIR$/optimise.appcache" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Optimise.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/header.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1463776484013" ignored="false" />
-    <file path="/Dummy.txt" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1464102809272" ignored="false" />
+    <file path="/Dummy.txt" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1464102833091" ignored="false" />
     <file path="/exposure.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1463573201415" ignored="false" />
     <file path="/relapse.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1461596971293" ignored="false" />
     <file path="/a.dummy" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1461670764077" ignored="false" />
@@ -342,7 +215,7 @@
       <file leaf-file-name="record.module.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scripts/js/record/record.module.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="158" column="31" selection-start="3888" selection-end="3888" vertical-scroll-proportion="0.030075189">
+            <state line="158" column="31" selection-start="3888" selection-end="3888" vertical-scroll-proportion="0.0302267">
               <folding />
             </state>
           </provider>
@@ -1301,7 +1174,11 @@
       <created>1463992223642</created>
       <updated>1463992223642</updated>
     </task>
-    <option name="localTasksCounter" value="158" />
+    <task id="LOCAL-00158" summary="Debugged access to mongodb, create own SITEID to use as prefix for subject id.">
+      <created>1464102884452</created>
+      <updated>1464102884452</updated>
+    </task>
+    <option name="localTasksCounter" value="159" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -1339,19 +1216,19 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.0" sideWeight="0.60940033" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32824427" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32924962" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959217" sideWeight="0.7136294" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19529983" sideWeight="0.67175573" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19529983" sideWeight="0.6707504" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.40122512" sideWeight="0.63857377" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1538,7 +1415,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/js/record/record.module.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="158" column="31" selection-start="3888" selection-end="3888" vertical-scroll-proportion="0.030075189">
+        <state line="158" column="31" selection-start="3888" selection-end="3888" vertical-scroll-proportion="0.0302267">
           <folding />
         </state>
       </provider>
