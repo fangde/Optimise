@@ -332,104 +332,120 @@
                         <div class="panel-body">
                             <div class="form-horizontal">
                                 <div class="marginTop form-group">
-                                    <label class="col-sm-3">Pyramidal</label>
-                                    <div class="col-sm-8">
-                                    <div class="btn-group">
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_pyramidal==0}" ng-click="edss_pyramidal = 0; helpPanel='Pyramidal'; updateEDSS()">0</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_pyramidal==1}" ng-click="edss_pyramidal = 1; helpPanel='Pyramidal'; updateEDSS()">1</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_pyramidal==2}" ng-click="edss_pyramidal = 2; helpPanel='Pyramidal'; updateEDSS()">2</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_pyramidal==3}" ng-click="edss_pyramidal = 3; helpPanel='Pyramidal'; updateEDSS()">3</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_pyramidal==4}" ng-click="edss_pyramidal = 4; helpPanel='Pyramidal'; updateEDSS()">4</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_pyramidal==5}" ng-click="edss_pyramidal = 5; helpPanel='Pyramidal'; updateEDSS()">5</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_pyramidal==6}" ng-click="edss_pyramidal = 6; helpPanel='Pyramidal'; updateEDSS()">6</button>
-                                    </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3">Cerebellar</label>
-                                    <div class="btn-group col-sm-8" role="group">
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_cerebellar==0}" ng-click="edss_cerebellar = 0; helpPanel='Cerebellar'; updateEDSS()">0</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_cerebellar==1}" ng-click="edss_cerebellar = 1; helpPanel='Cerebellar'; updateEDSS()">1</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_cerebellar==2}" ng-click="edss_cerebellar = 2; helpPanel='Cerebellar'; updateEDSS()">2</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_cerebellar==3}" ng-click="edss_cerebellar = 3; helpPanel='Cerebellar'; updateEDSS()">3</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_cerebellar==4}" ng-click="edss_cerebellar = 4; helpPanel='Cerebellar'; updateEDSS()">4</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_cerebellar==5}" ng-click="edss_cerebellar = 5; helpPanel='Cerebellar'; updateEDSS()">5</button>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-sm-push-1">Pyramidal</label>
+                                        <div class="btn-group col-sm-7 col-sm-push-1" role="group">
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_pyramidal==0}" ng-click="edss_pyramidal = 0; helpPanel='Pyramidal'; updateEDSS()">0</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_pyramidal==1}" ng-click="edss_pyramidal = 1; helpPanel='Pyramidal'; updateEDSS()">1</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_pyramidal==2}" ng-click="edss_pyramidal = 2; helpPanel='Pyramidal'; updateEDSS()">2</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_pyramidal==3}" ng-click="edss_pyramidal = 3; helpPanel='Pyramidal'; updateEDSS()">3</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_pyramidal==4}" ng-click="edss_pyramidal = 4; helpPanel='Pyramidal'; updateEDSS()">4</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_pyramidal==5}" ng-click="edss_pyramidal = 5; helpPanel='Pyramidal'; updateEDSS()">5</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_pyramidal==6}" ng-click="edss_pyramidal = 6; helpPanel='Pyramidal'; updateEDSS()">6</button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3">Brain Stem</label>
-                                    <div class="btn-group col-sm-8" role="group">
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_brainStem==0}" ng-click="edss_brainStem = 0; helpPanel='Brain Stem'; updateEDSS()">0</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_brainStem==1}" ng-click="edss_brainStem = 1; helpPanel='Brain Stem'; updateEDSS()">1</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_brainStem==2}" ng-click="edss_brainStem = 2; helpPanel='Brain Stem'; updateEDSS()">2</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_brainStem==3}" ng-click="edss_brainStem = 3; helpPanel='Brain Stem'; updateEDSS()">3</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_brainStem==4}" ng-click="edss_brainStem = 4; helpPanel='Brain Stem'; updateEDSS()">4</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_brainStem==5}" ng-click="edss_brainStem = 5; helpPanel='Brain Stem'; updateEDSS()">5</button>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-sm-push-1">Cerebellar</label>
+                                        <div class="btn-group col-sm-7 col-sm-push-1" role="group">
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_cerebellar==0}" ng-click="edss_cerebellar = 0; helpPanel='Cerebellar'; updateEDSS()">0</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_cerebellar==1}" ng-click="edss_cerebellar = 1; helpPanel='Cerebellar'; updateEDSS()">1</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_cerebellar==2}" ng-click="edss_cerebellar = 2; helpPanel='Cerebellar'; updateEDSS()">2</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_cerebellar==3}" ng-click="edss_cerebellar = 3; helpPanel='Cerebellar'; updateEDSS()">3</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_cerebellar==4}" ng-click="edss_cerebellar = 4; helpPanel='Cerebellar'; updateEDSS()">4</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_cerebellar==5}" ng-click="edss_cerebellar = 5; helpPanel='Cerebellar'; updateEDSS()">5</button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3">Sensory</label>
-                                    <div class="btn-group col-sm-8" role="group">
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_sensory==0}" ng-click="edss_sensory = 0; helpPanel='Sensory'; updateEDSS()">0</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_sensory==1}" ng-click="edss_sensory = 1; helpPanel='Sensory'; updateEDSS()">1</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_sensory==2}" ng-click="edss_sensory = 2; helpPanel='Sensory'; updateEDSS()">2</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_sensory==3}" ng-click="edss_sensory = 3; helpPanel='Sensory'; updateEDSS()">3</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_sensory==4}" ng-click="edss_sensory = 4; helpPanel='Sensory'; updateEDSS()">4</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_sensory==5}" ng-click="edss_sensory = 5; helpPanel='Sensory'; updateEDSS()">5</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_sensory==6}" ng-click="edss_sensory = 6; helpPanel='Sensory'; updateEDSS()">6</button>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-sm-push-1">Brain Stem</label>
+                                            <div class="btn-group col-sm-7 col-sm-push-1" role="group">
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_brainStem==0}" ng-click="edss_brainStem = 0; helpPanel='Brain Stem'; updateEDSS()">0</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_brainStem==1}" ng-click="edss_brainStem = 1; helpPanel='Brain Stem'; updateEDSS()">1</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_brainStem==2}" ng-click="edss_brainStem = 2; helpPanel='Brain Stem'; updateEDSS()">2</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_brainStem==3}" ng-click="edss_brainStem = 3; helpPanel='Brain Stem'; updateEDSS()">3</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_brainStem==4}" ng-click="edss_brainStem = 4; helpPanel='Brain Stem'; updateEDSS()">4</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_brainStem==5}" ng-click="edss_brainStem = 5; helpPanel='Brain Stem'; updateEDSS()">5</button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3">Bowel Bladder</label>
-                                    <div class="btn-group col-sm-8" role="group">
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_bowelBladder==0}" ng-click="edss_bowelBladder = 0; helpPanel='Bowel Bladder'; updateEDSS()">0</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_bowelBladder==1}" ng-click="edss_bowelBladder = 1; helpPanel='Bowel Bladder'; updateEDSS()">1</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_bowelBladder==2}" ng-click="edss_bowelBladder = 2; helpPanel='Bowel Bladder'; updateEDSS()">2</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_bowelBladder==3}" ng-click="edss_bowelBladder = 3; helpPanel='Bowel Bladder'; updateEDSS()">3</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_bowelBladder==4}" ng-click="edss_bowelBladder = 4; helpPanel='Bowel Bladder'; updateEDSS()">4</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_bowelBladder==5}" ng-click="edss_bowelBladder = 5; helpPanel='Bowel Bladder'; updateEDSS()">5</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_bowelBladder==6}" ng-click="edss_bowelBladder = 6; helpPanel='Bowel Bladder'; updateEDSS()">6</button>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-sm-push-1">Sensory</label>
+                                        <div class="btn-group col-sm-7 col-sm-push-1" role="group">
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_sensory==0}" ng-click="edss_sensory = 0; helpPanel='Sensory'; updateEDSS()">0</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_sensory==1}" ng-click="edss_sensory = 1; helpPanel='Sensory'; updateEDSS()">1</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_sensory==2}" ng-click="edss_sensory = 2; helpPanel='Sensory'; updateEDSS()">2</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_sensory==3}" ng-click="edss_sensory = 3; helpPanel='Sensory'; updateEDSS()">3</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_sensory==4}" ng-click="edss_sensory = 4; helpPanel='Sensory'; updateEDSS()">4</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_sensory==5}" ng-click="edss_sensory = 5; helpPanel='Sensory'; updateEDSS()">5</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_sensory==6}" ng-click="edss_sensory = 6; helpPanel='Sensory'; updateEDSS()">6</button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3">Visual</label>
-                                    <div class="btn-group col-sm-8" role="group" >
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_visual==0}" ng-click="edss_visual = 0; helpPanel='Visual'; updateEDSS()">0</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_visual==1}" ng-click="edss_visual = 1; helpPanel='Visual'; updateEDSS()">1</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_visual==2}" ng-click="edss_visual = 2; helpPanel='Visual'; updateEDSS()">2</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_visual==3}" ng-click="edss_visual = 3; helpPanel='Visual'; updateEDSS()">3</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_visual==4}" ng-click="edss_visual = 4; helpPanel='Visual'; updateEDSS()">4</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_visual==5}" ng-click="edss_visual = 5; helpPanel='Visual'; updateEDSS()">5</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_visual==6}" ng-click="edss_visual = 6; helpPanel='Visual'; updateEDSS()">6</button>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-sm-push-1">Bowel Bladder</label>
+                                        <div class="btn-group col-sm-7 col-sm-push-1" role="group">
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_bowelBladder==0}" ng-click="edss_bowelBladder = 0; helpPanel='Bowel Bladder'; updateEDSS()">0</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_bowelBladder==1}" ng-click="edss_bowelBladder = 1; helpPanel='Bowel Bladder'; updateEDSS()">1</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_bowelBladder==2}" ng-click="edss_bowelBladder = 2; helpPanel='Bowel Bladder'; updateEDSS()">2</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_bowelBladder==3}" ng-click="edss_bowelBladder = 3; helpPanel='Bowel Bladder'; updateEDSS()">3</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_bowelBladder==4}" ng-click="edss_bowelBladder = 4; helpPanel='Bowel Bladder'; updateEDSS()">4</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_bowelBladder==5}" ng-click="edss_bowelBladder = 5; helpPanel='Bowel Bladder'; updateEDSS()">5</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_bowelBladder==6}" ng-click="edss_bowelBladder = 6; helpPanel='Bowel Bladder'; updateEDSS()">6</button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3">Mental</label>
-                                    <div class="btn-group col-sm-8" role="group">
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_mental==0}" ng-click="edss_mental = 0; helpPanel='Mental'; updateEDSS()">0</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_mental==1}" ng-click="edss_mental = 1; helpPanel='Mental'; updateEDSS()">1</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_mental==2}" ng-click="edss_mental = 2; helpPanel='Mental'; updateEDSS()">2</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_mental==3}" ng-click="edss_mental = 3; helpPanel='Mental'; updateEDSS()">3</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_mental==4}" ng-click="edss_mental = 4; helpPanel='Mental'; updateEDSS()">4</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_mental==5}" ng-click="edss_mental = 5; helpPanel='Mental'; updateEDSS()">5</button>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-sm-push-1">Visual</label>
+                                        <div class="btn-group col-sm-7 col-sm-push-1" role="group">
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_visual==0}" ng-click="edss_visual = 0; helpPanel='Visual'; updateEDSS()">0</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_visual==1}" ng-click="edss_visual = 1; helpPanel='Visual'; updateEDSS()">1</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_visual==2}" ng-click="edss_visual = 2; helpPanel='Visual'; updateEDSS()">2</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_visual==3}" ng-click="edss_visual = 3; helpPanel='Visual'; updateEDSS()">3</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_visual==4}" ng-click="edss_visual = 4; helpPanel='Visual'; updateEDSS()">4</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_visual==5}" ng-click="edss_visual = 5; helpPanel='Visual'; updateEDSS()">5</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_visual==6}" ng-click="edss_visual = 6; helpPanel='Visual'; updateEDSS()">6</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label class="col-sm-3 col-sm-push-1">Mental</label>
+                                        <div class="btn-group col-sm-7 col-sm-push-1" role="group">
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_mental==0}" ng-click="edss_mental = 0; helpPanel='Mental'; updateEDSS()">0</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_mental==1}" ng-click="edss_mental = 1; helpPanel='Mental'; updateEDSS()">1</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_mental==2}" ng-click="edss_mental = 2; helpPanel='Mental'; updateEDSS()">2</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_mental==3}" ng-click="edss_mental = 3; helpPanel='Mental'; updateEDSS()">3</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_mental==4}" ng-click="edss_mental = 4; helpPanel='Mental'; updateEDSS()">4</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_mental==5}" ng-click="edss_mental = 5; helpPanel='Mental'; updateEDSS()">5</button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group" ng-init="edss_ambulation=0">
-                                    <label class="col-sm-3">Ambulation</label>
-                                    <div class="btn-group" role="group">
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==0}" ng-click="edss_ambulation = 0; helpPanel='Ambulation'; updateEDSS()">0</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==1}" ng-click="edss_ambulation = 1; helpPanel='Ambulation'; updateEDSS()">1</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==2}" ng-click="edss_ambulation = 2; helpPanel='Ambulation'; updateEDSS()">2</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==3}" ng-click="edss_ambulation = 3; helpPanel='Ambulation'; updateEDSS()">3</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==4}" ng-click="edss_ambulation = 4; helpPanel='Ambulation'; updateEDSS()">4</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==5}" ng-click="edss_ambulation = 5; helpPanel='Ambulation'; updateEDSS()">5</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==6}" ng-click="edss_ambulation = 6; helpPanel='Ambulation'; updateEDSS()">6</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==7}" ng-click="edss_ambulation = 7; helpPanel='Ambulation'; updateEDSS()">7</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==8}" ng-click="edss_ambulation = 8; helpPanel='Ambulation'; updateEDSS()">8</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==9}" ng-click="edss_ambulation = 9; helpPanel='Ambulation'; updateEDSS()">9</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==10}" ng-click="edss_ambulation = 10; helpPanel='Ambulation'; updateEDSS()">10</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==11}" ng-click="edss_ambulation = 11; helpPanel='Ambulation'; updateEDSS()">11</button>
-                                        <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==12}" ng-click="edss_ambulation = 12; helpPanel='Ambulation'; updateEDSS()">12</button>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-sm-push-1">Ambulation</label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="btn-group col-sm-11 col-sm-push-1" role="group">
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==0}" ng-click="edss_ambulation = 0; helpPanel='Ambulation'; updateEDSS()">0</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==1}" ng-click="edss_ambulation = 1; helpPanel='Ambulation'; updateEDSS()">1</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==2}" ng-click="edss_ambulation = 2; helpPanel='Ambulation'; updateEDSS()">2</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==3}" ng-click="edss_ambulation = 3; helpPanel='Ambulation'; updateEDSS()">3</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==4}" ng-click="edss_ambulation = 4; helpPanel='Ambulation'; updateEDSS()">4</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==5}" ng-click="edss_ambulation = 5; helpPanel='Ambulation'; updateEDSS()">5</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==6}" ng-click="edss_ambulation = 6; helpPanel='Ambulation'; updateEDSS()">6</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==7}" ng-click="edss_ambulation = 7; helpPanel='Ambulation'; updateEDSS()">7</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==8}" ng-click="edss_ambulation = 8; helpPanel='Ambulation'; updateEDSS()">8</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==9}" ng-click="edss_ambulation = 9; helpPanel='Ambulation'; updateEDSS()">9</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==10}" ng-click="edss_ambulation = 10; helpPanel='Ambulation'; updateEDSS()">10</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==11}" ng-click="edss_ambulation = 11; helpPanel='Ambulation'; updateEDSS()">11</button>
+                                            <button type="button" class="edssScore btn btn-default" ng-class="{selected: edss_ambulation==12}" ng-click="edss_ambulation = 12; helpPanel='Ambulation'; updateEDSS()">12</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -725,6 +741,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="panel-body" ng-if="showHelpPanel('Bowel Bladder')">
                             <div class="row" ng-class="{proposedEdssScore: edss_bowelBladder=='0'}">
                                 <div class="col-sm-2">0</div>
@@ -759,7 +776,7 @@
                             <div class="row" ng-class="{proposedEdssScore: edss_bowelBladder=='5'}">
                                 <div class="col-sm-2">5</div>
                                 <div class="col-sm-10">
-                                    <p>Indwelling catheter</p>
+                                    <p>In dwelling catheter</p>
                                 </div>
                             </div>
                             <div class="row" ng-class="{proposedEdssScore: edss_bowelBladder=='6'}">
@@ -769,11 +786,84 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="panel-body" ng-if="showHelpPanel('Ambulation')">
                             <div class="row" ng-class="{proposedEdssScore: edss_ambulation=='0'}">
                                 <div class="col-sm-2">0</div>
                                 <div class="col-sm-10">
-                                    <p>Ambulation</p>
+                                    <p>Fully ambulatory</p>
+                                </div>
+                            </div>
+                            <div class="row" ng-class="{proposedEdssScore: edss_ambulation=='1'}">
+                                <div class="col-sm-2">1</div>
+                                <div class="col-sm-10">
+                                    <p>500 m without aid/rest</p>
+                                </div>
+                            </div>
+                            <div class="row" ng-class="{proposedEdssScore: edss_ambulation=='2'}">
+                                <div class="col-sm-2">2</div>
+                                <div class="col-sm-10">
+                                    <p>300 m without aid/rest</p>
+                                </div>
+                            </div>
+                            <div class="row" ng-class="{proposedEdssScore: edss_ambulation=='3'}">
+                                <div class="col-sm-2">3</div>
+                                <div class="col-sm-10">
+                                    <p>200 m without aid/rest</p>
+                                </div>
+                            </div>
+                            <div class="row" ng-class="{proposedEdssScore: edss_ambulation=='4'}">
+                                <div class="col-sm-2">4</div>
+                                <div class="col-sm-10">
+                                    <p>100 m without aid/rest</p>
+                                </div>
+                            </div>
+                            <div class="row" ng-class="{proposedEdssScore: edss_ambulation=='5'}">
+                                <div class="col-sm-2">5</div>
+                                <div class="col-sm-10">
+                                    <p>100 m with unilateral assistance</p>
+                                </div>
+                            </div>
+                            <div class="row" ng-class="{proposedEdssScore: edss_ambulation=='6'}">
+                                <div class="col-sm-2">6</div>
+                                <div class="col-sm-10">
+                                    <p>200 m with bilateral assistance</p>
+                                </div>
+                            </div>
+                            <div class="row" ng-class="{proposedEdssScore: edss_ambulation=='7'}">
+                                <div class="col-sm-2">7</div>
+                                <div class="col-sm-10">
+                                    <p>Essentially restricted to wheelchair (wheels self)</p>
+                                </div>
+                            </div>
+                            <div class="row" ng-class="{proposedEdssScore: edss_ambulation=='8'}">
+                                <div class="col-sm-2">8</div>
+                                <div class="col-sm-10">
+                                    <p>Restricted to wheelchair (may need help in transfer)</p>
+                                </div>
+                            </div>
+                            <div class="row" ng-class="{proposedEdssScore: edss_ambulation=='9'}">
+                                <div class="col-sm-2">9</div>
+                                <div class="col-sm-10">
+                                    <p>Essentially restricted to bed/chair</p>
+                                </div>
+                            </div>
+                            <div class="row" ng-class="{proposedEdssScore: edss_ambulation=='10'}">
+                                <div class="col-sm-2">10</div>
+                                <div class="col-sm-10">
+                                    <p>Restricted to bed much of day</p>
+                                </div>
+                            </div>
+                            <div class="row" ng-class="{proposedEdssScore: edss_ambulation=='11'}">
+                                <div class="col-sm-2">11</div>
+                                <div class="col-sm-10">
+                                    <p>Bed patient. Can communicate and eat</p>
+                                </div>
+                            </div>
+                            <div class="row" ng-class="{proposedEdssScore: edss_ambulation=='12'}">
+                                <div class="col-sm-2">12</div>
+                                <div class="col-sm-10">
+                                    <p>Helpless bed patient. Unable to communicate, eat or swallow</p>
                                 </div>
                             </div>
                         </div>
