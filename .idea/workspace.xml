@@ -2,19 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2d964b44-c0be-4683-9935-0e04831a3555" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/exposure/exposure.html" afterPath="$PROJECT_DIR$/scripts/js/exposure/exposure.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/exposure/exposure.module.js" afterPath="$PROJECT_DIR$/scripts/js/exposure/exposure.module.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/header/header.module.js" afterPath="$PROJECT_DIR$/scripts/js/header/header.module.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.html" afterPath="$PROJECT_DIR$/main.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimise.appcache" afterPath="$PROJECT_DIR$/optimise.appcache" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/record/record.module.js" afterPath="$PROJECT_DIR$/scripts/js/record/record.module.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Optimise.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/header.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1463776484013" ignored="false" />
-    <file path="/Dummy.txt" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1464103726935" ignored="false" />
-    <file path="/exposure.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1463573201415" ignored="false" />
+    <file path="/header.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1464691038481" ignored="false" />
+    <file path="/Dummy.txt" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1464688990208" ignored="false" />
+    <file path="/exposure.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1464689500177" ignored="false" />
     <file path="/relapse.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1461596971293" ignored="false" />
     <file path="/a.dummy" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1461670764077" ignored="false" />
     <file path="/record.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1463778045195" ignored="false" />
     <file path="/subjectVisit.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1463427345256" ignored="false" />
-    <file path="/main.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1463759609115" ignored="false" />
-    <file path="/visit.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1463483862828" ignored="false" />
+    <file path="/main.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1464689398269" ignored="false" />
+    <file path="/visit.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1464172270559" ignored="false" />
     <file path="/questionnaire.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1461059754576" ignored="false" />
     <file path="/clinicalEvent.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1461065333570" ignored="false" />
     <file path="/findingAbout.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1460150417852" ignored="false" />
@@ -22,7 +28,7 @@
     <file path="/relapse.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1461596710899" ignored="false" />
     <file path="/event.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1432154283046" ignored="false" />
     <file path="/event.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1442075617688" ignored="false" />
-    <file path="/exposure.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1463779570427" ignored="false" />
+    <file path="/exposure.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1464690574929" ignored="false" />
     <file path="/relationship.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1446835925408" ignored="false" />
     <file path="/laboratory.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1463495089513" ignored="false" />
     <file path="/laboratory.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1451923747977" ignored="false" />
@@ -147,7 +153,6 @@
     <sortChildren value="false" />
   </component>
   <component name="DebuggerManager">
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -184,6 +189,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -196,43 +202,7 @@
       <file leaf-file-name="exposure.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/js/exposure/exposure.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="174" column="128" selection-start="11619" selection-end="11643" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="exposure.module.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/js/exposure/exposure.module.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="728" column="68" selection-start="26898" selection-end="26898" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="record.module.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/scripts/js/record/record.module.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="158" column="31" selection-start="3888" selection-end="3888" vertical-scroll-proportion="0.0302267">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="43" selection-start="59" selection-end="59" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="optimise.appcache" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/optimise.appcache">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="20" selection-start="35" selection-end="35" vertical-scroll-proportion="0.0">
+            <state line="145" column="130" selection-start="9713" selection-end="9735" vertical-scroll-proportion="-10.857142">
               <folding />
             </state>
           </provider>
@@ -241,7 +211,46 @@
       <file leaf-file-name="header.module.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/js/header/header.module.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="305" column="23" selection-start="8573" selection-end="8592" vertical-scroll-proportion="0.0">
+            <state line="1914" column="19" selection-start="65665" selection-end="65673" vertical-scroll-proportion="8.884615">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="exposure.module.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/js/exposure/exposure.module.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="508" column="18" selection-start="18134" selection-end="18134" vertical-scroll-proportion="-3.1153846">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="record.module.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/scripts/js/record/record.module.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="134" column="30" selection-start="3308" selection-end="3308" vertical-scroll-proportion="0.07462686">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="0" selection-start="69" selection-end="75" vertical-scroll-proportion="-1.1428572">
+              <folding>
+                <element signature="tag#div#1;tag#div#0;tag#div#0;tag#div#0;tag#div#0;tag#body#0;tag#html#0" expanded="false" />
+                <element signature="tag#div#2;tag#div#0;tag#div#0;tag#div#0;tag#div#0;tag#body#0;tag#html#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="optimise.appcache" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/optimise.appcache">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="56" selection-start="109" selection-end="109" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -279,17 +288,17 @@
         <option value="$PROJECT_DIR$/scripts/js/patient/patient.html" />
         <option value="$PROJECT_DIR$/scripts/js/laboratory/serological.html" />
         <option value="$PROJECT_DIR$/scripts/js/subjectVisit/subjectVisit.module.js" />
-        <option value="$PROJECT_DIR$/scripts/js/subjectVisit/visit.html" />
         <option value="$PROJECT_DIR$/scripts/js/laboratory/laboratory.module.js" />
         <option value="$PROJECT_DIR$/scripts/js/view/glasgow.json" />
         <option value="$PROJECT_DIR$/scripts/js/patient/patient.module.js" />
         <option value="$PROJECT_DIR$/scripts/js/vitalSigns/vitalSigns.module.js" />
+        <option value="$PROJECT_DIR$/scripts/js/subjectVisit/visit.html" />
         <option value="$PROJECT_DIR$/scripts/js/exposure/exposure.html" />
         <option value="$PROJECT_DIR$/scripts/js/exposure/exposure.module.js" />
         <option value="$PROJECT_DIR$/scripts/js/header/header.module.js" />
-        <option value="$PROJECT_DIR$/scripts/js/record/record.module.js" />
-        <option value="$PROJECT_DIR$/main.html" />
         <option value="$PROJECT_DIR$/optimise.appcache" />
+        <option value="$PROJECT_DIR$/main.html" />
+        <option value="$PROJECT_DIR$/scripts/js/record/record.module.js" />
       </list>
     </option>
   </component>
@@ -326,6 +335,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -358,22 +368,149 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="subjectVisit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="record" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="header" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="exposure" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="project.structure.last.edited" value="Modules" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="62" />
-    <property name="project.structure.proportion" value="0.15" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="160" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="63" />
-    <property name="MemberChooser.sorted" value="false" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="recentsLimit" value="5" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="63" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Repository/Code/TimelineV3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="68" />
@@ -389,14 +526,14 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
-    <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="options.searchVisible" value="true" />
   </component>
@@ -431,6 +568,19 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -459,19 +609,6 @@
       <listeners />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" />
@@ -485,6 +622,13 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="" />
       <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSDebuggerConfigurationSettings>
       <method />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
@@ -506,13 +650,6 @@
       </option>
       <envs />
       <patterns />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
-      <JSDebuggerConfigurationSettings>
-        <option name="engineId" value="embedded" />
-        <option name="fileUrl" />
-      </JSDebuggerConfigurationSettings>
       <method />
     </configuration>
     <list size="0" />
@@ -1219,19 +1356,19 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.0" sideWeight="0.60940033" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32924962" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1389313" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959217" sideWeight="0.7136294" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19529983" sideWeight="0.6707504" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15316045" sideWeight="0.8610687" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.40122512" sideWeight="0.63857377" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1327,24 +1464,9 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/scripts/js/laboratory/mri.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="338" column="30" selection-start="22290" selection-end="23603" vertical-scroll-proportion="0.6762226" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/css/testLayout.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="540" column="9" selection-start="11742" selection-end="11750" vertical-scroll-proportion="0.019138755" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/js/clinicalEvent/relapseSigns.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="98" column="38" selection-start="5725" selection-end="5725" vertical-scroll-proportion="-10.857142" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/js/subjectVisit/visit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="480" column="76" selection-start="38603" selection-end="38603" vertical-scroll-proportion="0.625" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/js/laboratory/laboratory.module.js">
@@ -1372,49 +1494,73 @@
         <state line="34" column="84" selection-start="870" selection-end="870" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/js/subjectVisit/subjectVisit.module.js">
+    <entry file="file://$PROJECT_DIR$/scripts/js/questionnaire/questionnaire.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="963" column="0" selection-start="40151" selection-end="40151" vertical-scroll-proportion="0.0" />
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.18085106" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/js/exposure/exposure.html">
+    <entry file="file://$PROJECT_DIR$/scripts/js/test/edss.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="174" column="128" selection-start="11619" selection-end="11643" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/js/header/header.module.js">
+    <entry file="file://$PROJECT_DIR$/scripts/js/subjectVisit/visit.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="305" column="23" selection-start="8573" selection-end="8592" vertical-scroll-proportion="0.0">
+        <state line="863" column="56" selection-start="63774" selection-end="63774" vertical-scroll-proportion="0.023904383">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/js/subjectVisit/subjectVisit.module.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="963" column="0" selection-start="40151" selection-end="40151" vertical-scroll-proportion="0.022944551">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/js/exposure/exposure.module.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="728" column="68" selection-start="26898" selection-end="26898" vertical-scroll-proportion="0.0">
+        <state line="508" column="18" selection-start="18134" selection-end="18134" vertical-scroll-proportion="-3.1153846">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.html">
+    <entry file="file://$PROJECT_DIR$/scripts/js/exposure/exposure.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="43" selection-start="59" selection-end="59" vertical-scroll-proportion="0.0">
+        <state line="145" column="130" selection-start="9713" selection-end="9735" vertical-scroll-proportion="-10.857142">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/js/header/header.module.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1914" column="19" selection-start="65665" selection-end="65673" vertical-scroll-proportion="8.884615">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/optimise.appcache">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="20" selection-start="35" selection-end="35" vertical-scroll-proportion="0.0">
+        <state line="6" column="56" selection-start="109" selection-end="109" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="69" selection-end="75" vertical-scroll-proportion="-1.1428572">
+          <folding>
+            <element signature="tag#div#1;tag#div#0;tag#div#0;tag#div#0;tag#div#0;tag#body#0;tag#html#0" expanded="false" />
+            <element signature="tag#div#2;tag#div#0;tag#div#0;tag#div#0;tag#div#0;tag#body#0;tag#html#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/js/record/record.module.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="158" column="31" selection-start="3888" selection-end="3888" vertical-scroll-proportion="0.0302267">
+        <state line="134" column="30" selection-start="3308" selection-end="3308" vertical-scroll-proportion="0.07462686">
           <folding />
         </state>
       </provider>

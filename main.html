@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html manifest="optimise.appcache?v=V0.0.47">
+<!--<html manifest="optimise.appcache?v=V0.0.48">-->
 <html>
 <head>
     <title>OPTIMISE</title>
@@ -42,7 +42,7 @@
                     <form class="doubleMarginTop col-sm-push-2 col-sm-6" ng-show="navigatorIsOnline()">
                         <div class="form-inline">
                             <input type="text" class="form-control" ng-model="UserName" placeholder="UserName">
-                            <input type="text" class="form-control" ng-model="Password" placeholder="Password">
+                            <input type="password" class="form-control" ng-model="Password" placeholder="Password">
                             <button type="button" class="btn btn-default" ng-click="authenticate()">{{authenticatedStatus}}</button>
                         </div>
                     </form>
@@ -136,14 +136,14 @@
             </div>
 
 
-            <div>
-                <button type="button" class="btn-lg" ng-click="openConfig()" ng-disabled="disableEntry()">
-                    <span class="glyphicon glyphicon-cog">
-                        <!--<br><br>Settings-->
-                    </span>
-                    <p class="doubleMarginTop">UI Customization</p>
-                </button>
-            </div>
+            <!--<div>-->
+                <!--<button type="button" class="btn-lg" ng-click="openConfig()" ng-disabled="disableEntry()">-->
+                    <!--<span class="glyphicon glyphicon-cog">-->
+                        <!--&lt;!&ndash;<br><br>Settings&ndash;&gt;-->
+                    <!--</span>-->
+                    <!--<p class="doubleMarginTop">UI Customization</p>-->
+                <!--</button>-->
+            <!--</div>-->
                     `
 
             <script type="text/ng-template" id="newPatient.html">

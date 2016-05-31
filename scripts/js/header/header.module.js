@@ -1065,8 +1065,8 @@ headerModule.controller('headerCtrl', function ($rootScope,
     $scope.authenticate = function() {
         if (navigator.onLine) {
             if (($scope.UserName.length > 0)&&($scope.Password.length>0)) {
-            USERID.save({"username":"may","password":"yong","expire_in_seconds":120}, function (data) {
-                //USERID.save({"username":$scope.UserName,"password":$scope.Password,"expire_in_seconds":120}, function (data) {
+            //USERID.save({"username":"may","password":"yong","expire_in_seconds":120}, function (data) {
+                USERID.save({"username":$scope.UserName,"password":$scope.Password,"expire_in_seconds":120}, function (data) {
                     data.$promise.then(function () {
                         if (data.result =='succeed') {
                             records.setToken(data.token);
@@ -1082,6 +1082,9 @@ headerModule.controller('headerCtrl', function ($rootScope,
                             $scope.sourceMode = 'internet';
                             viewService.setOffline(false);
                             alert("Logged in");
+                            clearCurrentPatientSession();
+                            $scope.contentOnDisplay = 'Patient';
+                            $scope.setContent();
                         }else {
                             alert ("You have no access into OPTIMISE")
                         }
@@ -1996,7 +1999,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
             return true;
         }
         else {
-            console.log("not a date");
+            //console.log("not a date");
             return false;
         }
     }

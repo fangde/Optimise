@@ -132,7 +132,7 @@ recordModule.factory('XNATLogin', function ($resource) {
 
 recordModule.factory('USERID', function ($resource) {
 
-    var onlineOrLocal = 'online';
+    var onlineOrLocal = 'local';
 
     if (onlineOrLocal=='local')
         return $resource('http://www.optimise-ms.org/api-optimise/wh/gettoken4c.php',{},{
@@ -156,7 +156,7 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
     }
 
     //var onlineOrLocal = 'local';
-    var onlineOrLocal = 'online';
+    var onlineOrLocal = 'local';
 
     var getURL = function(functionName) {
 

@@ -496,21 +496,45 @@ interventionModule.controller('exposureInfoCtrl', function($scope,
 
     $scope.setEXSTDTC_Interuption = function() {
         $scope.EXSTDTC_Interuption = new Date($scope.EXSTDTC_Interuption_display.substr(6), parseInt($scope.EXSTDTC_Interuption_display.substr(3,2))-1, $scope.EXSTDTC_Interuption_display.substr(0,2));
-        console.log($scope.EXSTDTC_Interuption);
+        if (thisIsADate($scope.EXENDTC_Interuption) && (thisIsADate($scope.EXSTDTC_Interuption))) {
+            $scope.interuptionDateValidated = true;
+        }
+    }
+
+    var thisIsADate = function(ddmmyy) {
+        if ( Object.prototype.toString.call(ddmmyy) === "[object Date]" ) {
+            return true;
+        }
+        else {
+            //console.log("not a date");
+            return false;
+        }
     }
 
     $scope.setEXENDTC = function() {
         $scope.EXENDTC = new Date($scope.EXENDTC_displayDate.substr(6), parseInt($scope.EXENDTC_displayDate.substr(3,2))-1, $scope.EXENDTC_displayDate.substr(0,2));
-        console.log($scope.EXENDTC);
+        //console.log($scope.EXENDTC);
     }
 
     $scope.setEXENDTC_Interuption = function() {
         $scope.EXENDTC_Interuption = new Date($scope.EXENDTC_Interuption_display.substr(6), parseInt($scope.EXENDTC_Interuption_display.substr(3,2))-1, $scope.EXENDTC_Interuption_display.substr(0,2));
-        console.log($scope.EXENDTC_Interuption);
+        if (thisIsADate($scope.EXENDTC_Interuption) && (thisIsADate($scope.EXSTDTC_Interuption))) {
+            $scope.interuptionDateValidated = true;
+        }
     }
 
     $scope.disableDoseProperty = function() {
-        return ($scope.dateValidated==false);
+        if ($scope.dateValidated == false)
+            return true;
+        else
+            return false;
+    }
+
+    $scope.disableInteruptionProperty = function() {
+        if ($scope.interuptionDateValidated == false)
+            return true;
+        else
+            return false;
     }
 
     $scope.disableDatabaseTreatmentDoseOptions = function() {
@@ -523,6 +547,7 @@ interventionModule.controller('exposureInfoCtrl', function($scope,
 
     $scope.USUBJID = '';
     $scope.dateValidated = false;
+    $scope.interuptionDateValidated = false;
 
     $rootScope.setExposureUSUBJID = function(USUBJID) {
         $scope.USUBJID = USUBJID;
@@ -569,6 +594,7 @@ interventionModule.controller('exposureInfoCtrl', function($scope,
         var exposureForDisplay = exposures.getCurrentExposure();
         var sortedExposures = exposures.getExposuresAscending(exposureForDisplay.EXTRT);
 
+        $scope.dateValidated = true;
         $scope.EXSTDTC = sortedExposures[0].EXSTDTC;
         $scope.EXSTDTC_displayDate = $scope.EXSTDTC.getDate()+"/"+(parseInt($scope.EXSTDTC.getMonth()+1))+"/"+$scope.EXSTDTC.getFullYear();// set date
 
@@ -809,7 +835,7 @@ interventionModule.controller('exposureInfoCtrl', function($scope,
     $scope.EXCAT = "Disease Modifying";
 
     $scope.data = {drugs: DrugFactory};
-    console.log($scope.data);
+    //console.log($scope.data);
 
     $scope.getDrugs = function() {
         var drugsInCategory = [];

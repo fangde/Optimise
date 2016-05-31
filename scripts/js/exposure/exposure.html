@@ -144,13 +144,13 @@
                                 <tr >
                                     <td><input type="text" class="form-control DTC_DayMonthYear" ng-change="setEXENDTC_Interuption()" ng-model="EXENDTC_Interuption_display" ng-disabled="getDisabledFields()"></td>
                                     <td><input type="text" class="form-control DTC_DayMonthYear" ng-change="setEXSTDTC_Interuption()"ng-model="EXSTDTC_Interuption_display" ng-disabled="getDisabledFields()"></td>
-                                    <td> <select class="form-control" ng-model="EXADJ_Interuption" ng-disabled="disableDoseProperty()">
+                                    <td> <select class="form-control" ng-model="EXADJ_Interuption" ng-disabled="disableInteruptionProperty()">
                                         <option>Pregnancy</option>
                                         <option>Convenience</option>
                                         <option>Adverse Event</option>
                                         <option>Unknown</option></select>
                                     </td>
-                                    <td><a href="#" ng-click="addInteruption()" ng-disabled="disableDoseProperty()">Add</a></td>
+                                    <td><a href="#" ng-click="addInteruption()" ng-disabled="disableInteruptionProperty()">Add</a></td>
                                 </tr>
                             </tbody>
                         </table>
