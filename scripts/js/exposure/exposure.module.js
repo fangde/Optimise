@@ -109,8 +109,10 @@ interventionModule.service('exposures', function (Exposure, records, viewService
 
     var deleteExposures = function () {
         exposures = [];
+        //exposures.splice(0);
         interuptions = [];
         currentExposure = null;
+        //console.log("length:"+exposures.length);
     }
 
     var populateExposures = function (RecordItems) {

@@ -129,6 +129,12 @@ recordModule.factory('XNATLogin', function ($resource) {
     });
 });
 
+recordModule.factory('CIFLogin', function ($resource) {
+    return $resource('http://cif-xnat.hh.med.ic.ac.uk/j_spring_security_check',{},{
+        'get': {method: 'GET'}
+    });
+});
+
 
 recordModule.factory('USERID', function ($resource) {
 

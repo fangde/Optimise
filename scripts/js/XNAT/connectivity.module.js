@@ -8,9 +8,16 @@
 
 var connectivityModule = angular.module('Optimise.connectivity',['ngResource']);
 
-connectivityModule.factory('GetExperiments', function ($resource) {
-    return $resource('https://central.xnat.org/data/archive/projects/eTRIKS/subjects/CENTRAL_S04082/experiments?format=json',{},{
-    });
+//connectivityModule.factory('GetExperiments', function ($resource) {
+//    return $resource('https://central.xnat.org/data/archive/projects/eTRIKS/subjects/CENTRAL_S04082/experiments?format=json',{},{
+//    });
+//});
+
+connectivityModule.factory('Cif_Subjects', function ($resource) {
+    return function() {
+        var url = "http://cif-xnat.hh.med.ic.ac.uk/data/projects/Optimise/subjects?format=json"
+        return $resource(url,{},{});
+    }
 });
 
 connectivityModule.factory('Experiments', function ($resource) {
@@ -56,7 +63,45 @@ connectivityModule.factory('Snapshots', function ($resource) {
     }
 });
 
-connectivityModule.service('connectionServices', function($q, Experiments, Scans, Resources, Snapshots, RawImage) {
+connectivityModule.factory('CifLogin', function ($resource) {
+    return $resource('http://cif-xnat.hh.med.ic.ac.uk/j_spring_security_check',{},{
+        'get': {method: 'GET'}
+    });
+});
+
+
+connectivityModule.service('connectionServices', function($q, Experiments, Scans, Resources, Snapshots, RawImage, CifLogin, Cif_Subjects) {
+
+    var getSubjectsFromCIF = function() {
+        console.log("getting from cif")
+        var valuePairs = {login_method: "Database",
+            j_username: "myyong",
+            j_password: "150914_Bg",
+            login: "Login",
+            XNAT_CSRF: ""};
+
+
+        CifLogin.get(valuePairs, function(data) {
+            data.$promise.then(function () {
+                var t = '';
+                console.log(data);
+                var deferred = $q.defer();
+                try {
+                    var subjects = new Cif_Subjects();
+                    subjects.get({}, function(subject_data) {
+                        subject_data.$promise.then(function() {
+                            console.log(subject_data);
+                            deferred.resolve(subject_data.ResultSet.Result);
+
+                        })
+                    });
+                }
+                catch (e) {
+                    deferred.reject(e);
+                }
+            });
+        });
+    }
 
     var getImagingExperiments = function(USUBJID) {
         var deferred = $q.defer();
@@ -230,7 +275,8 @@ connectivityModule.service('connectionServices', function($q, Experiments, Scans
     return {
         getImagingExperiments: getImagingExperiments,
         getExperiments:getExperiments,
-        getScans: getScans
+        getScans: getScans,
+        getSubjectsFromCIF: getSubjectsFromCIF
     }
 });
 

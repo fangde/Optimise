@@ -44,6 +44,7 @@ mriModule.controller('mriInfoCtrl', function ($scope, $rootScope, $parse, $uibMo
         //http://www.optimise-ms.org/api-optimise/xnat/proxy.php
         $scope.imageURL ='http://www.optimise-ms.org/api-optimise/xnat/proxy.php/'+$scope.selectedScan.thumbnail;
         $scope.downloadURL ='http://www.optimise-ms.org/api-optimise/xnat/proxy.php/'+$scope.selectedScan.download;
+        //console.log($scope.downloadURL);
         $scope.dicomURL ='http://www.optimise-ms.org/api-optimise/xnat/proxy.php/'+$scope.selectedScan.dicom;
         //console.log($scope.selectedScan);
     };

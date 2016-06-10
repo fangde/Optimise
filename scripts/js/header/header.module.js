@@ -31,7 +31,8 @@ var headerModule = angular.module('Optimise.header',['Optimise.view',
     'Optimise.configurations',
     'ngTable',
     'Optimise.substanceUse',
-    'Optimise.subjectCharacteristic']);
+    'Optimise.subjectCharacteristic',
+    ]);
 
 headerModule.factory('Country', function() {
     return function () {
@@ -633,60 +634,7 @@ headerModule.controller('newPatientInstanceCtrl', function ($scope, $uibModalIns
         $uibModalInstance.dismiss('cancel');
     };
 
-//    var getMonthIndex = function() {
-//        var birthMonthIndex=0;
-//        switch($scope.BRTHMNTH) {
-//            case 'January':{
-//                birthMonthIndex = 0;
-//                break;
-//            }
-//            case 'February':{
-//                birthMonthIndex = 1;
-//                break;
-//            }
-//            case 'March':{
-//                birthMonthIndex = 2;
-//                break;
-//            }
-//            case 'April':{
-//                birthMonthIndex = 3;
-//                break;
-//            }
-//            case 'May':{
-//                birthMonthIndex = 4;
-//                break;
-//            }
-//            case 'June':{
-//                birthMonthIndex = 5;
-//                break;
-//            }
-//            case 'July':{
-//                birthMonthIndex = 6;
-//                break;
-//            }
-//            case 'August':{
-//                birthMonthIndex = 7;
-//                break;
-//            }
-//            case 'September':{
-//                birthMonthIndex = 8;
-//                break;
-//            }
-//            case 'October':{
-//                birthMonthIndex = 9;
-//                break;
-//            }
-//            case 'November':{
-//                birthMonthIndex = 10;
-//                break;
-//            }
-//            case 'December':{
-//                birthMonthIndex = 11;
-//                break;
-//            }
-//        }
-//        return birthMonthIndex;
-//    }
+
 });
 
 headerModule.controller('configInstanceCtrl', function ($scope, $uibModalInstance) {
@@ -932,7 +880,10 @@ headerModule.controller('headerCtrl', function ($rootScope,
                                             Experiments, Scans, Resources, Snapshots, RawImage,
                                             adverseEventService,
                                             morphologyServices, Country,
-                                            substanceUse, subjectCharacteristic) {
+                                            substanceUse, subjectCharacteristic,
+                                            connectionServices) {
+
+
 
     var today = new Date();
     var dayMonthYear = angular.element(document.querySelector('#events .input-group.DTC_DayMonthYear'));
@@ -955,17 +906,6 @@ headerModule.controller('headerCtrl', function ($rootScope,
         todayHighlight: true,
         endDate: today.getFullYear().toString()
     });
-
-//    var monthYear = angular.element(document.querySelector('#myDTC_MonthYear'));
-//    monthYear.datepicker({
-//        format: "mm/yyyy",
-//        orientation: "auto",
-//        minViewMode: 1,
-//        startView: 1,
-//        autoclose: true,
-//        todayHighlight: true,
-//        endDate: today.getFullYear().toString()
-//    });
 
     $scope.getCalendarType = function() {
 
@@ -2860,6 +2800,38 @@ headerModule.controller('headerCtrl', function ($rootScope,
             console.log("Cancelled");
         });
     };
+
+
+//     var valuePairs = {login_method: "Database",
+//     j_username: "myong",
+//     j_password: "130915_Pc",
+//     login: "Login",
+//     XNAT_CSRF: ""};
+
+//    var valuePairs = {login_method: "Database",
+//        j_username: "myyong",
+//        j_password: "150914_Bg",
+//        login: "Login",
+//        XNAT_CSRF: ""};
+
+//     $http({url: 'https://central.xnat.org/j_spring_security_check',
+//        method: 'GET',
+//        data: valuePairs,
+//        headers: {"Content-Type": "application/json;charset=utf-8"}}).then(function(res) {
+//            console.log(res);
+//        }, function(error) {
+//            console.log(error);
+//        });
+
+
+//     XNATLogin.get(valuePairs, function(data) {
+//        data.$promise.then(function (theReturned) {
+//            var t = '';
+//            console.log(data);
+//            console.log(theReturned);
+//        });
+//     });
+    connectionServices.getSubjectsFromCIF();
 
 });
 

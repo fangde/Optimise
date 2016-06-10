@@ -366,7 +366,7 @@ background-color: hsl(360, 65%, 28%) !important;
     overflow: scroll;
     /*height: 65vh;*/
     height: 75vh;
-    width:100%;
+    /*width:100%;*/
     overflow-y: scroll;
     overflow-x: hidden;
     margin-left: 5px;
@@ -375,7 +375,7 @@ background-color: hsl(360, 65%, 28%) !important;
 #profileContent {
     overflow: scroll;
     height:75vh;
-    margin-left: 10px;
+    margin-left: 5px;
     margin-bottom: 5px;
 }
 
@@ -389,8 +389,8 @@ background-color: hsl(360, 65%, 28%) !important;
 #interventionContent {
     overflow: scroll;
     height:75vh;
-    margin-left: 10px;
-    margin-bottom: 1%;
+    margin-left: 5px;
+    margin-bottom: 5%;
 }
 
 #eventContent {

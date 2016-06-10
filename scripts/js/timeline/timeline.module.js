@@ -863,23 +863,27 @@ timelineModule.directive('timeline', function() {
             return result;
         }
     }
+    function clearDisplay() {
+        d3.selectAll("svg").remove();
+    }
 
     return {
         restrict:"E",
         controller: 'timelineCtrl',
         link: function ($scope, element){
-            /*
-            var rendered = function(){
-
-                display($scope, element);
-            };
-            //console.log(element);
-            console.log("In timeline");
-            timer(rendered,10*3); */
 
             $scope.$watch('randomData', function(){
-                if (($scope.randomData != null)&&($scope.randomData.lanes.length > 0))
+                //console.log("watching: "+$scope.randomData);
+                //console.log($scope.randomData);
+
+                if (($scope.randomData != null)&&($scope.randomData.lanes.length > 0)) {
+                    //console.log("displaying: "+$scope.randomData);
+                    //console.log($scope.randomData);
                     display($scope, element);
+                }
+                else {
+                    clearDisplay();
+                }
             }, true);
         }
     };
@@ -979,6 +983,7 @@ timelineModule.factory('patientEvents', function(exposures,
         }
 
         var generateWorkItems = function () {
+
             var data = [];
             //var laneNames = ["MS Specific", "Symptomatic", "Non-Pharma", "Relapses", "Medical Conditions", "MRI", "CSF","Evoked Potantials", "Lab Tests"]
 
@@ -1009,6 +1014,7 @@ timelineModule.factory('patientEvents', function(exposures,
 
             consolidateItemID(data);
 
+            //console.log('generated work items:'+data);
             return data;
         };
 
@@ -1395,6 +1401,8 @@ timelineModule.controller('timelineCtrl', function ($rootScope, $scope, patientE
     $scope.showThisContent = function() {
         if (viewService.getView().Section=='Timeline'){
             $scope.randomData = patientEvents.getPatientEvents($scope.dataToView);
+            //console.log("randomData: "+$scope.randomData);
+            //console.log($scope.randomData);
             return true;
         }
         else
@@ -1415,6 +1423,8 @@ timelineModule.controller('timelineCtrl', function ($rootScope, $scope, patientE
         }
         //console.log($scope.dataToView);
         $scope.randomData = patientEvents.getPatientEvents($scope.dataToView);
+        //console.log("randomData from toggleTimeline: "+$scope.randomData);
+        //console.log($scope.randomData);
     }
 
     $scope.includeInTimeline = function(dataType) {
