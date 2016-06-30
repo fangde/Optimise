@@ -27,7 +27,7 @@ findingModule.factory('findingAbout', function() {
             FAORES:'',
             FASTRESU:'',
             //FADTC: new Date (2015, 01, 01),
-            FADTC: new Date (),
+            FADTC: '',
             FALNKID:''
         }
         return findingsAbout;

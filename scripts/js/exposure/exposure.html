@@ -1,118 +1,169 @@
 <div class="container-fluid">
-    <!--<div class="doubleMarginTop">-->
-        <!--<div class="row">    &lt;!&ndash; Date of Onset &ndash;&gt;-->
-            <!--<div class="col-sm-4">-->
-                <!--<form class="form-inline">-->
-                    <!--<div class="form-group">-->
-                        <!--<label class='control-label'>Start On</label>-->
-                        <!--<input type="text" class="form-control DTC_DayMonthYear" ng-model="EXSTDTC_displayDate" ng-change="setEXSTDTC()" ng-disabled="getDisabledFields()">-->
-                    <!--</div>-->
-                <!--</form>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
     <div class="marginTop" id="interventionContent">
         <div class="panel-group">
             <div class="panel panel-default">
                 <div class="panel-heading myPanel">
-                    <h3 class="panel-title">Treatments for MS</h3>
+                    <h3 class="panel-title">Treatments</h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class='col-sm-6'>
                             <div class="form-group">
                                 <div class="btn-group" role="group" ng-init="EXCAT='Disease Modifying'">
-                                    <button type="button" class="btn btn-primary" ng-class="{active: EXCAT=='Disease Modifying'}" ng-click="EXCAT='Disease Modifying';">Disease Modifying</button>
-                                    <button type="button" class="btn btn-primary" ng-class="{active: EXCAT=='Symptomatic'}" ng-click="EXCAT='Symptomatic';">Symptomatic</button>
-                                    <!--<button type="button" class="btn btn-primary" ng-class="{active: EXCAT=='Others'}" ng-click="EXCAT='Others';">Others</button>-->
+                                    <button type="button" class="btn btn-primary"
+                                            ng-class="{active: EXCAT=='Disease Modifying'}"
+                                            ng-click="EXCAT='Disease Modifying'; addDoseProperty('EXCAT')">Disease Modifying</button>
+                                    <button type="button" class="btn btn-primary"
+                                            ng-class="{active: EXCAT=='Symptomatic'}"
+                                            ng-click="EXCAT='Symptomatic'; addDoseProperty('EXCAT')">Symptomatic</button>
+                                    <button type="button" class="btn btn-primary"
+                                            ng-class="{active: EXCAT=='Comorbidity'}"
+                                            ng-click="EXCAT='Comorbidity'; addDoseProperty('EXCAT')">Comorbidity</button>
                                 </div>
                             </div>
                         </div>
-                        <!--<div class='col-sm-4 col-sm-pull-2' ng-show="(EXCAT=='Others')">-->
-                            <!--<div class="form-group">-->
-                                <!--<input type="text"  class="form-control" placeholder="eg. Physiotherapy">-->
-                            <!--</div>-->
-                        <!--</div>-->
                     </div>
-                    <div class="row" ng-show="(EXCAT=='Disease Modifying')||(EXCAT=='Symptomatic')">
+                    <div class="row">
                         <div class='col-sm-4'>
                             <div class="form-group">
                                 <label class="control-label">Treatment</label>
-                                <select class="form-control" ng-model='EXTRT' ng-change="addExposure()" ng-disabled="getDisabledFields()">
-                                    <option ng-repeat="drug in getDrugs()" value="{{drug.name}}">{{drug.name}}</option>
-                                </select>
+                                <input type="text" ng-model="EXTRT"
+                                       uib-typeahead="treatment for treatment in drugsFactory | filter:$viewValue | limitTo:8"
+                                       class="form-control"
+                                       ng-disabled="getDisabledFields()"
+                                       ng-blur="addExposure()">
                             </div>
                         </div>
                         <div class='col-sm-2'>
                             <div class="form-group">
                                 <label class="control-label">Dose</label>
-                                <select class="form-control" ng-model='EXDOSE' ng-change="addDoseProperty('EXDOSE')" ng-disabled="disableDatabaseTreatmentDoseOptions()">
-                                    <option ng-repeat="dose in getDosages()" value="{{dose}}">{{dose}}</option>
-                                </select>
+                                <input type="text" ng-model="EXDOSE"
+                                       placeholder = "eg. 30" class="form-control"
+                                       ng-blur="addDoseProperty('EXDOSE')"
+                                       ng-disabled="disableDatabaseTreatmentDoseOptions()">
                             </div>
                         </div>
                         <div class='col-sm-2'>
                             <div class="form-group">
                                 <label class="control-label">Unit</label>
-                                <select class="form-control" ng-model='EXDOSU' ng-change="addDoseProperty('EXDOSU')" ng-disabled="disableDatabaseTreatmentDoseOptions()">
-                                    <option ng-repeat="unit in getUnits()" value="{{unit}}">{{unit}}</option>
-                                </select>
+                                <input type="text" ng-model="EXDOSU"
+                                       placeholder = "eg. mg" class="form-control"
+                                       ng-blur="addDoseProperty('EXDOSU')" ng-disabled="disableDatabaseTreatmentDoseOptions()">
                             </div>
                         </div>
                         <div class='col-sm-2'>
                             <div class="form-group">
                                 <label class="control-label">Form</label>
-                                <select class="form-control" ng-model='EXDOSFRM' ng-change="addDoseProperty('EXDOSFRM')" ng-disabled="disableDatabaseTreatmentDoseOptions()">
-                                    <option ng-repeat="form in getForms()" value="{{form}}">{{form}}</option>
-                                </select>
+                                <input type="text" ng-model="EXDOSFRM"
+                                       placeholder = "eg. IV, SC, Oral" class="form-control"
+                                       ng-blur="addDoseProperty('EXDOSFRM')" ng-disabled="disableDatabaseTreatmentDoseOptions()">
                             </div>
                         </div>
                         <div class='col-sm-2'>
                             <div class="form-group">
                                 <label class="control-label">Frequency</label>
-                                <select class="form-control" ng-model='EXDOSFRQ' ng-change="addDoseProperty('EXDOSFRQ')" ng-disabled="disableDatabaseTreatmentDoseOptions()">
-                                    <option ng-repeat="frequency in getFrequencies()" value="{{frequency}}">{{frequency}}</option>
-                                </select>
+                                <input type="text" ng-model="EXDOSFRQ"
+                                       placeholder = "eg. 3 / Day" class="form-control"
+                                       ng-blur="addDoseProperty('EXDOSFRQ')" ng-disabled="disableDatabaseTreatmentDoseOptions()">
                             </div>
                         </div>
                     </div>
-                    <div class="row" ng-show="notInDatabase()">
-                        <div class='col-sm-4'>
-                            <div class="form-group">
-                                <input type="text" class="form-control" ng-model="Other_EXTRT" ng-blur="addOtherExposure()"
-                                       placeholder = "eg. Treatment A"
-                                       ng-disabled="getDisabledFields()">
-                            </div>
-                        </div>
-                        <div class='col-sm-2'>
-                            <div class="form-group">
-                                <input type="text" class="form-control" ng-model="Other_EXDOSE" ng-blur="addOtherDoseProperty('EXDOSE')"
-                                       placeholder = "eg. 30"
-                                       ng-disabled="getDisabledFields()">
-                            </div>
-                        </div>
-                        <div class='col-sm-2'>
-                            <div class="form-group">
-                                <input type="text" class="form-control" ng-model="Other_EXDOSU" ng-blur="addOtherDoseProperty('EXDOSU')"
-                                       placeholder = "eg. mg"
-                                       ng-disabled="getDisabledFields()">
-                            </div>
-                        </div>
-                        <div class='col-sm-2'>
-                            <div class="form-group">
-                                <input type="text" class="form-control" ng-model="Other_EXDOSFRM" ng-blur="addOtherDoseProperty('EXDOSFRM')"
-                                       placeholder = "eg. Once"
-                                       ng-disabled="getDisabledFields()">
-                            </div>
-                        </div>
-                        <div class='col-sm-2'>
-                            <div class="form-group">
-                                <input type="text" class="form-control" ng-model="Other_EXDOSFRQ" ng-blur="addOtherDoseProperty('EXDOSFRQ')"
-                                       placeholder = "eg. Oral"
-                                       ng-disabled="getDisabledFields()">
-                            </div>
-                        </div>
-                    </div>
+
+                    <!--<div class="row">-->
+                        <!--<div class='col-sm-6'>-->
+                            <!--<div class="form-group">-->
+                                <!--<div class="btn-group" role="group" ng-init="EXCAT='Disease Modifying'">-->
+                                    <!--<button type="button" class="btn btn-primary" ng-class="{active: EXCAT=='Disease Modifying'}" ng-click="EXCAT='Disease Modifying';">Disease Modifying</button>-->
+                                    <!--<button type="button" class="btn btn-primary" ng-class="{active: EXCAT=='Symptomatic'}" ng-click="EXCAT='Symptomatic';">Symptomatic</button>-->
+                                    <!--&lt;!&ndash;<button type="button" class="btn btn-primary" ng-class="{active: EXCAT=='Others'}" ng-click="EXCAT='Others';">Others</button>&ndash;&gt;-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class='col-sm-4 col-sm-pull-2' ng-show="(EXCAT=='Others')">-->
+                            <!--<div class="form-group">-->
+                                <!--<input type="text"  class="form-control" placeholder="eg. Physiotherapy">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row" ng-show="(EXCAT=='Disease Modifying')||(EXCAT=='Symptomatic')">-->
+                        <!--<div class='col-sm-4'>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="control-label">Treatment</label>-->
+                                <!--<select class="form-control" ng-model='EXTRT' ng-change="addExposure()" ng-disabled="getDisabledFields()">-->
+                                    <!--<option ng-repeat="drug in getDrugs()" value="{{drug.name}}">{{drug.name}}</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class='col-sm-2'>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="control-label">Dose</label>-->
+                                <!--<select class="form-control" ng-model='EXDOSE' ng-change="addDoseProperty('EXDOSE')" ng-disabled="disableDatabaseTreatmentDoseOptions()">-->
+                                    <!--<option ng-repeat="dose in getDosages()" value="{{dose}}">{{dose}}</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class='col-sm-2'>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="control-label">Unit</label>-->
+                                <!--<select class="form-control" ng-model='EXDOSU' ng-change="addDoseProperty('EXDOSU')" ng-disabled="disableDatabaseTreatmentDoseOptions()">-->
+                                    <!--<option ng-repeat="unit in getUnits()" value="{{unit}}">{{unit}}</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class='col-sm-2'>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="control-label">Form</label>-->
+                                <!--<select class="form-control" ng-model='EXDOSFRM' ng-change="addDoseProperty('EXDOSFRM')" ng-disabled="disableDatabaseTreatmentDoseOptions()">-->
+                                    <!--<option ng-repeat="form in getForms()" value="{{form}}">{{form}}</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class='col-sm-2'>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="control-label">Frequency</label>-->
+                                <!--<select class="form-control" ng-model='EXDOSFRQ' ng-change="addDoseProperty('EXDOSFRQ')" ng-disabled="disableDatabaseTreatmentDoseOptions()">-->
+                                    <!--<option ng-repeat="frequency in getFrequencies()" value="{{frequency}}">{{frequency}}</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row" ng-show="notInDatabase()">-->
+                        <!--<div class='col-sm-4'>-->
+                            <!--<div class="form-group">-->
+                                <!--<input type="text" class="form-control" ng-model="Other_EXTRT" ng-blur="addOtherExposure()"-->
+                                       <!--placeholder = "eg. Treatment A"-->
+                                       <!--ng-disabled="getDisabledFields()">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class='col-sm-2'>-->
+                            <!--<div class="form-group">-->
+                                <!--<input type="text" class="form-control" ng-model="Other_EXDOSE" ng-blur="addOtherDoseProperty('EXDOSE')"-->
+                                       <!--placeholder = "eg. 30"-->
+                                       <!--ng-disabled="getDisabledFields()">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class='col-sm-2'>-->
+                            <!--<div class="form-group">-->
+                                <!--<input type="text" class="form-control" ng-model="Other_EXDOSU" ng-blur="addOtherDoseProperty('EXDOSU')"-->
+                                       <!--placeholder = "eg. mg"-->
+                                       <!--ng-disabled="getDisabledFields()">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class='col-sm-2'>-->
+                            <!--<div class="form-group">-->
+                                <!--<input type="text" class="form-control" ng-model="Other_EXDOSFRM" ng-blur="addOtherDoseProperty('EXDOSFRM')"-->
+                                       <!--placeholder = "eg. Once"-->
+                                       <!--ng-disabled="getDisabledFields()">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class='col-sm-2'>-->
+                            <!--<div class="form-group">-->
+                                <!--<input type="text" class="form-control" ng-model="Other_EXDOSFRQ" ng-blur="addOtherDoseProperty('EXDOSFRQ')"-->
+                                       <!--placeholder = "eg. Oral"-->
+                                       <!--ng-disabled="getDisabledFields()">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
                 </div>
             </div>
 

@@ -320,7 +320,7 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
             var newCEGRPID = clinicalEvents.getNewCEGRPID();
             var newEvent = addEvent(CEBODYSYS, newCEGRPID);
             clinicalEvents.setEvent(newEvent);
-            console.log(clinicalEvents.getCurrentEvent());
+            //console.log(clinicalEvents.getCurrentEvent());
         }
         else {  // if there are existing events in this relapse
             var currentCEGRPID = currentCE[0].CEGRPID;

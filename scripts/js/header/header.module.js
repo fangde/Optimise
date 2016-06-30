@@ -31,7 +31,7 @@ var headerModule = angular.module('Optimise.header',['Optimise.view',
     'Optimise.configurations',
     'ngTable',
     'Optimise.substanceUse',
-    'Optimise.subjectCharacteristic',
+    'Optimise.subjectCharacteristic'
     ]);
 
 headerModule.factory('Country', function() {
@@ -1511,6 +1511,13 @@ headerModule.controller('headerCtrl', function ($rootScope,
             RecordItems.push(scRecordItem);
         }
 
+        var REL = relationships.getRelationships();
+        for (var re = 0; re < REL.length; re++) {
+            var reRecordItem = getRecordItem(REL[re]);
+
+            RecordItems.push(reRecordItem);
+        }
+
         return(root);
     }
 
@@ -2831,7 +2838,8 @@ headerModule.controller('headerCtrl', function ($rootScope,
 //            console.log(theReturned);
 //        });
 //     });
-    connectionServices.getSubjectsFromCIF();
+
+    //connectionServices.getSubjectsFromCIF();
 
 });
 

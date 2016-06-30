@@ -753,6 +753,7 @@ visitModule.controller('visitInfoCtrl', function ($rootScope, $scope, $parse, $u
                 ninePegTestFinding3.FALOC = "Hand";
                 ninePegTestFinding3.FALAT = "Right";
                 ninePegTestFinding3.FATPT = "2/2";
+                findingsAbout.addFinding(ninePegTestFinding3);
                 relationships.addRelationship(ninePegTest,ninePegTestFinding3, 'PRLNKID', 'FALNKID', 'One', 'Many', ninePegTestFinding3.FALNKID);
 
                 var ninePegTestFinding4 = new findingAbout($scope.USUBJID, 'Mobility', 'Functional Test', '');

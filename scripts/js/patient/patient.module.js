@@ -701,8 +701,6 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
         return false;
     }
 
-
-
     $scope.addPrimaryDiagnosis = function() {
         var mh = new MedicalEvent(patients.getCurrentPatient().USUBJID, 'Primary Diagnosis');
         mh.MHTERM= $scope.newDiagnosis.MHTERM;      //Visit Name
@@ -738,7 +736,7 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
 
     $scope.addInitialSymptom = function() {
         var mh = new MedicalEvent(patients.getCurrentPatient().USUBJID, 'Initial Symptom');
-        mh.MHSCAT= "Initial Symptom"// MHSCAT = Onset, Initial Current
+        mh.MHSCAT= "Initial Symptom";// MHSCAT = Onset, Initial Current
         mh.MHSTDTC= new Date($scope.symptomMHSTDTC,0,1);    //End Date/Time of Visit
         mh.displaySTDTC= $scope.symptomMHSTDTC;    //End Date/Time of Visit
         mh.MHTERM= $scope.symptomMHTERM;      //Visit Name
@@ -877,7 +875,8 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
         if (finding == null) {
             //if (onsetIsFoundViaMethod)  // add finding
             {
-                var newFinding = new findingAbout(patients.getCurrentPatient().USUBJID, getOnsetCourse(), 'Primary Diagnosis', 'Onset Course');
+                var newFinding = new findingAbout(patients.getCurrentPatient().USUBJID,
+                    getOnsetCourse(), 'Primary Diagnosis', 'Onset Course');
                 newFinding.FALOC = FALOC;
                 newFinding.FAMETHOD = FAMETHOD;
                 findingsAbout.addFinding(newFinding);

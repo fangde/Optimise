@@ -2,24 +2,54 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2d964b44-c0be-4683-9935-0e04831a3555" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DataPull/data/iMed/originals/JoeBlogg_AE.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DataPull/data/iMed/originals/JoeBlogg_CD.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DataPull/data/iMed/originals/JoeBlogg_CS.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DataPull/data/iMed/originals/JoeBlogg_EP.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DataPull/data/iMed/originals/JoeBlogg_FH.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DataPull/data/iMed/originals/JoeBlogg_ID.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DataPull/data/iMed/originals/JoeBlogg_LT.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DataPull/data/iMed/originals/JoeBlogg_MR.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DataPull/data/iMed/originals/JoeBlogg_PG.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DataPull/data/iMed/originals/JoeBlogg_RE.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DataPull/data/iMed/originals/JoeBlogg_RL.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DataPull/data/iMed/originals/JoeBlogg_TR.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DataPull/data/iMed/originals/JoeBlogg_VI.txt" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../UserAuthentification/index.html" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../DataPull/scripts/clinicalEvent/clinicalEvent.module.js" afterPath="$PROJECT_DIR$/../DataPull/scripts/clinicalEvent/clinicalEvent.module.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/XNAT/connectivity.module.js" afterPath="$PROJECT_DIR$/scripts/js/XNAT/connectivity.module.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../DataPull/scripts/dataController.js" afterPath="$PROJECT_DIR$/../DataPull/scripts/dataController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/exposure/exposure.html" afterPath="$PROJECT_DIR$/scripts/js/exposure/exposure.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../DataPull/scripts/exposure/exposure.module.js" afterPath="$PROJECT_DIR$/../DataPull/scripts/exposure/exposure.module.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/exposure/exposure.module.js" afterPath="$PROJECT_DIR$/scripts/js/exposure/exposure.module.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/findingAbout/findingAbout.module.js" afterPath="$PROJECT_DIR$/scripts/js/findingAbout/findingAbout.module.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/header/header.module.js" afterPath="$PROJECT_DIR$/scripts/js/header/header.module.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../DataPull/scripts/iMedModule.js" afterPath="$PROJECT_DIR$/../DataPull/scripts/iMedModule.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../DataPull/main.html" afterPath="$PROJECT_DIR$/../DataPull/main.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.html" afterPath="$PROJECT_DIR$/main.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/laboratory/mri.module.js" afterPath="$PROJECT_DIR$/scripts/js/laboratory/mri.module.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimise.appcache" afterPath="$PROJECT_DIR$/optimise.appcache" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/patient/patient.html" afterPath="$PROJECT_DIR$/scripts/js/patient/patient.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../DataPull/scripts/patient/patient.module.js" afterPath="$PROJECT_DIR$/../DataPull/scripts/patient/patient.module.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/patient/patient.module.js" afterPath="$PROJECT_DIR$/scripts/js/patient/patient.module.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/record/record.module.js" afterPath="$PROJECT_DIR$/scripts/js/record/record.module.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/relapse/relapse.html" afterPath="$PROJECT_DIR$/scripts/js/relapse/relapse.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/relapse/relapse.module.js" afterPath="$PROJECT_DIR$/scripts/js/relapse/relapse.module.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../DataPull/scripts/relationship/relationship.module.js" afterPath="$PROJECT_DIR$/../DataPull/scripts/relationship/relationship.module.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/relationship/relationship.module.js" afterPath="$PROJECT_DIR$/scripts/js/relationship/relationship.module.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/subjectVisit/subjectVisit.module.js" afterPath="$PROJECT_DIR$/scripts/js/subjectVisit/subjectVisit.module.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/css/testLayout.css" afterPath="$PROJECT_DIR$/scripts/css/testLayout.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/timeline/timeline.module.js" afterPath="$PROJECT_DIR$/scripts/js/timeline/timeline.module.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/js/subjectVisit/visit.html" afterPath="$PROJECT_DIR$/scripts/js/subjectVisit/visit.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../DataPull/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../DataPull/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Optimise.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/header.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1465572476846" ignored="false" />
-    <file path="/Dummy.txt" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1465394689678" ignored="false" />
-    <file path="/exposure.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1464689500177" ignored="false" />
+    <file path="/header.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1467131012194" ignored="false" />
+    <file path="/Dummy.txt" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1467035844062" ignored="false" />
+    <file path="/exposure.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1467311750503" ignored="false" />
     <file path="/relapse.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1461596971293" ignored="false" />
     <file path="/a.dummy" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1461670764077" ignored="false" />
     <file path="/record.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1463778045195" ignored="false" />
@@ -27,18 +57,18 @@
     <file path="/main.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1464689398269" ignored="false" />
     <file path="/visit.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1464172270559" ignored="false" />
     <file path="/questionnaire.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1461059754576" ignored="false" />
-    <file path="/clinicalEvent.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1461065333570" ignored="false" />
+    <file path="/clinicalEvent.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1467215739916" ignored="false" />
     <file path="/findingAbout.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1460150417852" ignored="false" />
     <file path="/procedure.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1459965578592" ignored="false" />
     <file path="/relapse.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1461596710899" ignored="false" />
     <file path="/event.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1432154283046" ignored="false" />
     <file path="/event.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1442075617688" ignored="false" />
-    <file path="/exposure.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1464799916701" ignored="false" />
-    <file path="/relationship.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1446835925408" ignored="false" />
+    <file path="/exposure.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1467319889421" ignored="false" />
+    <file path="/relationship.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1467131331168" ignored="false" />
     <file path="/laboratory.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1463495089513" ignored="false" />
     <file path="/laboratory.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1451923747977" ignored="false" />
     <file path="/custom.css" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1424954900712" ignored="false" />
-    <file path="/patient.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1463777006464" ignored="false" />
+    <file path="/patient.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1467119684047" ignored="false" />
     <file path="/medicalHistory.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1461328819860" ignored="false" />
     <file path="/patient.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1464863295340" ignored="false" />
     <file path="/associatedPersonMedicalHistory.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1461247405708" ignored="false" />
@@ -54,7 +84,7 @@
     <file path="/msqol54.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1444755508694" ignored="false" />
     <file path="/morphology.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1446942888061" ignored="false" />
     <file path="/Connectivity.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1431096544151" ignored="false" />
-    <file path="/connectivity.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1465572667768" ignored="false" />
+    <file path="/connectivity.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1466428348076" ignored="false" />
     <file path="/adverseEvent.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1436639677201" ignored="false" />
     <file path="/deviceInUse.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1441659918733" ignored="false" />
     <file path="$USER_HOME$/.grails/2.3.11/projects/transmart/plugins/blend4j-plugin-1.2.1-SNAPSHOT/grails-app/views/scan/index.gsp" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1431546633978" ignored="false" />
@@ -99,7 +129,7 @@
     <file path="$USER_HOME$/Desktop/xnat/.idea/workspace.xml" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1456841387090" ignored="false" />
     <file path="$USER_HOME$/Desktop/xnat/grails-app/controllers/xnat/plugin/ScanController.groovy" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1456838312742" ignored="false" />
     <file path="/dataCtrl.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1446735573642" ignored="false" />
-    <file path="/dataController.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1446935900970" ignored="false" />
+    <file path="/dataController.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1467288775676" ignored="false" />
     <file path="/myData.css" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1446736529345" ignored="false" />
     <file path="/gourabModule.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1446845183494" ignored="false" />
     <file path="$PROJECT_DIR$/../DataPull/scripts/gourabModule.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1454954412484" ignored="false" />
@@ -114,7 +144,6 @@
     <file path="/myStyle.css" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1448984955498" ignored="false" />
     <file path="/entry.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1449149927012" ignored="false" />
     <file path="/entry.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1449161834947" ignored="false" />
-    <file path="$PROJECT_DIR$/../DataPull/main.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1454955182412" ignored="false" />
     <file path="$PROJECT_DIR$/../TreeBuilder/.idea/workspace.xml" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1455036416318" ignored="false" />
     <file path="/optimise.appcache" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1461796422606" ignored="false" />
     <file path="/substanceUse.module.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1455915469560" ignored="false" />
@@ -139,6 +168,11 @@
     <file path="/serological.html" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1462798643604" ignored="false" />
     <file path="$PROJECT_DIR$/../API/api-optimise/config.php" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1463672173613" ignored="false" />
     <file path="/glasgow.json" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1463753045430" ignored="false" />
+    <file path="/icometrix.php" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1466421872562" ignored="false" />
+    <file path="/cif.php" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1466415755466" ignored="false" />
+    <file path="/iMedModule.js" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1467288825095" ignored="false" />
+    <file path="$PROJECT_DIR$/../DataPull/data/iMed/JoeBlogg_RE.csv" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1467217906954" ignored="false" />
+    <file path="$PROJECT_DIR$/../DataPull/data/iMed/JoeBlogg_VI.csv" changelist="2d964b44-c0be-4683-9935-0e04831a3555" time="1467292889886" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,41 +238,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="connectivity.module.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/scripts/js/XNAT/connectivity.module.js">
+      <file leaf-file-name="exposure.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/js/exposure/exposure.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="92" column="52" selection-start="3734" selection-end="3734" vertical-scroll-proportion="0.67317075">
-              <folding>
-                <element signature="e#4055#5960#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="mri.module.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/js/laboratory/mri.module.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="10" selection-start="1858" selection-end="1858" vertical-scroll-proportion="0.0">
+            <state line="14" column="81" selection-start="837" selection-end="837" vertical-scroll-proportion="-3.5744681">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="header.module.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/js/header/header.module.js">
+      <file leaf-file-name="exposure.module.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/scripts/js/exposure/exposure.module.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="4" selection-start="948" selection-end="948" vertical-scroll-proportion="-12.076923">
-              <folding>
-                <element signature="e#996#8057#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="record.module.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/js/record/record.module.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="136" column="5" selection-start="3222" selection-end="3405" vertical-scroll-proportion="0.0">
+            <state line="720" column="54" selection-start="26398" selection-end="26398" vertical-scroll-proportion="0.79522187">
               <folding />
             </state>
           </provider>
@@ -271,22 +283,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/scripts/js/view/glasgow.json" />
-        <option value="$PROJECT_DIR$/scripts/js/patient/patient.module.js" />
-        <option value="$PROJECT_DIR$/scripts/js/vitalSigns/vitalSigns.module.js" />
-        <option value="$PROJECT_DIR$/scripts/js/subjectVisit/visit.html" />
-        <option value="$PROJECT_DIR$/scripts/js/exposure/exposure.html" />
-        <option value="$PROJECT_DIR$/scripts/js/exposure/exposure.module.js" />
-        <option value="$PROJECT_DIR$/scripts/css/testLayout.css" />
         <option value="$PROJECT_DIR$/scripts/js/relapse/relapse.html" />
         <option value="$PROJECT_DIR$/scripts/js/timeline/timeline.module.js" />
         <option value="$PROJECT_DIR$/scripts/js/patient/patient.html" />
         <option value="$PROJECT_DIR$/optimise.appcache" />
         <option value="$PROJECT_DIR$/main.html" />
-        <option value="$PROJECT_DIR$/scripts/js/laboratory/mri.module.js" />
         <option value="$PROJECT_DIR$/scripts/js/record/record.module.js" />
+        <option value="$PROJECT_DIR$/scripts/js/laboratory/mri.module.js" />
+        <option value="$PROJECT_DIR$/scripts/js/patient/patient.module.js" />
+        <option value="$PROJECT_DIR$/scripts/js/findingAbout/findingAbout.module.js" />
+        <option value="$PROJECT_DIR$/scripts/js/relationship/relationship.module.js" />
         <option value="$PROJECT_DIR$/scripts/js/header/header.module.js" />
+        <option value="$PROJECT_DIR$/scripts/js/subjectVisit/subjectVisit.module.js" />
+        <option value="$PROJECT_DIR$/scripts/js/relapse/relapse.module.js" />
         <option value="$PROJECT_DIR$/scripts/js/XNAT/connectivity.module.js" />
+        <option value="$PROJECT_DIR$/scripts/js/exposure/exposure.html" />
+        <option value="$PROJECT_DIR$/scripts/js/exposure/exposure.module.js" />
       </list>
     </option>
   </component>
@@ -323,8 +335,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -415,6 +425,72 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="subjectVisit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="relationship" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="relapse" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="record" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -438,6 +514,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="patient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="medicalHistory" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -503,7 +601,51 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="findingAbout" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="exposure" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimise" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clinicalEvent" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -527,18 +669,20 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="project.structure.last.edited" value="Modules" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="62" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="160" />
     <property name="project.structure.proportion" value="0.15" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="160" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="recentsLimit" value="5" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
-    <property name="MemberChooser.sorted" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="63" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="recentsLimit" value="5" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Repository/Code/TimelineV3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="68" />
@@ -554,14 +698,14 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
     <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
-    <property name="project.structure.side.proportion" value="0.2" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="options.searchVisible" value="true" />
   </component>
@@ -596,19 +740,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -637,6 +768,19 @@
       <listeners />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" />
@@ -650,13 +794,6 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="" />
       <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
-      <JSDebuggerConfigurationSettings>
-        <option name="engineId" value="embedded" />
-        <option name="fileUrl" />
-      </JSDebuggerConfigurationSettings>
       <method />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
@@ -678,6 +815,13 @@
       </option>
       <envs />
       <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSDebuggerConfigurationSettings>
       <method />
     </configuration>
     <list size="0" />
@@ -1376,7 +1520,6 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32824427" sideWeight="0.31892332" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3093415" sideWeight="0.63857377" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1391,11 +1534,12 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18800648" sideWeight="0.6906585" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.07131281" sideWeight="0.6906585" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3093415" sideWeight="0.63857377" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1484,7 +1628,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="8" />
+      <option name="time" value="9" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -1492,136 +1636,119 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/scripts/js/subjectVisit/subjectVisit.module.js">
+    <entry file="file://$PROJECT_DIR$/scripts/js/record/record.module.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="963" column="0" selection-start="40151" selection-end="40151" vertical-scroll-proportion="0.022944551" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/js/exposure/exposure.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="130" selection-start="9713" selection-end="9735" vertical-scroll-proportion="-0.5714286">
+        <state line="123" column="33" selection-start="3126" selection-end="3126" vertical-scroll-proportion="0.019607844">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/css/testLayout.css">
+    <entry file="file://$PROJECT_DIR$/scripts/js/findingAbout/findingAbout.module.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="369" column="4" selection-start="9234" selection-end="9234" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#3248#4226#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/js/relapse/relapse.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="30" selection-end="30" vertical-scroll-proportion="-0.5714286">
+        <state line="29" column="22" selection-start="937" selection-end="937" vertical-scroll-proportion="0.5568">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/js/timeline/timeline.module.js">
+    <entry file="file://$PROJECT_DIR$/scripts/js/medicalHistory/medicalHistory.module.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="865" column="29" selection-start="30835" selection-end="30835" vertical-scroll-proportion="20.885311">
-          <folding>
-            <element signature="e#32227#32627#0" expanded="false" />
-            <element signature="e#32679#32992#0" expanded="false" />
-            <element signature="e#33035#33308#0" expanded="false" />
-            <element signature="e#33356#34590#0" expanded="false" />
-            <element signature="e#35767#35902#0" expanded="false" />
-            <element signature="e#35939#40530#0" expanded="false" />
-            <element signature="e#40572#41457#0" expanded="false" />
-            <element signature="e#41493#42079#0" expanded="false" />
-            <element signature="e#42115#42737#0" expanded="false" />
-            <element signature="e#42772#43385#0" expanded="false" />
-            <element signature="e#43423#44243#0" expanded="false" />
-            <element signature="e#44280#45099#0" expanded="false" />
-            <element signature="e#45106#47049#0" expanded="false" />
-            <element signature="e#47088#47790#0" expanded="false" />
-          </folding>
+        <state line="19" column="19" selection-start="515" selection-end="515" vertical-scroll-proportion="0.3648">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/js/exposure/exposure.module.js">
+    <entry file="file://$PROJECT_DIR$/scripts/js/relationship/relationship.module.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="114" column="10" selection-start="4986" selection-end="4986" vertical-scroll-proportion="0.18309858">
+        <state line="117" column="11" selection-start="3005" selection-end="3691" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#5085#7529#0" expanded="false" />
+            <element signature="e#757#2161#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/js/subjectVisit/visit.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="863" column="56" selection-start="63774" selection-end="63774" vertical-scroll-proportion="0.023904383">
+        <state line="200" column="90" selection-start="13068" selection-end="13086" vertical-scroll-proportion="0.41769913">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/js/patient/patient.html">
+    <entry file="file://$PROJECT_DIR$/scripts/js/relapse/relapse.module.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="405" column="106" selection-start="25686" selection-end="25686" vertical-scroll-proportion="-231.42857">
+        <state line="184" column="29" selection-start="6313" selection-end="6331" vertical-scroll-proportion="0.3327645">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/optimise.appcache">
+    <entry file="file://$PROJECT_DIR$/scripts/js/relapse/relapse.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="11" selection-start="110" selection-end="110" vertical-scroll-proportion="0.1119403">
+        <state line="13" column="70" selection-start="617" selection-end="632" vertical-scroll-proportion="-1.2385787">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.html">
+    <entry file="file://$PROJECT_DIR$/scripts/js/clinicalEvent/clinicalEvent.module.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="49" selection-start="20" selection-end="65" vertical-scroll-proportion="0.023904383">
-          <folding />
+        <state line="238" column="32" selection-start="7433" selection-end="7433" vertical-scroll-proportion="0.56260437">
+          <folding>
+            <element signature="e#2904#5456#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/js/patient/patient.module.js">
+    <entry file="file://$PROJECT_DIR$/scripts/js/subjectVisit/subjectVisit.module.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="155" column="41" selection-start="4938" selection-end="4938" vertical-scroll-proportion="0.022944551">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/js/laboratory/mri.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/js/laboratory/mri.module.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="10" selection-start="1858" selection-end="1858" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/js/record/record.module.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="136" column="5" selection-start="3222" selection-end="3405" vertical-scroll-proportion="0.0">
+        <state line="820" column="78" selection-start="35061" selection-end="35077" vertical-scroll-proportion="0.37372014">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/js/header/header.module.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="4" selection-start="948" selection-end="948" vertical-scroll-proportion="-12.076923">
-          <folding>
-            <element signature="e#996#8057#0" expanded="false" />
-          </folding>
+        <state line="1533" column="33" selection-start="52844" selection-end="52844" vertical-scroll-proportion="0.51706487">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/js/XNAT/connectivity.module.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="52" selection-start="3734" selection-end="3734" vertical-scroll-proportion="0.67317075">
-          <folding>
-            <element signature="e#4055#5960#0" expanded="false" />
-          </folding>
+        <state line="444" column="26" selection-start="16719" selection-end="16719" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="129" column="79" selection-start="7367" selection-end="7382" vertical-scroll-proportion="-73.71429">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/js/patient/patient.module.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="300" column="71" selection-start="10123" selection-end="10138" vertical-scroll-proportion="-7.5">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/js/patient/patient.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="331" column="137" selection-start="20442" selection-end="20457" vertical-scroll-proportion="0.18274112">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/js/exposure/exposure.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="81" selection-start="837" selection-end="837" vertical-scroll-proportion="-3.5744681">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/js/exposure/exposure.module.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="720" column="54" selection-start="26398" selection-end="26398" vertical-scroll-proportion="0.79522187">
+          <folding />
         </state>
       </provider>
     </entry>

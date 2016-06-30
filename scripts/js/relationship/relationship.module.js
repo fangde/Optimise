@@ -106,17 +106,22 @@ relationshipModule.service('relationships', function (relationship, records) {
 
     var deleteRelationship = function (relationship) {
         var index = relationships.indexOf(relationship);
-        console.log(index);
+        //console.log(index);
         if (index > -1) {
             relationships.splice(index, 1);
         }
         records.deleteRecord(relationship);
     }
 
+    var getRelationships = function () {
+        return relationships;
+    }
+
     return {
         addRelationship:addRelationship,
         getRelationshipByIDVARVAL:getRelationshipByIDVARVAL,
         populateRelationships: populateRelationships,
-        deleteRelationship: deleteRelationship
+        deleteRelationship: deleteRelationship,
+        getRelationships: getRelationships
     };
 })
