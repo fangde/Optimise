@@ -47,7 +47,7 @@ signsModule.factory('signVocab', function() {
     signTerms['cranial.dysphagia']={CETERM: 'Dysphagia', CEBODSYS:''};
     signTerms['cranial.vertigo']={CETERM: 'Vertigo', CEBODSYS:''};
     signTerms['cranial.trigeminalNeuralgia']={CETERM: 'Trigeminal neuralgia', CEBODSYS:''};
-    signTerms['cranial.facialHypoesthsia']={CETERM: 'Facial hypoesthesia', CEBODSYS:'Face'};
+    signTerms['cranial.facialHypoesthesia']={CETERM: 'Facial hypoesthesia', CEBODSYS:'Face'};
     signTerms['cranial.atypicalFacialPain']={CETERM: 'Atypical facial pain', CEBODSYS:'Face'};
     signTerms['cranial.trigeminalPalsy']={CETERM: 'Trigeminal palsy', CEBODSYS:''};
     signTerms['cranial.hearingLoss']={CETERM: 'Hearing loss', CEBODSYS:''};
@@ -119,8 +119,10 @@ signsModule.service('signs', function(clinicalEvents, clinicalEvent) {
 
     var setDate = function(newDate) {
         signDate = newDate;
-        //console.log("signsDate"+signDate.toLocaleString());
-        //clinicalEvents.printEvents();
+    }
+
+    var getDate = function() {
+        return signDate;
     }
 
     var setUSUBJID = function(newUSUBJID) {
@@ -172,33 +174,69 @@ signsModule.service('signs', function(clinicalEvents, clinicalEvent) {
         clinicalEvents.addEvent(newSign);
     }
 
+    var editStatus = function (signsOnDate) {
+        var visitSignExists = false;
+        var relapseSignExists = false;
+        for (var s = 0; s < signsOnDate.length; s++) {
+            if (signsOnDate[s].CEGRPID == -1)
+                visitSignExists = true;
+            if (signsOnDate[s].CEGRPID != -1)
+                relapseSignExists = true;
+        }
+
+        return [visitSignExists, relapseSignExists];
+    }
+
     var editSign = function(CETERM, CEBODSYS, CELAT, useRelapseGrpID) {
         if ((signDate!= null) && (USUBJID!= '')){
             var signsOnDate = clinicalEvents.getEventByTermBodsysOnDate('Sign', CETERM, CEBODSYS, signDate);
 
-            if (signsOnDate.length > 0){ // if symptom already recorded on this day
-                // relapse symptom, visit symptom already recorded
-                // -> create new relapse symptom
-                if ((useRelapseGrpID)&&(signsOnDate[0].CEGRPID==-1)) {
-                    createEvent(CETERM, CEBODSYS, CELAT, useRelapseGrpID);
-                }
-                // visit symptom, relapse symptom already recorded
-                // -> create new symptom
-                else if ((useRelapseGrpID==false)&&(signsOnDate[0].CEGRPID!=-1)) {
-                    createEvent(CETERM, CEBODSYS, CELAT, useRelapseGrpID);
-                }
-                // relapse symptom, relapse symptom already recorded
-                // -> create new symptom
-                else if ((useRelapseGrpID)&&(signsOnDate[0].CEGRPID!=-1)) {
-                    editEvent(signsOnDate[0], CELAT);
-                }
-                // visit symptom, visit symptom already recorded
-                // -> edit
-                else if ((useRelapseGrpID==false)&&(signsOnDate[0].CEGRPID==-1)) {
-                    editEvent(signsOnDate[0], CELAT);
-                }
-                else {
-                    console.log("Error in recording symptoms")
+            if (signsOnDate.length > 0){ // if sign already recorded on this day
+
+                for (var s = 0; s < signsOnDate.length; s++) {
+
+                    // relapse sign, visit sign already recorded
+                    // -> create new relapse sign
+                    if ((useRelapseGrpID)
+                        &&(signsOnDate[s].CEGRPID==-1)
+                        &&(editStatus(signsOnDate)[0] == true)
+                        &&(editStatus(signsOnDate)[1] == false)) {
+                        createEvent(CETERM, CEBODSYS, CELAT, useRelapseGrpID);
+                        console.log(1);
+                    }
+
+                    // visit sign, relapse sign already recorded
+                    // -> create new sign
+                    // a relapse sign exists, create a visit one too
+                    else if ((!useRelapseGrpID)
+                        &&(signsOnDate[s].CEGRPID!=-1)
+                        &&(editStatus(signsOnDate)[0] == false)
+                        &&(editStatus(signsOnDate)[1] == true)) {
+                        createEvent(CETERM, CEBODSYS, CELAT, useRelapseGrpID);
+                        console.log("create a new visit sign, a relapse system exists but not a visit one");
+                    }
+
+                    // relapse sign, relapse sign already recorded
+                    // -> create new sign
+                    else if ((useRelapseGrpID)
+                        &&(signsOnDate[s].CEGRPID!=-1)
+                        &&(editStatus(signsOnDate)[1] == true)) {
+                        editEvent(signsOnDate[s], CELAT);
+                        console.log('editing an existing sign, a relapse sign exists');
+                    }
+
+                    // visit sign, visit sign already recorded
+                    // -> edit
+                    else if ((!useRelapseGrpID)
+                        &&(signsOnDate[s].CEGRPID==-1)
+                        &&(editStatus(signsOnDate)[0] == true)) {
+                        editEvent(signsOnDate[s], CELAT);
+                        console.log('Editing an existing visit sign, a visit sign exists');
+                    }
+
+//                    console.log('Relapse:'+ useRelapseGrpID);
+//                    console.log('Edit action:'+ editStatus(signsOnDate));
+//                    console.log('GroupID:'+signsOnDate[s].CEGRPID);
                 }
 
             }
@@ -206,32 +244,7 @@ signsModule.service('signs', function(clinicalEvents, clinicalEvent) {
                 createEvent(CETERM, CEBODSYS, CELAT, useRelapseGrpID);
             }
 
-//            if (signsOnDate.length > 0){ // if sign already recorded
-//                if (CELAT == false) {  //if this sign is to be unchecked
-//                    clinicalEvents.deleteEvent(signsOnDate[0]);
-//                } else {                // else change laterality
-//                    signsOnDate[0].CELAT = CELAT;
-//                    clinicalEvents.editEvent(signsOnDate[0], 'CELAT', CELAT);
-//                }
-//            }
-//            else {
-//                var newSign = new clinicalEvent(USUBJID, CETERM, 'Sign');
-//                newSign.CESTDTC = signDate;
-//                newSign.CEBODSYS = CEBODSYS;
-//                newSign.CELAT = CELAT;
-//
-//                if (useRelapseGrpID){ // a relapse symptom, shares same grpid with relapse event
-//                    var event = clinicalEvents.getCurrentEvent();
-//
-//                    if ((event!= null)&&(event.length > 0)) {
-//                        newSign.CEGRPID = event[0].CEGRPID;
-//                    } else {
-//                        console.log("associating sign with a non-event")
-//                    }
-//                }
-//
-//                clinicalEvents.addEvent(newSign);
-//            }
+
             clinicalEvents.printEvents();
         }
         else {
@@ -244,71 +257,121 @@ signsModule.service('signs', function(clinicalEvents, clinicalEvent) {
     var editSignSev = function(CETERM, CEBODSYS, CELAT, CESEV, useRelapseGrpID) {
 
         if ((signDate!= null) && (USUBJID!= '')){
-            var signsOnDate = clinicalEvents.getEventByTermBodsysOnDate('Sign', CETERM, CEBODSYS, signDate);
-
+            var allSignsOnDate = clinicalEvents.getEventByTermBodsysOnDate('Sign', CETERM, CEBODSYS, signDate);
+            var signsOnDate = [];
+            for (var s = 0; s < allSignsOnDate.length; s++) {
+                if (allSignsOnDate[s].CELAT == CELAT)
+                    signsOnDate.push(allSignsOnDate[s]);
+            }
             if (signsOnDate.length > 0){
                 var edited = false;
                 for (var lat = 0; lat < signsOnDate.length; lat++){
-                    if (signsOnDate[lat].CELAT == CELAT) {
+                    //if (signsOnDate[lat].CELAT == CELAT) {
 
-                        signsOnDate[lat].CESEV= CESEV;
+                        //signsOnDate[lat].CESEV= CESEV;
 
-                        if ((useRelapseGrpID)&&(signsOnDate[0].CEGRPID==-1)) {
+                        // no relapse sign, visit sign already recorded
+                        // -> create new relapse sign
+                        if ((useRelapseGrpID)
+                            &&(signsOnDate[lat].CEGRPID==-1)
+                            &&(editStatus(signsOnDate)[0] == true)
+                            &&(editStatus(signsOnDate)[1] == false) ) {
                             createEventSev(CETERM, CEBODSYS, CELAT, CESEV, useRelapseGrpID);
+                            console.log('new relapse sign to record, relapse sign not recorded before');
                         }
-                        // visit symptom, relapse symptom already recorded
-                        // -> create new symptom
-                        else if ((useRelapseGrpID==false)&&(signsOnDate[0].CEGRPID!=-1)) {
+
+                        /// no visit sign, relapse sign already recorded
+                        // -> create new visit sign
+                        // a relapse sign exists, create a visit one too
+                        else if ((!useRelapseGrpID)
+                            &&(signsOnDate[lat].CEGRPID!=-1)
+                            &&(editStatus(signsOnDate)[0] == false)
+                            &&(editStatus(signsOnDate)[1] == true)) {
                             createEventSev(CETERM, CEBODSYS, CELAT, CESEV, useRelapseGrpID);
+                            console.log('new relapse sign to record, relapse sign not recorded before');
                         }
+
                         // relapse sign, relapse sign already recorded
                         // -> create new symptom
-                        else if ((useRelapseGrpID)&&(signsOnDate[0].CEGRPID!=-1)) {
-                            //editEvent(signsOnDate[0], CELAT);
-                            var edited = false;
-                            for (var lat = 0; lat < signsOnDate.length; lat++){
-                                if (signsOnDate[lat].CELAT == CELAT) {
+                        else if ((useRelapseGrpID)
+                            &&(signsOnDate[lat].CEGRPID!=-1)
+                            &&(editStatus(signsOnDate)[1] == true)) {
+                                console.log(CESEV);
+                                if (CESEV == '') {
+                                    clinicalEvents.deleteEvent(signsOnDate[lat]);
+                                }
+                                else {
                                     signsOnDate[lat].CESEV= CESEV;
                                     clinicalEvents.editEvent(signsOnDate[lat], 'CESEV', CESEV);
-                                    edited=true;
                                 }
-                            }
-                            if (!edited) {
-                                createEventSev(CETERM, CEBODSYS, CELAT, CESEV, useRelapseGrpID);
-                            }
+                                console.log('Editing existing relapse sign');
+//                            var edited = false;
+//                            for (var alat = 0; alat < signsOnDate.length; alat++){
+//                                if (signsOnDate[alat].CELAT == CELAT) {
+//                                    if (CESEV == '') {
+//                                        clinicalEvents.deleteEvent(signsOnDate[alat]);
+//                                    }
+//                                    else {
+//                                        signsOnDate[alat].CESEV= CESEV;
+//                                        clinicalEvents.editEvent(signsOnDate[alat], 'CESEV', CESEV);
+//                                    }
+//                                    edited=true;
+//                                }
+//                            }
+//                            if (!edited) {
+//                                createEventSev(CETERM, CEBODSYS, CELAT, CESEV, useRelapseGrpID);
+//                            }
                         }
+
                         // visit symptom, visit symptom already recorded
                         // -> edit
-                        else if ((useRelapseGrpID==false)&&(signsOnDate[0].CEGRPID==-1)) {
-                            var edited = false;
-                            for (var lat = 0; lat < signsOnDate.length; lat++){
-                                if (signsOnDate[lat].CELAT == CELAT) {
+                        else if ((!useRelapseGrpID)
+                            &&(signsOnDate[lat].CEGRPID==-1)
+                            &&(editStatus(signsOnDate)[0] == true)) {
+                                console.log(CESEV=='');
+                                if (CESEV == '') {
+                                    console.log('deleting');
+                                    clinicalEvents.deleteEvent(signsOnDate[lat]);
+                                }
+                                else {
+                                    console.log('editing');
                                     signsOnDate[lat].CESEV= CESEV;
                                     clinicalEvents.editEvent(signsOnDate[lat], 'CESEV', CESEV);
-                                    edited=true;
                                 }
-                            }
-                            if (!edited) {
-                                createEventSev(CETERM, CEBODSYS, CELAT, CESEV, useRelapseGrpID);
-                            }
-                        }
-                        else {
-                            console.log("Error in recording signs")
+                                console.log('Editing existing visit sign');
+//                            var edited = false;
+//                            for (var lat = 0; lat < signsOnDate.length; lat++){
+//                                if (signsOnDate[lat].CELAT == CELAT) {
+//                                    if (CESEV == '') {
+//                                        clinicalEvents.deleteEvent(signsOnDate[alat]);
+//                                    }
+//                                    else {
+//                                        signsOnDate[lat].CESEV= CESEV;
+//                                        clinicalEvents.editEvent(signsOnDate[lat], 'CESEV', CESEV);
+//                                    }
+//                                    edited=true;
+//                                }
+//                            }
+//                            if (!edited) {
+//                                createEventSev(CETERM, CEBODSYS, CELAT, CESEV, useRelapseGrpID);
+//                            }
                         }
 
 //                        clinicalEvents.editEvent(signsOnDate[lat], 'CESEV', CESEV);
 //                        edited=true;
-                    }
+                    //}
                 }
-                if (!edited) {
-                    createEventSev(CETERM, CEBODSYS, CELAT, CESEV, useRelapseGrpID);
-                }
+//                if (!edited) {
+//                    createEventSev(CETERM, CEBODSYS, CELAT, CESEV, useRelapseGrpID);
+//                }
             }
             else {
                 createEventSev(CETERM, CEBODSYS, CELAT, CESEV, useRelapseGrpID);
             }
 
-            clinicalEvents.printEvents();
+            var signsOnDate = clinicalEvents.getEventByTermBodsysOnDate('Sign', CETERM, CEBODSYS, signDate);
+            console.log(signsOnDate);
+
         }
         else {
             console.log("failed to add sign");
@@ -330,8 +393,11 @@ signsModule.service('signs', function(clinicalEvents, clinicalEvent) {
         return [];
     }
 
+
+
     return {
         setDate: setDate,
+        getDate: getDate,
         setUSUBJID: setUSUBJID,
         editSign: editSign,
         getSigns: getSigns,
@@ -340,29 +406,54 @@ signsModule.service('signs', function(clinicalEvents, clinicalEvent) {
 });
 
 
-signsModule.controller('relapseSignsCtrl', function ($rootScope, $parse, $scope, signs, signVocab) {
+signsModule.controller('relapseSignsCtrl', function ($rootScope, $parse, $scope, signs, signVocab, clinicalEvents) {
 
     var useRelapseGrpID = true;
+
+    var checkCESEVNeedsUndoing = function(CETERM, CEBODSYS, CELAT, CESEV, model) {
+        var signsOnDate = clinicalEvents.getEventByTermBodsysOnDate('Sign', CETERM, CEBODSYS, signs.getDate());
+        for (var lat = 0; lat < signsOnDate.length; lat++){
+            if ((signsOnDate[lat].CELAT == CELAT) && (signsOnDate[lat].CEGRPID != -1)) {
+                if (signsOnDate[lat].CESEV == CESEV) {
+                    model.assign($scope, '');
+                    CESEV = "";
+                }
+            }
+        }
+        return CESEV;
+    }
+
+    var checkCELATNeedsUndoing = function(CETERM, CEBODSYS, CELAT, model) {
+        var signsOnDate = clinicalEvents.getEventByTermBodsysOnDate('Sign', CETERM, CEBODSYS, signs.getDate());
+        for (var s = 0; s < signsOnDate.length; s++) {
+            if ((signsOnDate[s].CELAT == CELAT) && (signsOnDate[s].CEGRPID != -1)){
+                model.assign($scope, '');
+                CELAT = false;
+            }
+        }
+        return CELAT;
+    }
 
     $scope.editSign = function(modelName) {
         var CETERM = signVocab.getTerm(modelName).CETERM;//signTerms[modelName].CETERM;
         var CEBODSYS = signVocab.getTerm(modelName).CEBODSYS;
-        //console.log(modelName);
         if (modelName.indexOf('right')>-1){
             var model = $parse(modelName);
             var CESEV = model($scope);
+            CESEV = checkCESEVNeedsUndoing(CETERM, CEBODSYS, 'Right', CESEV, model);
             signs.editSignSev(CETERM, CEBODSYS, 'Right', CESEV, useRelapseGrpID);
+
         } else if (modelName.indexOf('left')>-1){
             var model = $parse(modelName);
             var CESEV = model($scope);
+            CESEV = checkCESEVNeedsUndoing(CETERM, CEBODSYS, 'Left', CESEV, model);
             signs.editSignSev(CETERM, CEBODSYS, 'Left', CESEV, useRelapseGrpID);
         }
         else {
             var model = $parse(modelName);
             var CELAT = model($scope);
-            console.log(CETERM)
-            console.log(CEBODSYS)
-            console.log(CELAT)
+            CELAT = checkCELATNeedsUndoing(CETERM, CEBODSYS, CELAT, model);
+            console.log(CELAT);
             signs.editSign(CETERM, CEBODSYS, CELAT, useRelapseGrpID);
         }
     }
@@ -397,26 +488,54 @@ signsModule.controller('relapseSignsCtrl', function ($rootScope, $parse, $scope,
     }
 })
 
-signsModule.controller('visitSignsCtrl', function ($rootScope, $parse, $scope, signs, signVocab) {
+signsModule.controller('visitSignsCtrl', function ($rootScope, $parse, $scope, signs, signVocab, clinicalEvents) {
 
     var useRelapseGrpID = false;
+
+    var checkCESEVNeedsUndoing = function(CETERM, CEBODSYS, CELAT, CESEV, model) {
+        var signsOnDate = clinicalEvents.getEventByTermBodsysOnDate('Sign', CETERM, CEBODSYS, signs.getDate());
+        for (var lat = 0; lat < signsOnDate.length; lat++){
+            if ((signsOnDate[lat].CELAT == CELAT)&& (signsOnDate[lat].CEGRPID == -1)) {
+                if (signsOnDate[lat].CESEV == CESEV) {
+                    model.assign($scope, '');
+                    CESEV = "";
+                }
+            }
+        }
+        return CESEV;
+    }
+
+    var checkCELATNeedsUndoing = function(CETERM, CEBODSYS, CELAT, model) {
+        var signsOnDate = clinicalEvents.getEventByTermBodsysOnDate('Sign', CETERM, CEBODSYS, signs.getDate());
+        for (var s = 0; s < signsOnDate.length; s++) {
+            if ((signsOnDate[s].CELAT == CELAT) && (signsOnDate[s].CEGRPID == -1)) {
+                model.assign($scope, '');
+                CELAT = false;
+            }
+        }
+        return CELAT;
+    }
 
     $scope.editSign = function(modelName) {
         var CETERM = signVocab.getTerm(modelName).CETERM;//signTerms[modelName].CETERM;
         var CEBODSYS = signVocab.getTerm(modelName).CEBODSYS;
-        console.log(modelName);
+
         if (modelName.indexOf('right')>-1){
             var model = $parse(modelName);
             var CESEV = model($scope);
+            CESEV = checkCESEVNeedsUndoing(CETERM, CEBODSYS, 'Right', CESEV, model);
             signs.editSignSev(CETERM, CEBODSYS, 'Right', CESEV, useRelapseGrpID);
+
         } else if (modelName.indexOf('left')>-1){
             var model = $parse(modelName);
             var CESEV = model($scope);
+            CESEV = checkCESEVNeedsUndoing(CETERM, CEBODSYS, 'Left', CESEV, model);
             signs.editSignSev(CETERM, CEBODSYS, 'Left', CESEV, useRelapseGrpID);
         }
         else {
             var model = $parse(modelName);
             var CELAT = model($scope);
+            CELAT = checkCELATNeedsUndoing(CETERM, CEBODSYS, CELAT, model);
             signs.editSign(CETERM, CEBODSYS, CELAT, useRelapseGrpID);
         }
     }

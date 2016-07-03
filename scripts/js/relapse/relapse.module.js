@@ -51,32 +51,9 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
         todayHighlight: true
     });
 
-    /*
-    $scope.relapseDuration = function() {
-        if (($scope.CEENDTC!=null)&&($scope.CESTDTC!=null)){
-            if (($scope.CEENDTC != '') && ($scope.CESTDTC != ''))
-            {
-                var dayInMilliseconds=1000*60*60*24;
-                var dateEnd = $scope.CEENDTC.getTime();
-                var dateStart = $scope.CESTDTC.getTime();
-                var duration = Math.round((dateEnd-dateStart)/dayInMilliseconds);
-                if (duration == 1)
-                    return duration.toString()+ " day";
-                else
-                    return duration.toString()+ " days";
-            }
-        }
-        return '';
-    };
-    */
-
     $scope.getDisabledFields = function() {
         return viewService.getView().DisableInputFields;
     }
-
-//    $scope.preventAddBodySys = function() {
-//        return $scope.datesValidated;
-//    }
 
     $scope.datesValidated = false;
 
@@ -138,9 +115,16 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
                 }
             }
 
-            var currentADL = findingsAbout.getFindingsByLNKID(currentRelapse[0].CELNKID);
-            if ((currentADL != null)&&(currentADL.length > 0))
-                $scope.adlScore = currentADL[0].FAORES;
+            var currentFindings = findingsAbout.getFindingsByLNKID(currentRelapse[0].CELNKID);
+            if (currentFindings != null) {
+                for (var fa = 0; fa < currentFindings.length; fa++) {
+                    if (currentFindings[fa].FASCAT == 'Impact on ADL')
+                        $scope.adlScore = currentFindings[fa].FAORES;
+                    else if  (currentFindings[fa].FASCAT == 'Cortisteroids prescribed')
+                        $scope.steroidsPrescribed = currentFindings[fa].FAORES;
+                }
+
+            }
         }
     }
 
@@ -158,38 +142,35 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
         $scope.visual = false;
         $scope.higherFunction = false;
         $scope.adlScore = '';
+        $scope.steroidsPrescribed = '';
     }
 
-    /*
-    var editQuestionProperties = function(ADL, resValue) {
-        questionnaires.editQuestion(ADL, resValue);
-    }*/
-
-//    $scope.addADL = function() {
-//        var visitDate = generateCESTDTC();
-//        console.log(visitDate);
-//        var ADLResOnDate = questionnaires.getQuestionByTest('Activities of Daily Living', visitDate);    // get questions taken on this date
-//        if (ADLResOnDate != null) {  // if existing record
-//            //editQuestionProperties(ADLResOnDate, $scope.adlScore);
-//            questionnaires.editQuestion(ADLResOnDate, 'QSSTRESC', $scope.adlScore);
-//        }
-//        else {
-//            var newQuestion = new question($scope.USUBJID, 'Activities of Daily Living');
-//            newQuestion.QSTEST = 'Activities of Daily Living';
-//            newQuestion.QSSTRESC = $scope.adlScore;
-//            questionnaires.addQuestion(visitDate, newQuestion);
-//        }
-//        questionnaires.printQuestions();
-//    }
-
-    $scope.editRelapseFinding = function () {
+    $scope.editRelapseFinding = function (FASCAT) {
 
         var ce = clinicalEvents.getCurrentEvent();
+        console.log(ce);
         if ((ce != null) && (ce.length > 0)){
             var findings = findingsAbout.getFindingsByLNKID(ce[0].CELNKID);
+            console.log(findings);
             for (var f = 0; f < findings.length; f++) {
-                findings[f].FAORES = $scope.adlScore;
-                findingsAbout.editFinding(findings[f]);
+                if (findings[f].FASCAT == FASCAT) {
+                    console.log(FASCAT);
+                    if (FASCAT == 'Impact on ADL') {
+                        if ($scope.adlScore == findings[f].FAORES)
+                            $scope.adlScore = "";
+                        findings[f].FAORES = $scope.adlScore;
+                    }
+                    else if (FASCAT == 'Cortisteroids prescribed') {
+                        console.log($scope.steroidsPrescribed);
+                        console.log(findings[f].FAORES);
+                        if ($scope.steroidsPrescribed == findings[f].FAORES)
+                            $scope.steroidsPrescribed = "";
+                        findings[f].FAORES = $scope.steroidsPrescribed;
+                        console.log($scope.steroidsPrescribed);
+                        console.log(findings[f].FAORES);
+                    }
+                    findingsAbout.editFinding(findings[f]);
+                }
             }
         }
     }
@@ -197,6 +178,8 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
     var editRelapseProperties = function(inFunctionalSys, resName) {
         switch (resName) {
             case ('CESEV'): {
+                if (inFunctionalSys.CESEV == $scope.CESEV)
+                    $scope.CESEV = "";
                 inFunctionalSys.CESEV = $scope.CESEV;
                 inFunctionalSys.displayLabel = $scope.CESEV;
                 clinicalEvents.editEvent(inFunctionalSys, resName, $scope.CESEV);
@@ -204,6 +187,8 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
                 break;
             };
             case ('CEOUT'): {
+                if (inFunctionalSys.CEOUT == $scope.CEOUT)
+                    $scope.CEOUT = "";
                 inFunctionalSys.CEOUT = $scope.CEOUT;
                 clinicalEvents.editEvent(inFunctionalSys, resName, $scope.CEOUT);
                 break;
@@ -234,21 +219,6 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
     }
 
     var generateCESTDTC = function() {
-        /*
-        var year = $scope.CESTDTC_Year;
-        var month = "";
-        if ($scope.CESTDTC_Month.indexOf("Spring") != -1)
-            month = 3;
-        else if ($scope.CESTDTC_Month.indexOf("Summer") != -1)
-            month = 6;
-        else if ($scope.CESTDTC_Month.indexOf("Autumn") != -1)
-            month = 9;
-        else if ($scope.CESTDTC_Month.indexOf("Winter") != -1)
-            month = 0;
-
-        return new Date (year, month, 1);
-        */
-        //03/2015
         return new Date($scope.CESTDTC_displayDate.substr(3), parseInt($scope.CESTDTC_displayDate.substr(0,2))-1, 1);
     };
 
@@ -269,19 +239,7 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
                 editRelapseProperties(event, propName);
             }
         }
-        //clinicalEvents.printEvents();
     }
-
-
-//    $scope.validateDates = function() {
-//        console.log($scope.CESTDTC_displayDate);
-//        if ($scope.CESTDTC_displayDate == ''){
-//            //alert("Date null");
-//            $scope.duration = null;
-//            return false;
-//        }
-//        $scope.datesValidated = true;
-//    }
 
     $rootScope.setNewRelapseDate = function(display, CESTDTC) {
         console.log(CESTDTC);
@@ -320,12 +278,9 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
             var newCEGRPID = clinicalEvents.getNewCEGRPID();
             var newEvent = addEvent(CEBODYSYS, newCEGRPID);
             clinicalEvents.setEvent(newEvent);
-            //console.log(clinicalEvents.getCurrentEvent());
         }
         else {  // if there are existing events in this relapse
             var currentCEGRPID = currentCE[0].CEGRPID;
-
-            //if (inFunctionalSys != null) {  // if this event already exists
             if (toAdd) { // if functional system is checked
                 var newEvent = addEvent(CEBODYSYS, currentCEGRPID);
             }
@@ -342,16 +297,20 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
                 }
             }
         }
-        //clinicalEvents.printEvents();
     }
 
     var addRelapseFinding = function(CE) {
-        var aFinding = new findingAbout(CE.USUBJID, CE.CETERM, 'Severity Test', 'Impact on ADL'); // Is it mobility??
-        aFinding.FAORES = '';
-        aFinding.FADTC = generateCESTDTC();
-        aFinding.FALNKID = generateCESTDTC()+" Multiple Sclerosis Relapse";
-        findingsAbout.addFinding(aFinding);
-//        return aFinding;
+        var adlFinding = new findingAbout(CE.USUBJID, CE.CETERM, 'Severity Test', 'Impact on ADL');
+        adlFinding.FAORES = '';
+        adlFinding.FADTC = generateCESTDTC();
+        adlFinding.FALNKID = generateCESTDTC()+" Multiple Sclerosis Relapse";
+        findingsAbout.addFinding(adlFinding);
+
+        var steroidsFinding = new findingAbout(CE.USUBJID, CE.CETERM, 'Severity Test', 'Cortisteroids prescribed');
+        steroidsFinding.FAORES = '';
+        steroidsFinding.FADTC = generateCESTDTC();
+        steroidsFinding.FALNKID = generateCESTDTC()+" Multiple Sclerosis Relapse";
+        findingsAbout.addFinding(steroidsFinding);
     }
 
     var addEvent = function(CEBODYSYS, CEGRPID) {

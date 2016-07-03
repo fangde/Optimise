@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="row doubleMarginTop" ng-show="enableSeverityOutcomeCapture()">
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <div class="input-group" >
                                 <span class="input-group-addon">Duration</span>
@@ -68,10 +68,10 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-sm-2"><h5>Severity</h5>
+                    <div class="col-sm-1">
+                        <h5>Severity</h5>
                     </div>
-                    <div class="col-sm-4" ng-init="CESEV=''">
+                    <div class="col-sm-3" ng-init="CESEV=''">
                         <div class="btn-group" >
                             <button type="button" class="btn btn-default" ng-model="CESEV"
                                     ng-change="addRelapseProperty('CESEV')" ng-disabled="getDisabledFields()"
@@ -88,66 +88,74 @@
                                     uib-btn-radio="'Severe'">
                                 Severe
                             </button>
-                            <button type="button" class="btn btn-default" ng-model="CESEV"
-                                    ng-change="addRelapseProperty('CESEV')" ng-disabled="getDisabledFields()"
-                                    uib-btn-radio="'Unknown'">
-                                Unknown
-                            </button>
                         </div>
                     </div>
-                </div>
-
-                <div class="row marginTop" ng-show="enableSeverityOutcomeCapture()">
-                    <div class="col-sm-2">
-                        <h5>
-                            Impact on ADL
-                        </h5>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default" ng-model="adlScore"
-                                    ng-change="editRelapseFinding()" ng-disabled="getDisabledFields()"
-                                    uib-btn-radio="'Yes'">
-                                Yes
-                            </button>
-                            <button type="button" class="btn btn-default" ng-model="adlScore"
-                                    ng-change="editRelapseFinding()" ng-disabled="getDisabledFields()"
-                                    uib-btn-radio="'No'">
-                                No
-                            </button>
-                            <button type="button" class="btn btn-default" ng-model="adlScore"
-                                    ng-change="editRelapseFinding()" ng-disabled="getDisabledFields()"
-                                    uib-btn-radio="'Unknown'">
-                                Unknown
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-1">
                         <h5>
                             Recovery
                         </h5>
                     </div>
-                    <div class="col-sm-4" ng-init="CEOUT=''">
+                    <div class="col-sm-3" ng-init="CEOUT=''">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default" ng-model="CEOUT"
-                                    ng-change="addRelapseProperty('CEOUT')" ng-disabled="getDisabledFields()"
+                                    ng-click="addRelapseProperty('CEOUT')" ng-disabled="getDisabledFields()"
                                     uib-btn-radio="'Complete'">
                                 Complete
                             </button>
                             <button type="button" class="btn btn-default" ng-model="CEOUT"
-                                    ng-change="addRelapseProperty('CEOUT')" ng-disabled="getDisabledFields()"
+                                    ng-click="addRelapseProperty('CEOUT')" ng-disabled="getDisabledFields()"
                                     uib-btn-radio="'Partial'">
                                 Partial
                             </button>
                             <button type="button" class="btn btn-default" ng-model="CEOUT"
-                                    ng-change="addRelapseProperty('CEOUT')" ng-disabled="getDisabledFields()"
+                                    ng-click="addRelapseProperty('CEOUT')" ng-disabled="getDisabledFields()"
                                     uib-btn-radio="'None'">
                                 None
                             </button>
-                            <button type="button" class="btn btn-default" ng-model="CEOUT"
-                                    ng-change="addRelapseProperty('Unknown')" ng-disabled="getDisabledFields()"
-                                    uib-btn-radio="'Unknown'">
-                                Unknown
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row marginTop" ng-show="enableSeverityOutcomeCapture()">
+
+                    <div class="col-sm-2 col-sm-offset-3">
+                        <h5>
+                            Impact on ADL
+                        </h5>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default" ng-model="adlScore"
+                                    ng-click="editRelapseFinding('Impact on ADL')" ng-disabled="getDisabledFields()"
+                                    uib-btn-radio="'Yes'">
+                                Yes
+                            </button>
+                            <button type="button" class="btn btn-default" ng-model="adlScore"
+                                    ng-click="editRelapseFinding('Impact on ADL')" ng-disabled="getDisabledFields()"
+                                    uib-btn-radio="'No'">
+                                No
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <h5>
+                            Steroids
+                        </h5>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default"
+                                    ng-model="steroidsPrescribed"
+                                    ng-click="editRelapseFinding('Cortisteroids prescribed')" ng-disabled="getDisabledFields()"
+                                    uib-btn-radio="'Yes'">
+                                Yes
+                            </button>
+                            <button type="button" class="btn btn-default"
+                                    ng-model="steroidsPrescribed"
+                                    ng-click="editRelapseFinding('Cortisteroids prescribed')" ng-disabled="getDisabledFields()"
+                                    uib-btn-radio="'No'">
+                                No
                             </button>
                         </div>
                     </div>

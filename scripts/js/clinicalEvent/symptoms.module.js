@@ -39,9 +39,9 @@ symptomsModule.factory('symptomVocab', function() {
     symptomTerms['cranial.dysphagia']={CETERM: 'Dysphagia', CEBODSYS:''};
     symptomTerms['cranial.dizziness']={CETERM: 'Dizziness', CEBODSYS:''};
     symptomTerms['cranial.vertigo']={CETERM: 'Vertigo', CEBODSYS:''};
-    symptomTerms['cranial.facialPain']={CETERM: 'Facial pain', CEBODSYS:''};
-    symptomTerms['cranial.facialHypoesthesia']={CETERM: 'Facial hypoesthesia', CEBODSYS:''};
-    symptomTerms['cranial.facialWeakness']={CETERM: 'Facial weakness', CEBODSYS:''};
+    symptomTerms['cranial.facialPain']={CETERM: 'Facial pain', CEBODSYS:'Face'};
+    symptomTerms['cranial.facialHypoesthesia']={CETERM: 'Facial hypoesthesia', CEBODSYS:'Face'};
+    symptomTerms['cranial.facialWeakness']={CETERM: 'Facial weakness', CEBODSYS:'Face'};
 
     symptomTerms['motor.weakness.upper']={CETERM: 'Weakness', CEBODSYS:'Upper Limbs'};
     symptomTerms['motor.weakness.lower']={CETERM: 'Weakness', CEBODSYS:'Lower Limbs'};
@@ -98,8 +98,10 @@ symptomsModule.service('symptoms', function(clinicalEvents, clinicalEvent) {
 
     var setDate = function(newDate) {
         symptomDate = newDate;
-        //console.log("symptomsDate"+symptomDate.toLocaleString());
-        //clinicalEvents.printEvents();
+    }
+
+    var getDate = function() {
+        return symptomDate;
     }
 
     var setUSUBJID = function(newUSUBJID) {
@@ -133,35 +135,77 @@ symptomsModule.service('symptoms', function(clinicalEvents, clinicalEvent) {
         clinicalEvents.addEvent(newSymptom);
     }
 
+    var editStatus = function (symptomsOnDate) {
+        var visitSymptomExists = false;
+        var relapseSymptomExists = false;
+        for (var s = 0; s < symptomsOnDate.length; s++) {
+            if (symptomsOnDate[s].CEGRPID == -1)
+                visitSymptomExists = true;
+            if (symptomsOnDate[s].CEGRPID != -1)
+                relapseSymptomExists = true;
+        }
+
+        return [visitSymptomExists, relapseSymptomExists];
+    }
+
     var editSymptom = function(CETERM, CEBODSYS, CELAT, useRelapseGrpID) {
         if ((symptomDate!= null) && (USUBJID!= '')){
             var symptomsOnDate = clinicalEvents.getEventByTermBodsysOnDate('Symptom', CETERM, CEBODSYS, symptomDate);
-
+            //console.log(symptomsOnDate);
             if (symptomsOnDate.length > 0){ // if symptom already recorded on this day
+                for (var s = 0; s < symptomsOnDate.length; s++) {
 
-                // relapse symptom, visit symptom already recorded
-                // -> create new relapse symptom
-                if ((useRelapseGrpID)&&(symptomsOnDate[0].CEGRPID==-1)) {
-                    createEvent(CETERM, CEBODSYS, CELAT, useRelapseGrpID);
+                    // relapse symptom, visit symptom already recorded
+                    // -> create new relapse symptom
+                    if ((useRelapseGrpID)
+                        &&(symptomsOnDate[s].CEGRPID==-1)
+                        &&(editStatus(symptomsOnDate)[0] == true)
+                        &&(editStatus(symptomsOnDate)[1] == false)) {
+                            createEvent(CETERM, CEBODSYS, CELAT, useRelapseGrpID);
+                            console.log(1);
+                    }
+
+                    // visit symptom, relapse symptom already recorded
+                    // -> create new symptom
+                    // a relapse symptom exists, create a visit one too
+                    else if ((!useRelapseGrpID)
+                            &&(symptomsOnDate[s].CEGRPID!=-1)
+                            &&(editStatus(symptomsOnDate)[0] == false)
+                            &&(editStatus(symptomsOnDate)[1] == true)) {
+                                createEvent(CETERM, CEBODSYS, CELAT, useRelapseGrpID);
+                                console.log("create a new visit symptom, a relapse system exists but not a visit one");
+                    }
+
+                    // relapse symptom, relapse symptom already recorded
+                    // -> edit new symptom
+                    else if ((useRelapseGrpID)
+                            &&(symptomsOnDate[s].CEGRPID!=-1)
+                            &&(editStatus(symptomsOnDate)[1] == true)) {
+                                editEvent(symptomsOnDate[s], CELAT);
+                                console.log('editing an existing symptom, a relapse symptom exists');
+                    }
+
+                    // visit symptom, visit symptom already recorded
+                    // -> edit
+                    else if ((!useRelapseGrpID)
+                        &&(symptomsOnDate[s].CEGRPID==-1)
+                        &&(editStatus(symptomsOnDate)[0] == true)) {
+                            editEvent(symptomsOnDate[s], CELAT);
+                            console.log('Editing an existing visit symptom, a visit symptom exists');
+                    }
+
+                    console.log('Relapse:'+ useRelapseGrpID);
+                    console.log('Edit action:'+ editStatus(symptomsOnDate));
+                    console.log('GroupID:'+symptomsOnDate[s].CEGRPID);
+//                    else {
+//                        symptomsOnDate[s]
+//                        console.log("Error in recording symptoms")
+//
+//                    }
                 }
-                // visit symptom, relapse symptom already recorded
-                // -> create new symptom
-                else if ((useRelapseGrpID==false)&&(symptomsOnDate[0].CEGRPID!=-1)) {
-                    createEvent(CETERM, CEBODSYS, CELAT, useRelapseGrpID);
-                }
-                // relapse symptom, relapse symptom already recorded
-                // -> create new symptom
-                else if ((useRelapseGrpID)&&(symptomsOnDate[0].CEGRPID!=-1)) {
-                    editEvent(symptomsOnDate[0], CELAT);
-                }
-                // visit symptom, visit symptom already recorded
-                // -> edit
-                else if ((useRelapseGrpID==false)&&(symptomsOnDate[0].CEGRPID==-1)) {
-                    editEvent(symptomsOnDate[0], CELAT);
-                }
-                else {
-                    console.log("Error in recording symptoms")
-                }
+                var symptomsOnDate = clinicalEvents.getEventByTermBodsysOnDate('Symptom', CETERM, CEBODSYS, symptomDate);
+                console.log(symptomsOnDate);
+
 
                 // relapse symptom, visit symptom already recorded
                 // -> create new symptom
@@ -175,8 +219,9 @@ symptomsModule.service('symptoms', function(clinicalEvents, clinicalEvent) {
             }
             else {
                 createEvent(CETERM, CEBODSYS, CELAT, useRelapseGrpID);
+                console.log(5);
             }
-            clinicalEvents.printEvents();
+            //clinicalEvents.printEvents();
         }
         else {
             console.log("failed to add symptom");
@@ -202,6 +247,7 @@ symptomsModule.service('symptoms', function(clinicalEvents, clinicalEvent) {
 
     return {
         setDate: setDate,
+        getDate: getDate,
         setUSUBJID: setUSUBJID,
         editSymptom: editSymptom,
         getSymptoms: getSymptoms
@@ -209,9 +255,22 @@ symptomsModule.service('symptoms', function(clinicalEvents, clinicalEvent) {
 });
 
 
-symptomsModule.controller('visitSymptomsCtrl', function ($rootScope, $parse, $scope, symptoms, symptomVocab) {
+symptomsModule.controller('visitSymptomsCtrl', function ($rootScope, $parse, $scope, symptoms, symptomVocab, clinicalEvents) {
 
     var useRelapseGrpID = false;
+
+    var checkCELATNeedsUndoing = function(CETERM, CEBODSYS, CELAT, model) {
+        var signsOnDate = clinicalEvents.getEventByTermBodsysOnDate('Symptom', CETERM, CEBODSYS, symptoms.getDate());
+        for (var s = 0; s < signsOnDate.length; s++) {
+            // if this symptom already exists and is the same value
+            // if the symptom is a visit symptom
+            if ((signsOnDate[s].CELAT == CELAT) && (signsOnDate[s].CEGRPID == -1)) {
+                model.assign($scope, '');
+                CELAT = false;
+            }
+        }
+        return CELAT;
+    }
 
     $scope.editSymptom = function(modelName) {
         var CETERM = symptomVocab.getTerm(modelName).CETERM;//symptomTerms[modelName].CETERM;
@@ -219,6 +278,10 @@ symptomsModule.controller('visitSymptomsCtrl', function ($rootScope, $parse, $sc
         var model = $parse(modelName);
         var CELAT = model($scope);
 
+        CELAT = checkCELATNeedsUndoing(CETERM, CEBODSYS, CELAT, model);
+        //console.log('Visit');
+        //console.log(modelName);
+        console.log(CELAT);
         symptoms.editSymptom(CETERM, CEBODSYS, CELAT, useRelapseGrpID);
     }
 
@@ -246,9 +309,23 @@ symptomsModule.controller('visitSymptomsCtrl', function ($rootScope, $parse, $sc
     }
 })
 
-symptomsModule.controller('relapseSymptomsCtrl', function ($rootScope, $parse, $scope, symptoms, symptomVocab) {
+symptomsModule.controller('relapseSymptomsCtrl', function ($rootScope, $parse, $scope, symptoms, symptomVocab, clinicalEvents) {
 
     var useRelapseGrpID = true;
+
+    var checkCELATNeedsUndoing = function(CETERM, CEBODSYS, CELAT, model) {
+        var signsOnDate = clinicalEvents.getEventByTermBodsysOnDate('Symptom', CETERM, CEBODSYS, symptoms.getDate());
+        // if this symptom already exists and is the same value
+        // if is a relapse symptom
+        // if the symptom is a relapse symptom
+        for (var s = 0; s < signsOnDate.length; s++) {
+            if ((signsOnDate[s].CELAT == CELAT)&& (signsOnDate[s].CEGRPID != -1)) {
+                model.assign($scope, '');
+                CELAT = false;
+            }
+        }
+        return CELAT;
+    }
 
     $scope.editSymptom = function(modelName) {
         var CETERM = symptomVocab.getTerm(modelName).CETERM;//symptomTerms[modelName].CETERM;
@@ -256,6 +333,10 @@ symptomsModule.controller('relapseSymptomsCtrl', function ($rootScope, $parse, $
         var model = $parse(modelName);
         var CELAT = model($scope);
 
+        CELAT = checkCELATNeedsUndoing(CETERM, CEBODSYS, CELAT, model);
+        console.log('Relapse');
+        console.log(modelName);
+        console.log(CELAT);
         symptoms.editSymptom(CETERM, CEBODSYS, CELAT, useRelapseGrpID);
     }
 
