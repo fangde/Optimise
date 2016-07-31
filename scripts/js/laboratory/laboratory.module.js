@@ -452,7 +452,7 @@ laboratoryTestResultModule.factory('LaboratoryTestResult', function() {
             LBSPEC :"",//Specimen Type
             LBBLFL :"Y",//Baseline Flag
             LBFAST :"",//Fasting status
-            VISITNUM :"",//Visit Number
+            //VISITNUM :"",//Visit Number
             VISIT :"",//Visit Name
             VISITDY :"",//Planned Study Day of Visit
             LBDTC :"",//Date/Time of Specimen Collection
@@ -549,10 +549,10 @@ laboratoryTestResultModule.service('laboratoryTestResults', function(LaboratoryT
                     newTestResult.LBFAST = RecordItems[i].value;
                     break;
                 }
-                case 'VISITNUM':{
-                    newTestResult.VISITNUM = RecordItems[i].value;
-                    break;
-                }
+//                case 'VISITNUM':{
+//                    newTestResult.VISITNUM = RecordItems[i].value;
+//                    break;
+//                }
                 case 'VISIT':{
                     newTestResult.VISIT = RecordItems[i].value;
                     break;
@@ -1017,6 +1017,8 @@ laboratoryTestResultModule.controller('laboratoryInfoCtrl', function($scope, $ro
 
                 //procedures.push(aProcedure);
                 procedures.addProcedure(aProcedure);
+                procedures.setCurrentProcedure(aProcedure);
+                $scope.setNewMRIDTC(display, $scope.LBDTC);
             }
         }
     }

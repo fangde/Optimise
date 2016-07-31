@@ -1,4 +1,5 @@
-var mriModule = angular.module('Optimise.mri',['Optimise.morphology', 'Optimise.procedure', 'Optimise.connectivity']);
+var mriModule = angular.module('Optimise.mri',['Optimise.morphology',
+    'Optimise.procedure', 'Optimise.connectivity','Optimise.deviceInUse']);
 
 mriModule.directive('mriEntry', function() {
     return {
@@ -8,45 +9,145 @@ mriModule.directive('mriEntry', function() {
     };
 });
 
+mriModule.service('fileUpload', ['$http', function ($http) {
+    //sourceFile, uploadUrl, $scope.USUBJID, $scope.sessionLabel, scanDate, $scope.scanWeight
+    var uploadToXNAT = function(file, uploadUrl, USUBJID, sessionLabel, scanDate, scanWeight){
+        var fd = new FormData();
+        fd.append('file', file);
+        fd.append('USUBJID', USUBJID);
+        fd.append('sessionLabel', sessionLabel);
+        fd.append('scanDate', scanDate);
+        fd.append('scanWeight', scanWeight);
+        console.log('uploading');
+        $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined,'Process-Data': false}
+        })
+            .success(function(){
+                console.log("Success");
+                //records
+            })
+            .error(function(){
+                console.log("Error");
+            });
+    }
+    return {
+        uploadToXNAT: uploadToXNAT
+    }
+}]);
+
 
 
 mriModule.controller('mriInfoCtrl', function ($scope, $rootScope, $parse, $uibModal, $timeout,
-                                        procedures, procedure,
-                                        morphologyServices, Morphology, connectionServices) {
+                                        procedures, procedure, viewService, records,
+                                        morphologyServices, Morphology, connectionServices,
+                                        DeviceInUse, deviceInUseServices, fileUpload) {
+
     $scope.USUBJID = '';
+    $scope.provideICOMETRIX = false;
+
     $rootScope.setMRIUSUBJID = function(USUBJID, connectToXNAT) {
         $scope.USUBJID = USUBJID;
         if (connectToXNAT)
-            getNewProcedures();
+            $scope.provideICOMETRIX = true;
+            //getNewProcedures();
+            //console.log("Module for pulling new procedures logged off.");
+    }
+
+    $scope.provideICOMETRIXSupport = function() {
+        return $scope.provideICOMETRIX;
+    }
+
+    var getDisabledFields = function() {
+        return viewService.getView().DisableInputFields;
     }
 
     $scope.scans = [];
     $scope.scansTakenDuringExperiment = [];
+    $scope.imageURL ="";
+    $scope.downloadURL ="";
+    $scope.dicomURL ="";
 
-    var getNewProcedures = function() {
-        var XNATData = connectionServices.getImagingExperiments($scope.USUBJID);
-        $timeout(function() {
-        }, 3000).then(function(){
-                XNATData.then(function(data){
-                    procedures.syncExperiments(data.experiments, $scope.USUBJID);
-                    setScans(data.scans);
-                });
-            });
-    }
+//    var getNewProcedures = function() {
+//        var XNATData = connectionServices.getImagingExperiments($scope.USUBJID);
+//        $timeout(function() {
+//        }, 3000).then(function(){
+//                XNATData.then(function(data){
+//                    console.log(data);
+//                    procedures.syncExperiments(data.experiments, $scope.USUBJID);
+//                    setScans(data.scans);
+//                });
+//            });
+//    }
+
+    $scope.dicomNameChanged = function(element){
+        console.log('dicomNameChanged');
+        $scope.$apply(function() {
+            if (($scope.scanWeight != "")&&(element.files[0]!=null)){
+                var sourceFile = element.files[0];
+                console.log(sourceFile);
+                var uploadUrl = "http://www.optimise-ms.org/api-optimise/xnat/upload.php";
+                console.log($scope.USUBJID);
+                console.log($scope.sessionLabel);
+                console.log($scope.LBDTC);
+                console.log($scope.scanWeight);
+                if (($scope.USUBJID != '')&&
+                    ($scope.sessionLabel != '') &&
+                    ($scope.LBDTC != '') &&
+                    ($scope.scanWeight != '')) {
+                        var scanDate = $scope.LBDTC.getDate()+"/"+($scope.LBDTC.getMonth()+1)+"/"+$scope.LBDTC.getFullYear();
+                        fileUpload.uploadToXNAT(sourceFile, uploadUrl, $scope.USUBJID, $scope.sessionLabel, scanDate, $scope.scanWeight);
+
+                        var DU = new DeviceInUse($scope.USUBJID, "Weighting");
+                        DU.DUDTC = $scope.LBDTC;
+                        DU.DUORRES = $scope.scanWeight;
+                        deviceInUseServices.addDeviceInUse(DU);
+                        //deviceInUseServices.print();
+                        setScansTakenDuringExperiment();
+
+                        var scans = deviceInUseServices.getScansByDate($scope.LBDTC.toDateString());
+                        var T1Loaded = false;
+                        var T2Loaded = false;
+                        for (var s = 0; s < scans.length; s++) {
+                            if ((scans[s].DUTEST == 'Weighting')&&(scans[s].DUORRES == "T1")){
+                                T1Loaded = true;
+                            }
+                            else if ((scans[s].DUTEST == 'Weighting')&&(scans[s].DUORRES == "T2")) {
+                                T2Loaded = true;
+                            }
+
+                        }
+                        if ((T1Loaded) && (T2Loaded))
+                            setIcometrixJob();
+                }
+            }
+        });
+//        var file = $scope.myFile;
+//        console.log('file is ' );
+//        console.dir(file);
+
+
+    };
+
+    var setIcometrixJob = function() {
+        var job = {"USUBJID": $scope.USUBJID,
+                "Project": "Optimise",
+                "Session": $scope.USUBJID+"_"+$scope.sessionLabel,
+                "Job_GUID": "",
+                "Job_Status": "New"
+            };
+        //console.log(job);
+        records.saveIcometrixJob(job);
+    };
 
     $scope.selectScan = function (){
-        //console.log($scope.selectedScan);
         /*
-        $scope.imageURL ='https://central.xnat.org'+$scope.selectedScan.thumbnail;
-        $scope.downloadURL ='https://central.xnat.org'+$scope.selectedScan.download;
-        $scope.dicomURL ='https://central.xnat.org'+$scope.selectedScan.dicom;
-        */
-        //http://www.optimise-ms.org/api-optimise/xnat/proxy.php
         $scope.imageURL ='http://www.optimise-ms.org/api-optimise/xnat/proxy.php/'+$scope.selectedScan.thumbnail;
         $scope.downloadURL ='http://www.optimise-ms.org/api-optimise/xnat/proxy.php/'+$scope.selectedScan.download;
         //console.log($scope.downloadURL);
         $scope.dicomURL ='http://www.optimise-ms.org/api-optimise/xnat/proxy.php/'+$scope.selectedScan.dicom;
         //console.log($scope.selectedScan);
+        */
     };
 
     var setScans = function(newScans) {
@@ -55,51 +156,137 @@ mriModule.controller('mriInfoCtrl', function ($scope, $rootScope, $parse, $uibMo
     };
 
     var setScansTakenDuringExperiment = function () {
+        /*
         var XNATExperimentID = procedures.getCurrentProcedure().XNATExperimentID;
         $scope.scansTakenDuringExperiment = [];
+        //console.log($scope.scans);
+        //console.log(XNATExperimentID);
         for (var s = 0; s < $scope.scans.length; s++) {
             if ($scope.scans[s].uri.indexOf(XNATExperimentID) >-1) {
                 $scope.scansTakenDuringExperiment.push($scope.scans[s]);
             }
         }
         setSelectedScan();
+        */
+        $scope.scansTakenDuringExperiment = [];
+        //console.log($scope.LBDTC);
+        var scans = deviceInUseServices.getScansByDate($scope.LBDTC.toDateString());
+        for (var s = 0; s < scans.length; s++) {
+            var newScan = {"type": scans[s].DUORRES};
+            $scope.scansTakenDuringExperiment.push(newScan);
+        }
+        //console.log($scope.scansTakenDuringExperiment);
     };
 
     var setSelectedScan = function() {
-        //console.log($scope.scansTakenDuringExperiment);
         if ($scope.scansTakenDuringExperiment.length > 0) {
-            console.log($scope.scansTakenDuringExperiment[0]);
             $scope.selectedScan = $scope.scansTakenDuringExperiment[0];
             $scope.selectScan();
         }
     }
 
+    $scope.lockDownSessionLabelValue = function() {
+        return getDisabledFields();
+    }
 
-    //$scope.testIndex = 'Magnetic Resonance Imaging';
-    //$scope.imageURL ="https://central.xnat.org/data/experiments/CENTRAL_E07330/scans/7/resources/123229201/files/CENTRAL_E07330_7_qc_t.gif"
-    $scope.imageURL ="";
-    $scope.downloadURL ="";
-    $scope.dicomURL ="";
+    $rootScope.setNewMRIFields = function() {
+        clearFields();
+    }
 
     $rootScope.displayMRI = function() {
         clearFields();
-        var LBDTC = procedures.getCurrentProcedure().PRSTDTC;
+        $scope.LBDTC = procedures.getCurrentProcedure().PRSTDTC;
+        //console.log($scope.LBDTC);
         setScansTakenDuringExperiment();
-        var morphologicalFindings = morphologyServices.getFindingsByDate(LBDTC.toDateString());
-        for (var f = 0; f < morphologicalFindings.length; f++) {
-            var moVariables = getImagingMorphologyScopeName(morphologicalFindings[f].MOTEST);
-            if (moVariables != null) {
-                var modelTestValue = $parse(moVariables.scopeVariable);
-                modelTestValue.assign($scope, morphologicalFindings[f].MOORRES);
-            }
+        $scope.sessionLabel = procedures.getCurrentProcedure().displayLabel;
+        $scope.scanWeight = "";
+//        var morphologicalFindings = morphologyServices.getFindingsByDate(LBDTC.toDateString());
+//        for (var f = 0; f < morphologicalFindings.length; f++) {
+//            var moVariables = getImagingMorphologyScopeName(morphologicalFindings[f].MOTEST);
+//            if (moVariables != null) {
+//                var modelTestValue = $parse(moVariables.scopeVariable);
+//                modelTestValue.assign($scope, morphologicalFindings[f].MOORRES);
+//            }
+//
+//            var loVariables = getImagingLocalityScopeName(morphologicalFindings[f].MOLOC);
+//            if (loVariables != null){
+//                var modelTestValue = $parse(loVariables.scopeVariable);
+//                modelTestValue.assign($scope, morphologicalFindings[f].MOLOC);
+//            }
+//        }
+    }
 
-            var loVariables = getImagingLocalityScopeName(morphologicalFindings[f].MOLOC);
-            if (loVariables != null){
-                var modelTestValue = $parse(loVariables.scopeVariable);
-                modelTestValue.assign($scope, morphologicalFindings[f].MOLOC);
-            }
+    var addProcedure = function() {
+        //console.log("adding procedure");
+        if (procedures.getProcedureByTRTAndDate('MRI',  $scope.LBDTC).length == 0){
+            var aProcedure = new procedure($scope.USUBJID, 'MRI');
+            aProcedure.PRLOC = 'Head';
+            aProcedure.PRSTDTC = $scope.LBDTC;
+            aProcedure.displayLabel = 'MRI';
+            aProcedure.displayDate = $scope.LBDTC.toDateString();
+            //aProcedure.XNATExperimentID = experiments[e].id;
+            //aProcedure.XNATExperimentURI = experiments[e].uri;
+
+            //procedures.push(aProcedure);
+            procedures.addProcedure(aProcedure);
+            //procedures.setCurrentProcedure(aProcedure);
         }
     }
+
+    $scope.editProcedureDisplayLabel = function() {
+        var currentProcedure = procedures.getCurrentProcedure();
+        currentProcedure.displayLabel = $scope.sessionLabel;
+        procedures.editProcedure(currentProcedure, "displayLabel", $scope.sessionLabel);
+    }
+
+    var clearFields = function() {
+        $scope.sessionLabel = "";
+        $scope.scanWeight = "";
+        $scope.LBDTC = "";
+        $scope.scansTakenDuringExperiment = [];
+        /*
+        var loKeys = [{scopeVariable: 'lesionsInPeriventricular'},
+            {scopeVariable: 'lesionsInJuxtacortical'},
+            {scopeVariable: 'lesionsInInfratentorial'},
+            {scopeVariable: 'lesionsInOpticalNerve'},
+            {scopeVariable: 'Thoracic'},
+            {scopeVariable: 'Cervical'}];
+
+        for (var k = 0; k < loKeys.length; k++){
+            // Get the model
+            var modelValue = $parse(loKeys[k].scopeVariable);
+            modelValue.assign($scope,false);
+        }
+
+        var gdKeys = [{scopeVariable: 'GDLesions'},
+            {scopeVariable: 'GDSpineLesions'}];
+
+        for (var k = 0; k < gdKeys.length; k++){
+            // Get the model
+            var modelValue = $parse(gdKeys[k].scopeVariable);
+            modelValue.assign($scope,'');
+        }
+
+        var TKeys = [{scopeVariable: 'T1Lesions'},
+            {scopeVariable: 'T2Lesions'},
+            {scopeVariable: 'T2SpineLesions'}];
+
+        for (var k = 0; k < TKeys.length; k++){
+            // Get the model
+            var modelValue = $parse(TKeys[k].scopeVariable);
+            modelValue.assign($scope,'');
+        } */
+    }
+
+    $rootScope.setNewMRIDTC = function (display, LBDTC) {
+        //$scope.LBDTC = new Date($scope.LBDTC_displayDate.substr(6), parseInt($scope.LBDTC_displayDate.substr(3,2))-1, $scope.LBDTC_displayDate.substr(0,2));
+        //console.log($scope.LBDTC);
+        $scope.LBDTC = LBDTC;
+        //$scope.LBDTC = new Date(LBDTC.substr(6), parseInt(LBDTC.substr(3,2))-1, LBDTC.substr(0,2));
+        $scope.displayDate = display;
+    }
+
+
 
     var getImagingMorphologyScopeName = function(MOTEST) {
         var moNames = [{scopeVariable: 'GDLesions', testName: "Gd Enhancing Lesions"},
@@ -141,46 +328,6 @@ mriModule.controller('mriInfoCtrl', function ($scope, $rootScope, $parse, $uibMo
         if ($scope.MOLOC =='Spine')
             return ((($scope.T2SpineLesions=='None')||($scope.T2SpineLesions==null))
                 &&(($scope.GDSpineLesions=='None')||($scope.GDSpineLesions==null)));
-    }
-
-    var clearFields = function() {
-
-        var loKeys = [{scopeVariable: 'lesionsInPeriventricular'},
-            {scopeVariable: 'lesionsInJuxtacortical'},
-            {scopeVariable: 'lesionsInInfratentorial'},
-            {scopeVariable: 'lesionsInOpticalNerve'},
-            {scopeVariable: 'Thoracic'},
-            {scopeVariable: 'Cervical'}];
-
-        for (var k = 0; k < loKeys.length; k++){
-            // Get the model
-            var modelValue = $parse(loKeys[k].scopeVariable);
-            modelValue.assign($scope,false);
-        }
-
-        var gdKeys = [{scopeVariable: 'GDLesions'},
-            {scopeVariable: 'GDSpineLesions'}];
-
-        for (var k = 0; k < gdKeys.length; k++){
-            // Get the model
-            var modelValue = $parse(gdKeys[k].scopeVariable);
-            modelValue.assign($scope,'');
-        }
-
-        var TKeys = [{scopeVariable: 'T1Lesions'},
-            {scopeVariable: 'T2Lesions'},
-            {scopeVariable: 'T2SpineLesions'}];
-
-        for (var k = 0; k < TKeys.length; k++){
-            // Get the model
-            var modelValue = $parse(TKeys[k].scopeVariable);
-            modelValue.assign($scope,'');
-        }
-    }
-
-    $scope.setLBDTC = function () {
-        $scope.LBDTC = new Date($scope.LBDTC_displayDate.substr(6), parseInt($scope.LBDTC_displayDate.substr(3,2))-1, $scope.LBDTC_displayDate.substr(0,2));
-        console.log($scope.LBDTC);
     }
 
     $scope.editGdLesionsProperty = function() {
@@ -271,20 +418,6 @@ mriModule.controller('mriInfoCtrl', function ($scope, $rootScope, $parse, $uibMo
         }
     }
 
-    var addProcedure = function() {
-        if (procedures.getProcedureByTRTAndDate('MRI',  $scope.LBDTC).length == 0){
-            var aProcedure = new procedure($scope.USUBJID, 'MRI');
-            aProcedure.PRLOC = 'Head';
-            aProcedure.PRSTDTC = $scope.LBDTC;
-            aProcedure.displayLabel = 'MRI';
-            aProcedure.displayDate = $scope.LBDTC.toDateString();
-            //aProcedure.XNATExperimentID = experiments[e].id;
-            //aProcedure.XNATExperimentURI = experiments[e].uri;
-
-            //procedures.push(aProcedure);
-            procedures.addProcedure(aProcedure);
-        }
-    }
 
     $scope.addLesionSecondaryLocation = function(MOSLOC) {
         if ($scope.MOLOC == 'Brain'){
@@ -969,15 +1102,3 @@ mriModule.controller('zoomImageCtrl', function ($scope, $uibModalInstance, $time
         }
     }*/
 
-/*
- $scope.setScansTakenDuringExperiment = function () {
- var LBDTC = procedures.getCurrentProcedure().PRSTDTC;
- var XNATExperimentID = procedures.getCurrentProcedure().XNATExperimentID;
- $scope.scansTakenDuringExperiment = [];
- for (var s = 0; s < $scope.scans.length; s++) {
- if ($scope.scans[s].experimentID == XNATExperimentID) {
- $scope.scansTakenDuringExperiment.push($scope.scans[s]);
- }
- }
- };
- */

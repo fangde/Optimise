@@ -48,15 +48,15 @@ procedureModule.service('procedures', function (procedure, records, viewService)
     }
 
     var syncExperiments = function (experiments, USUBJID) {
-        console.log(experiments);
+        //console.log(experiments);
 
         for (var e = 0; e < experiments.length; e++) {
             var dateOfExperiment = dateFromXNATRetrievedExperiment(experiments[e].date);
-            console.log(dateOfExperiment);
+            //console.log(dateOfExperiment);
 
             // TO DO: if (new procedure not found in db, add procedure)
             var foundProcedures = getProcedureByTRTAndDate('MRI',  dateOfExperiment);
-            console.log(foundProcedures);
+            //console.log(foundProcedures);
             if (foundProcedures.length == 0){
                 var aProcedure = new procedure(USUBJID, 'MRI');
                 aProcedure.PRLOC = 'Head';
@@ -194,6 +194,19 @@ procedureModule.service('procedures', function (procedure, records, viewService)
             records.saveRecord(procedure);
     }
 
+    var editProcedure = function (pr, recordToChange, valueToChange){
+        var USUBJID = {fieldName: "USUBJID", value: pr.USUBJID};
+        var PRSEQ = {fieldName:"PRSEQ", value: pr.PRSEQ};
+        var RECTOCHANGE = {fieldName:recordToChange, value: valueToChange};
+
+        var idRecord = [USUBJID, PRSEQ];
+        var valueRecord = [RECTOCHANGE];
+
+        if (!viewService.workOffline())
+            records.editRecord(idRecord, valueRecord);
+    }
+
+
     var getProcedureByTRTAndDate = function(PRTRT, PRSTDTC)
     {
         var validProcedures = [];
@@ -267,6 +280,7 @@ procedureModule.service('procedures', function (procedure, records, viewService)
 
     return {
         addProcedure:addProcedure,
+        editProcedure: editProcedure,
         getProcedureByTRTAndDate: getProcedureByTRTAndDate,
         populateProcedures:populateProcedures,
         getVisitProceduresByDate: getVisitProceduresByDate,

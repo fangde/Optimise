@@ -1374,7 +1374,6 @@ timelineModule.factory('patientEvents', function(exposures,
             var stdtc = events[t].CESTDTC;
             var endtc = new Date(stdtc);
             endtc.setDate(stdtc.getDate()+1);
-
             var workItem = {
                 id: '',
                 name: 'work item ' + '',

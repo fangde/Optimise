@@ -22,7 +22,6 @@ header {
     border-bottom: 4px solid #002670;
 }
 
-
 div.panel-heading.myPanel{
     color:white;
     background-color: #445C88;
@@ -591,6 +590,18 @@ linkButton {
 
 linkButton:hover{
     text-decoration:underline;
+}
+
+.btn-primary.inactive {
+    background-color: transparent;
+    color:#0c288a;
+
+}
+
+.btn-primary.inactive:hover {
+    background-color: #0c288a;
+    color:white;
+
 }
 
 .btn-info.inactive {

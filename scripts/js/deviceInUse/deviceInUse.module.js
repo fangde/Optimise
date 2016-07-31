@@ -12,7 +12,7 @@ deviceInUseModule.factory('DeviceInUse', function() {
     return function(USUBJID, DUTEST) {
         var device = {
             STUDYID:'OPTIMISE',
-            DOMAIN:'MO',
+            DOMAIN:'DU',
             USUBJID:USUBJID,
             SPDEVID:'',
             DUSEQ:'',
@@ -33,8 +33,7 @@ deviceInUseModule.service('deviceInUseServices', function(DeviceInUse, records, 
     var scansFromDevice = [];
 
     var populateDeviceInUse = function (RecordItems) {
-        var aFinding = new Morphology();
-        //console.log(RecordItems);
+        var aFinding = new DeviceInUse();
         for (var i = 0; i < RecordItems.length; i++){
             switch (RecordItems[i].fieldName) {
                 case 'STUDYID':{
@@ -53,64 +52,36 @@ deviceInUseModule.service('deviceInUseServices', function(DeviceInUse, records, 
                     aFinding.SPDEVID = RecordItems[i].value;
                     break;
                 }
-                case 'MOSEQ':{
-                    aFinding.MOSEQ = parseInt(RecordItems[i].value);
+                case 'DUSEQ':{
+                    aFinding.DUSEQ = parseInt(RecordItems[i].value);
                     break;
                 }
-                case 'MOLNKID':{
-                    aFinding.MOLNKID = RecordItems[i].value;
+                case 'DUREFID':{
+                    aFinding.DULNKID = RecordItems[i].value;
                     break;
                 }
-                case 'MOREFID':{
-                    aFinding.MOREFID = RecordItems[i].value;
+                case 'DUTESTCD':{
+                    aFinding.DUREFID = RecordItems[i].value;
                     break;
                 }
-                case 'MOTESTCD':{
-                    aFinding.MOTESTCD = RecordItems[i].value;
+                case 'DUTESTCD':{
+                    aFinding.DUTESTCD = RecordItems[i].value;
                     break;
                 }
-                case 'MOTEST':{
-                    aFinding.MOTEST = RecordItems[i].value;
+                case 'DUTEST':{
+                    aFinding.DUTEST = RecordItems[i].value;
                     break;
                 }
-                case 'MOORRES':{
-                    aFinding.MOORRES = RecordItems[i].value;
+                case 'DUORRES':{
+                    aFinding.DUORRES = RecordItems[i].value;
                     break;
                 }
-                case 'MOORRESU':{
-                    aFinding.MOORRESU = RecordItems[i].value;
+                case 'DUORRESU':{
+                    aFinding.DUORRESU = RecordItems[i].value;
                     break;
                 }
-                case 'MOSTRESC':{
-                    aFinding.MOSTRESC = RecordItems[i].value;
-                    break;
-                }
-                case 'MOSTRESN':{
-                    aFinding.MOSTRESN = RecordItems[i].value;
-                    break;
-                }
-                case 'MOSTRESU':{
-                    aFinding.MOSTRESU = RecordItems[i].value;
-                    break;
-                }
-                case 'MOLOC':{
-                    aFinding.MOLOC = RecordItems[i].value;
-                    break;
-                }
-                case 'MOLAT':{
-                    aFinding.MOLAT = RecordItems[i].value;
-                    break;
-                }
-                case 'MOMETHOD':{
-                    aFinding.MOMETHOD = RecordItems[i].value;
-                    break;
-                }
-                case 'MOANMETH':{
-                    aFinding.MOANMETH = RecordItems[i].value;
-                    break;
-                }
-                case 'MODTC':{
-                    aFinding.MODTC = records.formatStringToDate(RecordItems[i].value);
+                case 'DUDTC':{
+                    aFinding.DUDTC = records.formatStringToDate(RecordItems[i].value);
                     break;
                 }
             }
@@ -191,30 +162,41 @@ deviceInUseModule.service('deviceInUseServices', function(DeviceInUse, records, 
         return null;
     };
 
+
     var getScansByDate = function(DUDTC) {
         var scans = [];
         for (var e = 0; e < scansFromDevice.length; e++) {
+            //console.log(scansFromDevice[e]);
             if ((scansFromDevice[e].DUDTC.toDateString() == DUDTC)&&
-                (scansFromDevice[e].DUTEST == 'Anatomical Plane')) {
+                (scansFromDevice[e].DUTEST == 'Weighting')) {
                 scans.push(scansFromDevice[e]);
             }
         }
-        return null;
+        return scans;
     };
 
     var print = function() {
         console.log(scansFromDevice);
     }
 
+    var deleteDevicesInUse = function() {
+        scansFromDevice = [];
+    }
+
+    var getDevicesInUse = function() {
+        return scansFromDevice;
+    }
+
     return {
         addDeviceInUse: addDeviceInUse,
-        editDeviceInUse: editDeviceInUse,
         editDeviceInUse: editDeviceInUse,
         deleteDeviceInUse:deleteDeviceInUse,
         getDeviceInUseByDate:getDeviceInUseByDate,
         getDeviceInUseByTest:getDeviceInUseByTest,
         populateDeviceInUse: populateDeviceInUse,
         getScansByDate:getScansByDate,
-        print:print
+        print:print,
+        deleteDevicesInUse: deleteDevicesInUse,
+        getDevicesInUse: getDevicesInUse
     }
 });

@@ -148,10 +148,11 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
     $scope.editRelapseFinding = function (FASCAT) {
 
         var ce = clinicalEvents.getCurrentEvent();
-        console.log(ce);
+        //console.log(ce);
         if ((ce != null) && (ce.length > 0)){
             var findings = findingsAbout.getFindingsByLNKID(ce[0].CELNKID);
-            console.log(findings);
+            //console.log(findings);
+            var findingsFound = false;
             for (var f = 0; f < findings.length; f++) {
                 if (findings[f].FASCAT == FASCAT) {
                     console.log(FASCAT);
@@ -159,18 +160,56 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
                         if ($scope.adlScore == findings[f].FAORES)
                             $scope.adlScore = "";
                         findings[f].FAORES = $scope.adlScore;
+                        findingsAbout.editFinding(findings[f]);
+                        findingsFound = true;
                     }
                     else if (FASCAT == 'Cortisteroids prescribed') {
-                        console.log($scope.steroidsPrescribed);
-                        console.log(findings[f].FAORES);
+//                        console.log($scope.steroidsPrescribed);
+//                        console.log(findings[f].FAORES);
                         if ($scope.steroidsPrescribed == findings[f].FAORES)
                             $scope.steroidsPrescribed = "";
                         findings[f].FAORES = $scope.steroidsPrescribed;
-                        console.log($scope.steroidsPrescribed);
-                        console.log(findings[f].FAORES);
+//                        console.log($scope.steroidsPrescribed);
+//                        console.log(findings[f].FAORES);
+                        findingsAbout.editFinding(findings[f]);
+
+                        var currentCE = clinicalEvents.getCurrentEvent();
+                        for (var ce = 0; ce < currentCE.length; ce++) {
+                            if ($scope.steroidsPrescribed == "Yes")
+                                currentCE[ce].displayLabel = currentCE[ce].CESEV + ", Steroids";
+                            else
+                                currentCE[ce].displayLabel = currentCE[ce].CESEV;
+                            clinicalEvents.editEvent(currentCE[ce], "displayLabel", currentCE[ce].displayLabel);
+                        }
+                        //console.log(clinicalEvents.getCurrentEvent());
+                        findingsFound = true;
                     }
-                    findingsAbout.editFinding(findings[f]);
+
                 }
+            }
+            if (!findingsFound) {
+                var newFinding = new findingAbout($scope.USUBJID, 'Multiple Sclerosis Relapse', 'Severity Test', FASCAT);
+                if (FASCAT == 'Cortisteroids prescribed'){
+                    var currentCE = clinicalEvents.getCurrentEvent();
+                    for (var ce = 0; ce < currentCE.length; ce++) {
+                        if ($scope.steroidsPrescribed == "Yes")
+                            currentCE[ce].displayLabel = currentCE[ce].CESEV + ", Steroids";
+                        else
+                            currentCE[ce].displayLabel = currentCE[ce].CESEV;
+                        clinicalEvents.editEvent(currentCE[ce], "displayLabel", currentCE[ce].displayLabel);
+                    }
+                    //console.log(clinicalEvents.getCurrentEvent());
+                    newFinding.FAORES = $scope.steroidsPrescribed;
+                }
+
+                else if (FASCAT == 'Impact on ADL')
+                    newFinding.FAORES = $scope.steroidsPrescribed;
+
+                newFinding.FADTC = $scope.CESTDTC;
+                newFinding.FALNKID = $scope.CESTDTC+" Multiple Sclerosis Relapse";
+                findingsAbout.addFinding(newFinding);
+
+
             }
         }
     }
@@ -219,6 +258,7 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
     }
 
     var generateCESTDTC = function() {
+        //console.log(new Date($scope.CESTDTC_displayDate.substr(3), parseInt($scope.CESTDTC_displayDate.substr(0,2))-1, 1));
         return new Date($scope.CESTDTC_displayDate.substr(3), parseInt($scope.CESTDTC_displayDate.substr(0,2))-1, 1);
     };
 

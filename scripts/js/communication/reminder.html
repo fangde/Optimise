@@ -1,0 +1,81 @@
+<div class="container-fluid">
+    <div class="marginTop" id="communicationsContent">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading myPanel">
+                    <h3 class="panel-title">Laboratory</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <!--<div class="col-sm-3">-->
+                                <!--<div class="input-group">-->
+                                    <!--<label>Start Reminders</label>-->
+                                    <!--<div class="DTC_DayMonthYear"></div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="col-sm-3">-->
+                                <!--<div class="input-group">-->
+                                    <!--<label>End Reminders</label>-->
+                                    <!--<div class="DTC_DayMonthYear"></div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <div class="col-sm-6">
+                                <label>Start Reminders</label>
+                                <div class="input-daterange input-group" id="datepicker">
+                                    <input type="text" class="input-sm form-control" ng-model="reminder.start"
+                                           ng-change="editReminder('REMINDERSTDTC')"/>
+                                    <span class="input-group-addon">to</span>
+                                    <input type="text" class="input-sm form-control" ng-model="reminder.end"
+                                           ng-change="editReminder('REMINDERENDTC')"/>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label>Frequency</label>
+                                <select class="form-control" ng-model="reminder.frequency"
+                                        ng-change="editReminder('REMINDERFREQUENCY')">
+                                    <option>Once/ Week</option>
+                                    <option>Once/ Month</option>
+                                    <option>Twice/ Month</option>
+                                    <option>Once/ Year</option>
+                                    <option>Twice/ Year</option></select>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="btn-group  pull-right">
+                                    <button type="button" class="btn btn-primary"
+                                            ng-class='{inactive: !(reminder.on=="On")}' ng-model="reminder.on"
+                                            uib-btn-radio="'On'"
+                                            ng-change="setReminder()">
+                                        On
+                                    </button>
+                                    <button type="button" class="btn btn-primary"
+                                            ng-class='{inactive: !(reminder.on=="Off")}' ng-model="reminder.on"
+                                            uib-btn-radio="'Off'"
+                                            ng-change="setReminder()">
+                                        Off
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <label>Notes</label>
+                                    <textarea rows='2' class="form-control"
+                                              ng-model="reminder.notes"
+                                              placeholder="Notes"
+                                              ng-blur="editReminder('REMINDERNOTES')"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

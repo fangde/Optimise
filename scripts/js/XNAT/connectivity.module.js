@@ -8,11 +8,6 @@
 
 var connectivityModule = angular.module('Optimise.connectivity',['ngResource']);
 
-//connectivityModule.factory('GetExperiments', function ($resource) {
-//    return $resource('https://central.xnat.org/data/archive/projects/eTRIKS/subjects/CENTRAL_S04082/experiments?format=json',{},{
-//    });
-//});
-
 
 connectivityModule.factory('Experiments', function ($resource) {
     return function(project, subjectID) {
@@ -64,249 +59,47 @@ connectivityModule.factory('Snapshots', function ($resource) {
     }
 });
 
-//connectivityModule.factory('CifLogin', function ($resource, cookieService) {
-//    //return $resource('http://cif-xnat.hh.med.ic.ac.uk/REST/JSESSION',{},{
-//    return $resource('http://cif-xnat.hh.med.ic.ac.uk/j_spring_security_check',{},{
-//        'get': {
-//            method: 'GET',
-//            isArray: false,
-//            headers: {
-//                //"accept": "application/json; charset=utf-8",
-//                //"XNAT_CSRF":"Fetch"
-//            },
-//            transformResponse: function(data, headers, response) {
-//                //console.log(data);
-//                //cookieService.setCookie(data);
-//                //console.log(response)
-//                //var header_xcsrf_token = headers['XNAT_CSRF'];
-//                //console.log(headers);
-//
-//                //return data;
-//                console.log($('#div-contents'));
-//                $('#div-contents').html(data);
-//                console.log($('#div-contents'));
-//                var result = $('#div-contents').find("input[name='XNAT_CSRF']");
-//
-//                //var result = $(response).find("input[name='XNAT_CSRF']");
-//                console.log(result);
-//            }
-//        }
-//    });
-//});
-//
-//connectivityModule.factory('Cif_Subjects', function ($resource) {
-//    return function() {
-//        var url = "http://cif-xnat.hh.med.ic.ac.uk/data/projects/Optimise/subjects?format=json"
-//        return $resource(url,{},{});
-//    }
-//});
-//
-//connectivityModule.factory('Cif_NewSubject', ['$resource',function ($resource) {
-//    //return $resource('http://cif-xnat.hh.med.ic.ac.uk/data/archive/projects/Optimise/subjects/test2',{},{
-//    return $resource('http://cif-xnat.hh.med.ic.ac.uk/data/archive/projects/Optimise/subjects/test2',{},{
-//        'put': {
-//            method: 'PUT'
-//        }
-//    });
-//}]);
-
-//connectivityModule.service('cookieService', function() {
-//    var cookie = "";
-//    var setCookie = function(aCookie) {
-//        console.log(aCookie);
-//        cookie = aCookie;
-//    }
-//
-//    var getCookie = function() {
-//        return cookie;
-//    }
-//
-//    return {
-//        getCookie: getCookie,
-//        setCookie: setCookie
-//    }
-//})
-
-
 connectivityModule.service('connectionServices', function($q, Experiments, Scans, Resources, Snapshots, RawImage, CIF_Data) {
 
-//    var getSubjectsFromCIF = function() {
-//        console.log("getting from cif")
-//        var valuePairs = {login_method: "Database",
-//            j_username: "myyong",
-//            j_password: "150914_Bg",
-//            login: "Login"};
-//            //XNAT_CSRF: ""};
-//
-//        var loginPairs = {
-//            'u':"myyong",
-//            "p":"150914_Bg"
-//        }
 
-//        $http.get('http://cif-xnat.hh.med.ic.ac.uk/j_spring_security_check',
-//            {
-//                params: valuePairs,
-//                headers : {'Accept' : 'application/json'},
-//                transformResponse: function(data, headers) {
-//                    console.log(headers());
-//                    return data;
-//                }
-//            }
-//        ).then(function successCallback(res) {
-//            console.log(res);
-//        }, function(error) {
-//            console.log(error);
-//        });
-
-//        CifLogin.get(loginPairs, function(cifLoginResource){
-//            cifLoginResource.$promise.then(function (logindata, headers) {
-//                console.log(logindata);
-//            }put
-//        });
-
-//            console.log(logindata)
-//            logindata.$promise.then(function (loginresponse) {
-//                console.log(loginresponse);
-//                var deferred = $q.defer();
-//                try {
-//                    var subjects = new Cif_Subjects();
-//                    subjects.get({}, function(subject_data) {
-//                        subject_data.$promise.then(function(subjectLists) {
-//                            console.log(subjectLists);
-//                            deferred.resolve(subjectLists);
-//
-//                            var newSubjectResource = new Cif_NewSubject();
-//                            console.log(newSubjectResource);
-//                            newSubjectResource.$put(loginPairs, function(aResponse) {
-//                                    aResponse.$promise.then(function(newSubjectResponse) {
-//                                        console.log(newSubjectResponse);
-//                                    })
-//                            })
-//                        })
-//                    });
-//                }
-//                catch (e) {
-//                    deferred.reject(e);
-//                }
-            //});
-        //})
-
-
-//        CifLogin.get(valuePairs, function(cifLoginResource) {
-//            cifLoginResource.$promise.then(function (loginData) {
-                //console.log(valuePairs);
-//                var cookie = "";
-//                for (var i = 0; i < 32; i++){
-//                    cookie = cookie.concat(loginData[i]);
-//                }
-//                console.log(cookie);
-
-//                var deferred = $q.defer();
-//                try {
-//                    var subjects = new Cif_Subjects();
-//                    subjects.get({XNAT_CSRF:cookie}, function(subject_data) {
-//                        subject_data.$promise.then(function() {
-//                            console.log(subject_data);
-//                            deferred.resolve(subject_data.ResultSet.Result);
-//                        })
-//                    });
-//                }
-//                catch (e) {
-//                    deferred.reject(e);
-//                }
-//
-//                var deferred2 = $q.defer();
-//                try {
-//                    Cif_NewSubject.put({XNAT_CSRF:cookie}, function(subject_data) {
-//                        subject_data.$promise.then(function() {
-//                            console.log(subject_data);
-//                            deferred2.resolve(subject_data.ResultSet.Result);
-//                        })
-//                    });
-//                }
-//                catch (e) {
-//                    deferred2.reject(e);
-//                }
-
-
-//                var newSubjectResource = new Cif_NewSubject();
-//                newSubjectResource.$put({}, function(aResponse) {
-//                                    aResponse.$promise.then(function(newSubjectResponse) {
-//                                        console.log(newSubjectResponse);
-//                                    })
-//                            })
-//                var deferred = $q.defer();
-//                try {
-//                    var subjects = new Cif_Subjects();
-//                    subjects.get({}, function(subject_data) {
-//                        subject_data.$promise.then(function() {
-//                            console.log(subject_data);
-//                            deferred.resolve(subject_data.ResultSet.Result);
-//                        })
-//                    });
-//                }
-//                catch (e) {
-//                    deferred.reject(e);
-//                }
-//            });
-//        });
-//    }
-
-//    var getImagingExperiments = function(USUBJID) {
-//        var deferred = $q.defer();
-//        try {
-//
-//            var data = {experiments:[], scans:[]};
-//            var experiments = getExperiments(USUBJID);
-//            experiments.then(function(experiments) {
-//                //console.log(experiments);
-//
-//                for (var e = 0; e < experiments.length; e++) {
-//                    var anExperiment = {id: experiments[e].ID,
-//                        label:experiments[e].label,
-//                        date: experiments[e].date,
-//                        uri: experiments[e].URI};
-//                    data.experiments.push(anExperiment);
-//                    //console.log(data.experiments);
-//                    var scansFromExperiment = getScans(anExperiment.uri);
-//                    scansFromExperiment.then(function(scans) {
-//                        //console.log(scans);
-//                        for (var s = 0; s < scans.length; s++) {
-//                            var aScan = {id: scans[s].ID,
-//                                uri: scans[s].URI,
-//                                type:scans[s].type,
-//                                quality:scans[s].quality,
-//                                dicom:'',
-//                                thumbnail:'',
-//                                download:'',
-//                                //experimentID:anExperiment.id,
-//                                resourceID:'',
-//                                raw:[]};
-//                            aScan.dicom = aScan.uri+'?format=json';
-//                            aScan.download = aScan.uri+"/files?format=zip";
-//                            getResourcesFromAScan(aScan);
-//                            data.scans.push(aScan);
-//                        }
-//                    })
-//                }
-//            });
-//            //console.log(data);
-//            deferred.resolve(data);
-//        } catch (e) {
-//            deferred.reject(e);
-//        }
-//        return deferred.promise;
-//    }
-
+    /*
     var getImagingExperiments = function(USUBJID) {
         var deferred = $q.defer();
         try {
 
-            var cif_data = new CIF_Data(USUBJID);
-            cif_data.get({}, function(data) {
-                data.$promise.then(function() {
-                    deferred.resolve(data);
-                })
+            var data = {experiments:[], scans:[]};
+            var experiments = getExperiments(USUBJID);
+            experiments.then(function(experiments) {
+                //console.log(experiments);
+
+                for (var e = 0; e < experiments.length; e++) {
+                    var anExperiment = {id: experiments[e].ID,
+                        label:experiments[e].label,
+                        date: experiments[e].date,
+                        uri: experiments[e].URI};
+                    data.experiments.push(anExperiment);
+                    //console.log(data.experiments);
+                    var scansFromExperiment = getScans(anExperiment.uri);
+                    scansFromExperiment.then(function(scans) {
+                        //console.log(scans);
+                        for (var s = 0; s < scans.length; s++) {
+                            var aScan = {id: scans[s].ID,
+                                uri: scans[s].URI,
+                                type:scans[s].type,
+                                quality:scans[s].quality,
+                                dicom:'',
+                                thumbnail:'',
+                                download:'',
+                                //experimentID:anExperiment.id,
+                                resourceID:'',
+                                raw:[]};
+                            aScan.dicom = aScan.uri+'?format=json';
+                            aScan.download = aScan.uri+"/files?format=zip";
+                            getResourcesFromAScan(aScan);
+                            data.scans.push(aScan);
+                        }
+                    })
+                }
             });
             //console.log(data);
             deferred.resolve(data);
@@ -315,6 +108,27 @@ connectivityModule.service('connectionServices', function($q, Experiments, Scans
         }
         return deferred.promise;
     }
+    */
+
+
+
+//    var getImagingExperiments = function(USUBJID) {
+//        var deferred = $q.defer();
+//        try {
+//
+//            var cif_data = new CIF_Data(USUBJID);
+//            cif_data.get({}, function(data) {
+//                data.$promise.then(function() {
+//                    deferred.resolve(data);
+//                })
+//            });
+//            //console.log(data);
+//            deferred.resolve(data);
+//        } catch (e) {
+//            deferred.reject(e);
+//        }
+//        return deferred.promise;
+//    }
 
     var getResourcesFromAScan = function(aScan) {
         var resourcesFromAScan = getResources(aScan.uri);
@@ -440,7 +254,7 @@ connectivityModule.service('connectionServices', function($q, Experiments, Scans
 
 
     return {
-        getImagingExperiments: getImagingExperiments,
+        //getImagingExperiments: getImagingExperiments,
         getExperiments:getExperiments,
         getScans: getScans
         //getSubjectsFromCIF: getSubjectsFromCIF

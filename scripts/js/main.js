@@ -38,6 +38,7 @@ var myPortal = angular.module('Optimise', ['Optimise.timeline',
     'Optimise.communication',
     'textAngular',
     'Optimise.symptoms',
+    'Optimise.reminders',
     'Optimise.signs',
     'ui.bootstrap']);
 

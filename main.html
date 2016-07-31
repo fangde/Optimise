@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!--<html manifest="optimise.appcache?v=V0.0.49">-->
+<!--<html manifest="optimise.appcache?v=V0.0.50">-->
 <html>
 <head>
     <title>OPTIMISE</title>
@@ -27,19 +27,27 @@
                         </h2>
                     </div>
 
-                    <div class="marginTop col-lg-push-8 col-sm-2" style="text-align: right">
-                        <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-default" ng-class="{active: sourceMode=='internet'}"
-                                    ng-click="setSourceMode('internet');"
-                                    ng-show="connectionAvailable()">
-                                <span class="glyphicon glyphicon-cloud" aria-hidden="true"></span><br>Cloud</button>
-                            <button type="button" class="btn btn-default" ng-class="{active: sourceMode=='computer'}"
-                                    ng-click="setSourceMode('computer');">
-                                <span class="glyphicon glyphicon-hdd" aria-hidden="true"></span><br>Local</button>
+                    <div class="doubleMarginTop col-sm-4">
+                        <div class="form-inline">
+                            <div class="btn-group-sm" role="group">
+                                <button type="button" class="btn btn-link" ng-click="openAppointments()">
+                                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                </button>
+
+                                <button type="button" class="btn btn-primary" ng-model="sourceMode"
+                                        ng-class='{inactive: sourceMode != "internet"}'
+                                        ng-show="connectionAvailable()"
+                                        uib-btn-radio="'internet'">
+                                    <span class="glyphicon glyphicon-cloud" aria-hidden="true"></span>Cloud</button>
+                                <button type="button" class="btn btn-primary"  ng-model="sourceMode"
+                                        ng-class='{inactive: sourceMode != "computer"}'
+                                        uib-btn-radio="'computer'">
+                                    <span class="glyphicon glyphicon-hdd" aria-hidden="true"></span>Local</button>
+                            </div>
                         </div>
                     </div>
 
-                    <form class="doubleMarginTop col-sm-push-2 col-sm-6" ng-show="navigatorIsOnline()">
+                    <form class="doubleMarginTop col-sm-push-1 col-sm-5 text-right" ng-show="navigatorIsOnline()">
                         <div class="form-inline">
                             <input type="text" class="form-control" ng-model="UserName" placeholder="UserName">
                             <input type="password" class="form-control" ng-model="Password" placeholder="Password">
@@ -47,49 +55,66 @@
                         </div>
                     </form>
 
+                    <!--<div class="doubleMarginTop col-sm-2">-->
+                        <!--<div class="btn-group-sm" role="group">-->
+                            <!--<button type="button" class="btn btn-primary" ng-class="{active: sourceMode=='internet'}"-->
+                                    <!--ng-click="setSourceMode('internet');"-->
+                                    <!--ng-show="connectionAvailable()"-->
+                                    <!--uib-btn-radio="'Both'">-->
+                                <!--<span class="glyphicon glyphicon-cloud" aria-hidden="true"></span>Cloud</button>-->
+                            <!--<button type="button" class="btn btn-primary" ng-class="{active: sourceMode=='computer'}"-->
+                                    <!--ng-click="setSourceMode('computer');"-->
+                                    <!--uib-btn-radio="'Both'">-->
+                                <!--<span class="glyphicon glyphicon-hdd" aria-hidden="true"></span>Local</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="doubleMarginTop col-sm-2">-->
+                        <!---->
+                    <!--</div>-->
+        </div>
+    </div>
+</header>
+
+<div id="mainContent">
+    <div id="events" class="container-fluid">
+        <div class="eventStatus" ng-show="showEventsBar()">
+            <div class="row" ng-show="enableNewDate()&&(contentOnDisplay=='Relapse')">
+                <div class="col-sm-12" >
+                    <div class="input-group">
+                        <input type="text" class="form-control DTC_MonthYear"
+                               ng-class="{fillThisFirst: newEventDate==''}"
+                               ng-disabled="disableChangesToDate()"
+                               ng-model="newEventDate"
+                               ng-change="setNewFormDate();">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
                 </div>
             </div>
-        </header>
-
-        <div id="mainContent">
-            <div id="events" class="container-fluid">
-                <div class="eventStatus" ng-show="showEventsBar()">
-                    <div class="row" ng-show="enableNewDate()&&(contentOnDisplay=='Relapse')">
-                        <div class="col-sm-12" >
-                            <div class="input-group">
-                                <input type="text" class="form-control DTC_MonthYear"
-                                       ng-class="{fillThisFirst: newEventDate==''}"
-                                       ng-disabled="disableChangesToDate()"
-                                       ng-model="newEventDate"
-                                       ng-change="setNewFormDate();">
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </div>
-                        </div>
+            <div class="row" ng-show="enableNewDate()&&(contentOnDisplay!='Relapse')">
+                <div class="col-sm-12" >
+                    <div class="input-group">
+                        <input type="text" class="form-control DTC_DayMonthYear" ng-disabled="disableChangesToDate()"
+                               ng-model="newEventDate"
+                               ng-class="{fillThisFirst: newEventDate==''}"
+                               ng-change="setNewFormDate();">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                     </div>
-                    <div class="row" ng-show="enableNewDate()&&(contentOnDisplay!='Relapse')">
-                        <div class="col-sm-12" >
-                            <div class="input-group">
-                                <input type="text" class="form-control DTC_DayMonthYear" ng-disabled="disableChangesToDate()"
-                                       ng-model="newEventDate"
-                                       ng-class="{fillThisFirst: newEventDate==''}"
-                                       ng-change="setNewFormDate();">
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="table-responsive">
-                                <table id="eventsTable" class="table">
-                                    <thead><tr>
-                                        <th>#</th>
-                                        <th colspan="1">{{contentOnDisplay}}</th>
-                                        <!--<th colspan="1"><linkButton ng-click="setNewForm()"-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <table id="eventsTable" class="table">
+                            <thead><tr>
+                                <th>#</th>
+                                <th colspan="1">{{contentOnDisplay}}</th>
+                                <!--<th colspan="1"><linkButton ng-click="setNewForm()"-->
                                                                     <!--ng-disabled="true"-->
                                                                     <!--ng-hide='contentOnDisplay=="Questionnaire"'>New</linkButton></th>-->
                                         <th colspan="1" ng-show="thereIsAPatient()">
                                             <a href="#" ng-click="setNewForm()"
-                                            ng-hide='contentOnDisplay=="Questionnaire"'>New</a>
+                                            ng-hide='(contentOnDisplay=="Questionnaire")||(contentOnDisplay=="Reminders")'>New</a>
                                         </th>
                                         </tr></thead>
                                 <tbody>
@@ -219,6 +244,35 @@
                 <div class="modal-footer">
                     <button class="btn btn-primary" ng-show="okToProceed()" ng-click="ok()">OK</button>
                     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                </div>
+            </script>
+
+            <script type="text/ng-template" id="appointments.html">
+                <div class="modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">
+                                <span class="glyphicon glyphicon-book">  Appointments</span></h3>
+                        </div>
+                        <div class="modal-body container-fluid">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <table ng-table="tableParams" class="table">
+                                        <tr ng-repeat="reminder in $data">
+                                            <td title="'OPT ID'"class="columnValuesCentered">{{reminder.id}}</a></td>
+                                            <td title="'Last '" class="columnValuesCentered">{{reminder.last}}</td>
+                                            <td title="'Due'" class="columnValuesCentered">{{reminder.due}}</td>
+                                            <td title="'Notes'" class="columnValuesCentered">{{reminder.notes}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" ng-click="ok()">OK</button>
+                            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                        </div>
+                    </div>
                 </div>
             </script>
 
@@ -395,8 +449,8 @@
                         <a href="#" role="tab" data-toggle="tab" ng-click="contentOnDisplay='Questionnaire'; setContent();">Proms <span class="badge">{{getNumQuestionnaires()}}</span></a></li>
                     <li role="presentation" ng-class="{active: isActiveContent('Exposure')}" >
                         <a href="#" role="tab" data-toggle="tab" ng-click="contentOnDisplay='Exposure'; setContent();">Treatments <span class="badge">{{getNumExposures()}}</span></a></li>
-                    <!--<li role="presentation" ng-class="{active: isActiveContent('Communications')}" >-->
-                        <!--<a href="#" role="tab" data-toggle="tab" ng-click="contentOnDisplay='Communications'; setContent();">Communications</a></li>-->
+                    <li role="presentation" ng-class="{active: isActiveContent('Reminders')}" >
+                        <a href="#" role="tab" data-toggle="tab" ng-click="contentOnDisplay='Reminders'; setContent();"><span class="glyphicon glyphicon-bell"></span></a></li>
                     <!--<li role="presentation" ng-class="{active: 'Medical Event'}" >-->
                         <!--<a href="#" role="tab" data-toggle="tab" ng-click="contentOnDisplay='Medical Event'; setContent();">Medical Events <span class="badge">{{getNumEvents()}}</span></a>-->
                     <!--<li role="presentation"><a href="#" ng-class="{active: 'Test')" role="tab" data-toggle="tab" ng-click="contentOnDisplay='Test'; setContent();">Tests <span class="badge">{{getNumCollections()}}</span></a></li>  </li>-->
@@ -435,9 +489,9 @@
                 <div questionnaire-entry ng-controller="questionnaireInfoCtrl" ng-show="showThisContent()">
                 </div>
 
-                <!-- Communicatios -->
-                <!--<div communication-entry ng-controller="communicationInfoCtrl" ng-show="showThisContent()">-->
-                <!--</div>-->
+                <!--Communication -->
+                <div reminder-entry ng-controller="reminderInfoCtrl" ng-show="showThisContent()">
+                </div>
         </section>
         </div>
 
@@ -495,6 +549,7 @@
 <script type="text/javascript" src="scripts/js/clinicalEvent/adverseEvent.module.js"></script>
 <script type="text/javascript" src="scripts/js/deviceInUse/deviceInUse.module.js"></script>
 <script type="text/javascript" src="scripts/js/communication/communication.module.js"></script>
+<script type="text/javascript" src="scripts/js/communication/reminders.module.js"></script>
 
 
 <script type="text/javascript" src="scripts/vendor/cornerstone.min.js"></script>

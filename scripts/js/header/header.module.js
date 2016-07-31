@@ -301,6 +301,18 @@ headerModule.controller('newInterestCtrl', function($scope, $uibModalInstance) {
     };
 });
 
+
+headerModule.controller('appointmentsCtrl', function ($scope, $uibModalInstance) {
+    $scope.ok = function () {
+        $uibModalInstance.close();
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
+
+
 headerModule.controller('newPatientInstanceCtrl', function ($scope, $uibModalInstance, sourceMode, viewService, records, siteID) {
 
     $scope.actionMode = "New";
@@ -315,7 +327,7 @@ headerModule.controller('newPatientInstanceCtrl', function ($scope, $uibModalIns
         actionMode: $scope.actionMode
     };
 
-    console.log(siteID);
+    //console.log(siteID);
 
     var currentDate = new Date();
     $scope.yearsOption = [];
@@ -637,7 +649,49 @@ headerModule.controller('newPatientInstanceCtrl', function ($scope, $uibModalIns
 
 });
 
+headerModule.controller('appointmentsCtrl', function ($scope, $uibModalInstance, records, NgTableParams, $timeout) {
+
+    $scope.data = [];
+
+    var makeAppointmentsAPICall = function() {
+        var appointments = [];
+
+        var appointmentsAPICall = records.getDueAppointments();
+        appointmentsAPICall.then(function(data) {
+            var reminders = data.Reminders;
+            var subjectIDs = Object.keys(reminders);
+
+            for (var s = 0; s < subjectIDs.length; s++) {
+                var id = subjectIDs[s];
+                var lastAppointment = reminders[id]['LastAppointment'];
+                var due = reminders[id]['DueAppointment'];
+                var notes = reminders[id]['Notes'];
+
+                var aReminder = {'id':id, 'last':lastAppointment, 'due':due, 'notes':notes};
+                appointments.push(aReminder);
+            }
+
+            $scope.tableParams.settings({
+                    dataset: appointments
+                });
+                $scope.data = appointments.slice(0);
+        });
+    }
+    $scope.tableParams = new NgTableParams({}, { dataset: []});
+
+    makeAppointmentsAPICall();
+
+    $scope.ok = function () {
+        $uibModalInstance.close();
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
+
 headerModule.controller('configInstanceCtrl', function ($scope, $uibModalInstance) {
+
     $scope.ok = function () {
         $uibModalInstance.close();
     };
@@ -704,6 +758,7 @@ headerModule.controller('depositoryCtrl', function ($scope, $uibModalInstance, s
             var dmData = [];
             var demographicAPICall = records.getAllDemographics();
             demographicAPICall.then(function(demographics) {
+                console.log(demographics);
                 var dmRecords = demographics.RecordSet;
                 for (var dm = 0; dm < dmRecords.length; dm++) {
                     var aRecord = dmRecords[dm];
@@ -881,7 +936,8 @@ headerModule.controller('headerCtrl', function ($rootScope,
                                             adverseEventService,
                                             morphologyServices, Country,
                                             substanceUse, subjectCharacteristic,
-                                            connectionServices) {
+                                            deviceInUseServices,
+                                            reminders) {
 
 
 
@@ -1118,9 +1174,10 @@ headerModule.controller('headerCtrl', function ($rootScope,
                             $scope.setEventUSUBJID($scope.USUBJID);
                             $scope.setExposureUSUBJID($scope.USUBJID);
                             $scope.setLabUSUBJID($scope.USUBJID);
-                            $scope.setMRIUSUBJID($scope.USUBJID, $scope.sourceMode=='internet');
+                            $scope.setMRIUSUBJID($scope.USUBJID, ($scope.authenticatedStatus=="Logged In")&&($scope.sourceMode=="internet"));
                             $scope.setVisitUSUBJID($scope.USUBJID);
                             $scope.setRelapseUSUBJID($scope.USUBJID);
+                            $scope.setReminderSUBJID($scope.USUBJID, patients.getCurrentPatient().NHS_USUBJID);
                             $scope.setQuestionnaireUSUBJID($scope.USUBJID);
                             displayCurrentPatient();
                         }
@@ -1306,6 +1363,16 @@ headerModule.controller('headerCtrl', function ($rootScope,
             case 'SC':
             {
                 subjectCharacteristic.populateSubjectCharacteristic(aRecordItems);
+                break;
+            }
+            case 'DU':
+            {
+                deviceInUseServices.populateDeviceInUse(aRecordItems);
+                break;
+            }
+            case 'REMINDER':
+            {
+                reminders.populateDeviceInUse(aRecordItems);
                 break;
             }
         }
@@ -1516,6 +1583,13 @@ headerModule.controller('headerCtrl', function ($rootScope,
             var reRecordItem = getRecordItem(REL[re]);
 
             RecordItems.push(reRecordItem);
+        }
+
+        var DU = deviceInUseServices.getDevicesInUse();
+        for (var du = 0; re < DU.length; re++) {
+            var duRecordItem = getRecordItem(DU[du]);
+
+            RecordItems.push(duRecordItem);
         }
 
         return(root);
@@ -1760,6 +1834,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
         $scope.setNewVisitFields();
         $scope.setNewResultFields();
         $scope.setNewQuestionnaireFields();
+        $scope.setNewReminderFields();
 
         associatedPersonMedicalHistories.deleteAssociatedPersonMedicalHistories();
         clinicalEvents.deleteClinicalEvents();
@@ -1775,6 +1850,8 @@ headerModule.controller('headerCtrl', function ($rootScope,
         subjectVisits.deleteSubjectVisits();
         subjectCharacteristic.deleteSubjectCharacteristics();
         substanceUse.deleteSubstanceUse();
+        deviceInUseServices.deleteDevicesInUse();
+        reminders.deleteReminders();
     }
 
     $scope.deletePatient = function () {
@@ -1967,6 +2044,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
             case "Visit":
             {
                 var SVSTDTC = new Date($scope.newEventDate.substr(6), parseInt($scope.newEventDate.substr(3,2))-1, $scope.newEventDate.substr(0,2));
+                console.log(SVSTDTC);
                 if (isThisADate(SVSTDTC)) {
                     $scope.setNewVisitDate($scope.newEventDate, SVSTDTC);
                     viewService.setView("Visit", false);
@@ -2035,6 +2113,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
                 $scope.setNewResultFields();
                 $scope.setNewCSFFields();
                 $scope.setTestIndexForLab($scope.testIndex);
+                $scope.setNewMRIFields();
                 break;
             }
             case 'Questionnaire':
@@ -2283,6 +2362,11 @@ headerModule.controller('headerCtrl', function ($rootScope,
                             laboratoryTestResults.deleteResult(testsSelectedForDeletion[v]);
                             laboratoryTestResults.printLabTestResults();
                         }
+                        var scansSelectedForDeletion = deviceInUseServices.getScansByDate(collectionDate);
+                        for (var v = 0; v < scansSelectedForDeletion.length; v++) {
+                            deviceInUseServices.deleteDeviceInUse(scansSelectedForDeletion[v]);
+                            deviceInUseServices.print();
+                        }
                     }
                 }
                 else {
@@ -2309,6 +2393,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
                 viewService.setView('Test', false);
                 $scope.setNewResultFields();
                 $scope.setNewCSFFields();
+                $scope.setNewMRIFields();
 
                 break;
             }
@@ -2649,6 +2734,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
             $scope.setVisitUSUBJID($scope.USUBJID);
             $scope.setRelapseUSUBJID($scope.USUBJID);
             $scope.setQuestionnaireUSUBJID($scope.USUBJID);
+            $scope.setReminderSUBJID($scope.USUBJID, aPatient.NHS_USUBJID);
         }
         //console.log(patients.getCurrentPatient());
     }
@@ -2753,6 +2839,33 @@ headerModule.controller('headerCtrl', function ($rootScope,
             return false;
     }
 
+    $scope.openAppointments = function() {
+        var modalInstance = $uibModal.open({
+            templateUrl: 'appointments.html',
+            controller: 'appointmentsCtrl',
+            resolve: {
+
+            }
+        });
+
+        modalInstance.result.then(function() {
+            console.log("ok");
+        }, function() {
+            console.log("cancelled")
+        })
+    }
+
+    var populateReminders = function() {
+        var reminderForPatient = records.getReminder(patients.getCurrentPatient().USUBJID);
+        reminderForPatient.then(function(reminderData) {
+            if ((reminderData.RecordSet != null)&&(reminderData.RecordSet.length >0)) {
+                //console.log(reminderData.RecordSet[0]);
+                reminders.populateReminder(reminderData.RecordSet[0]);
+                $scope.displayReminder();
+            }
+        });
+    }
+
     $scope.openDepository = function () {
         clearCurrentPatientSession();
 
@@ -2773,6 +2886,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
                     //viewService.setOffline(false);
                     //$scope.USUBJID = newData.USUBJID;
                     populateFromDB(selectionData.recordSet);
+                    populateReminders();
                 }
                 else if ($scope.sourceMode=='computer') {
                     //$scope.USUBJID = newData.USUBJID;
@@ -2807,6 +2921,8 @@ headerModule.controller('headerCtrl', function ($rootScope,
             console.log("Cancelled");
         });
     };
+
+
 
 
 //     var valuePairs = {login_method: "Database",

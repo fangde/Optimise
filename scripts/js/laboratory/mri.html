@@ -10,35 +10,72 @@
             <div class="panel-collapse collapse in" id='collapseScans'>
                 <div class="panel-body">
                     <div class="row">
-                        <!--
-                        <div class="col-sm-2">
-                            <button type="button" class='textButton' ng-click="setScansTakenDuringExperiment()">Get Scans</button>
-                        </div> -->
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Session Name</label>
+                                <input type="text" class="form-control"
+                                       ng-model="sessionLabel"
+                                       ng-change="editProcedureDisplayLabel()"
+                                       ng-disabled="lockDownSessionLabelValue()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-4">
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Scans</label>
-                                        <select class='form-control' ng-model="selectedScan" ng-options="scan.type for scan in scansTakenDuringExperiment" ng-change="selectScan()">
+                                        <select class='form-control' ng-model="selectedScan"
+                                                ng-options="scan.type for scan in scansTakenDuringExperiment" ng-change="selectScan()"
+                                                multiple ng-disabled=true>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <a class="btn btn-default" href="{{dicomURL}}" target="_blank" role="button">DICOM Parameters</a>
+                                    <a class="btn btn-default" href="{{dicomURL}}" target="_blank" role="button"
+                                       ng-disabled=true>DICOM Parameters</a>
                                 </div>
                                 <div class="col-sm-6">
-                                    <a class="btn btn-default" href="{{downloadURL}}" target="_blank" role="button">Download</a>
+                                    <a class="btn btn-default" href="{{downloadURL}}" target="_blank" role="button"
+                                       ng-disabled=true>Download</a>
                                 </div>
                             </div>
                         </div>
                         <div class='col-sm-8'>
                             <div class="imagePanel panel panel-default">
-                                <img ng-src="{{imageURL}}" ng-click="zoomImage()"/>
+                                <img ng-src="{{imageURL}}" ng-click="zoomImage()"
+                                     ng-disabled=true />
                             </div>
                         </div>
-
+                    </div>
+                    <div class="row marginTop">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label ng-show="provideICOMETRIXSupport();">Scan Type</label>
+                                <select class='form-control' ng-model="scanWeight" ng-show="provideICOMETRIXSupport();">
+                                    <option>T1</option>
+                                    <option>T2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class ='col-sm-4'>
+                            <div class="form-group">
+                            <label for="dicomFiles" ng-show="provideICOMETRIXSupport();">DICOM volume</label>
+                                <!--<input type="text" ng-model="name" class="form-control">-->
+                                <input type="file" id="dicomFiles" class="form-control"
+                                onchange="angular.element(this).scope().dicomNameChanged(this)"
+                                ng-show="provideICOMETRIXSupport();"
+                                ng-disabled="scanWeight==''">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="button" class="btn btn-primary"
+                                    ng-click="setIcometrixJob();"
+                                    ng-show="provideICOMETRIXSupport();">Upload</button>
+                        </div>
                     </div>
                 </div>
             </div>

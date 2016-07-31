@@ -26,7 +26,7 @@ immunogenicitySpecimenAssessmentModule.factory('ImmunogenicitySpecimenAssessment
             ISNAM:"",
             ISSPEC:"",
             ISMETHOD:"",
-            VISITNUM:"",
+            //VISITNUM:"",
             VISIT:"",
             ISDTC:"",
             displayDate:'',
@@ -52,14 +52,6 @@ immunogenicitySpecimenAssessmentModule.service('immunogenicitySpecimenAssessment
 
     var getAssessments = function () {
         return immunogenicitySpecimenAssessments;
-    }
-
-    var populateManual = function () {
-        var newISA = new ImmunogenicitySpecimenAssessment("Anti HIV Antibody");
-        newISA.ISORRES = "Negative";
-        newISA.ISDTC = new Date(2015,1,31);
-        newISA.ISSEQ = immunogenicitySpecimenAssessments.length;
-        immunogenicitySpecimenAssessments.push(newISA);
     }
 
     var populateISA = function (RecordItems) {
@@ -126,11 +118,11 @@ immunogenicitySpecimenAssessmentModule.service('immunogenicitySpecimenAssessment
                     newISA.ISMETHOD = RecordItems[i].value;
                     break;
                 }
-
+                /*
                 case 'VISITNUM':{
                     newISA.VISITNUM = RecordItems[i].value;
                     break;
-                }
+                }*/
                 case 'VISIT':{
                     newISA.VISIT = RecordItems[i].value;
                     break;
@@ -210,6 +202,8 @@ immunogenicitySpecimenAssessmentModule.service('immunogenicitySpecimenAssessment
 
     var deleteResult = function (IS){
         var index = immunogenicitySpecimenAssessments.indexOf(IS);
+        console.log('deleting');
+        console.log(IS);
         if (index > -1) {
             immunogenicitySpecimenAssessments.splice(index, 1);
             if (!viewService.workOffline())
@@ -243,8 +237,8 @@ immunogenicitySpecimenAssessmentModule.service('immunogenicitySpecimenAssessment
         var testsOnDate = [];
         var dateCriteria = LBDTC.toDateString();
         for (var t = 0; t < immunogenicitySpecimenAssessments.length; t++){
-            console.log(immunogenicitySpecimenAssessments[t].ISDTC.toDateString());
-            console.log(LBDTC.toDateString());
+            //console.log(immunogenicitySpecimenAssessments[t].ISDTC.toDateString());
+            //console.log(LBDTC.toDateString());
             if (dateCriteria==immunogenicitySpecimenAssessments[t].ISDTC.toDateString()){
                 testsOnDate.push(immunogenicitySpecimenAssessments[t]);
             }
@@ -266,8 +260,8 @@ immunogenicitySpecimenAssessmentModule.service('immunogenicitySpecimenAssessment
         else  {
             currentCollectionDate = event.NVDTC;
         }
-        console.log("setting collection day");
-        console.log(currentCollectionDate);
+        //console.log("setting collection day");
+        //console.log(currentCollectionDate);
     }
 
     var getAssessmentByDate = function (ISDTC) {
@@ -286,7 +280,7 @@ immunogenicitySpecimenAssessmentModule.service('immunogenicitySpecimenAssessment
     return {
         printISAs:printISAs,
         populateISA:populateISA,
-        populateManual:populateManual,
+        //populateManual:populateManual,
         getAssessmentResult: getAssessmentResult,
         addResult: addResult,
         deleteResult:deleteResult,

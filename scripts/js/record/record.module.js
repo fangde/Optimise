@@ -19,6 +19,36 @@ recordModule.factory('Record', function ($resource) {
     }
 });
 
+recordModule.factory('ReminderResource', function ($resource) {
+    return {
+        saveData: function(url) {
+            console.log("saving data");
+            var resource = $resource(url, {},{
+                'save': {method: 'POST'}
+            });
+            return resource;
+        },
+        getData: function(url) {
+            //console.log("saving data");
+            var resource = $resource(url, {},{
+                'get': {method: 'GET'}
+            });
+            return resource;
+        }
+    }
+});
+
+recordModule.factory('ICOMETRIX', function ($resource) {
+    return {
+        saveData: function(url) {
+            var resource = $resource(url, {},{
+                'save': {method: 'POST'}
+            });
+            return resource;
+        }
+    }
+});
+
 recordModule.factory('NewSubject', function ($resource) {
     return {
         createSubject: function(url) {
@@ -42,10 +72,10 @@ recordModule.factory('Edit', function ($resource) {
     }
 });
 
-recordModule.factory('DataGroup', function ($resource) {
-    return $resource('http://www.optimise-ms.org/api-optimise/wh/groups.php',{},{
-    });
-})
+//recordModule.factory('DataGroup', function ($resource) {
+//    return $resource('http://www.optimise-ms.org/api-optimise/wh/groups.php',{},{
+//    });
+//})
 
 recordModule.factory('NewUser', function ($resource) {
     var url = "http://www.optimise-ms.org/api-optimise/wh/clinicians.php";
@@ -90,6 +120,18 @@ recordModule.factory('USUBJID', function ($resource) {
     }
 });
 
+recordModule.factory('DueAppointments', function ($resource) {
+    return {
+        getDueAppointments: function(url) {
+            var resource = $resource(url, {},
+                {
+                    get: {method: 'GET'}
+                });
+            return resource;
+        }
+    }
+});
+
 recordModule.factory('DeleteFactory', function ($resource) {
     return {
         deleteSubjectData: function(url) {
@@ -114,26 +156,26 @@ recordModule.factory('CONFIG', function ($resource) {
     }
 });
 
-recordModule.factory('XNATLogin', function ($resource) {
-
-    return $resource('https://central.xnat.org/j_spring_security_check',{},{
-        'get': {method: 'GET'},
-        'transformRequest': function(data, headers){
-            //MESS WITH THE DATA
-            var response = {}
-            response.data = data;
-            response.headers = headers();
-            return response;
-        }
-
-    });
-});
-
-recordModule.factory('CIFLogin', function ($resource) {
-    return $resource('http://cif-xnat.hh.med.ic.ac.uk/j_spring_security_check',{},{
-        'get': {method: 'GET'}
-    });
-});
+//recordModule.factory('XNATLogin', function ($resource) {
+//
+//    return $resource('https://central.xnat.org/j_spring_security_check',{},{
+//        'get': {method: 'GET'},
+//        'transformRequest': function(data, headers){
+//            //MESS WITH THE DATA
+//            var response = {}
+//            response.data = data;
+//            response.headers = headers();
+//            return response;
+//        }
+//
+//    });
+//});
+//
+//recordModule.factory('CIFLogin', function ($resource) {
+//    return $resource('http://cif-xnat.hh.med.ic.ac.uk/j_spring_security_check',{},{
+//        'get': {method: 'GET'}
+//    });
+//});
 
 
 recordModule.factory('USERID', function ($resource) {
@@ -149,7 +191,8 @@ recordModule.factory('USERID', function ($resource) {
     }
 });
 
-recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUBJIDList, NewSubject, DeleteFactory, NewUser) {
+recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUBJIDList,
+                                          NewSubject, DeleteFactory, NewUser, ICOMETRIX, DueAppointments, ReminderResource) {
 
     var token='';
 
@@ -172,6 +215,13 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
                 api = 'http://www.optimise-ms.org/api-optimise/opt.php';
             else
                 api = '/api-optimise/opt.php';
+        }
+
+        if (functionName == 'Appointments') {
+            if (onlineOrLocal == 'local')
+                api = 'http://www.optimise-ms.org/api-optimise/getListAppointmentsDue.php';
+            else
+                api = '/api-optimise/getListAppointmentsDue.php';
         }
 
         if (functionName == 'Delete') {
@@ -200,6 +250,13 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
                 api = 'http://www.optimise-ms.org/api-optimise/opt.php';
             else
                 api = '/api-optimise/opt.php';
+        }
+
+        if (functionName == 'Reminder') {
+            if (onlineOrLocal == 'local')
+                api = 'http://www.optimise-ms.org/api-optimise/reminders.php';
+            else
+                api = '/api-optimise/reminders.php';
         }
 
         if (functionName == 'Edit') {
@@ -289,6 +346,12 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
             case 'SC': {
                 return event.DOMAIN+"_"+event.SCSEQ;
             }
+            case 'DU': {
+                return event.DOMAIN+"_"+event.DUSEQ;
+            }
+            case 'MO': {
+                return event.DOMAIN+"_"+event.MOSEQ;
+            }
         };
     }
 
@@ -348,11 +411,6 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
             switch (keys[k]) {
                 case 'QSSEQ': {
                     var keyAndItem = {fieldName:"QSSEQ", value: aRecord[keys[k]]};
-                    keysAndItems.push(keyAndItem);
-                    break;
-                }
-                case 'VISITNUM': {
-                    var keyAndItem = {fieldName:"VISITNUM", value: aRecord[keys[k]]};
                     keysAndItems.push(keyAndItem);
                     break;
                 }
@@ -418,9 +476,32 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
                     keysAndItems.push(keyAndItem);
                     break;
                 }
+                case 'DUSEQ': {
+
+                    var keyAndItem = {fieldName:"DUSEQ", value: aRecord[keys[k]]};
+                    keysAndItems.push(keyAndItem);
+                    break;
+                }
                 case 'SCSEQ': {
 
                     var keyAndItem = {fieldName:"SCSEQ", value: aRecord[keys[k]]};
+                    keysAndItems.push(keyAndItem);
+                    break;
+                }
+                case 'LBSEQ': {
+
+                    var keyAndItem = {fieldName:"LBSEQ", value: aRecord[keys[k]]};
+                    keysAndItems.push(keyAndItem);
+                    break;
+                }
+                case 'ISSEQ': {
+
+                    var keyAndItem = {fieldName:"ISSEQ", value: aRecord[keys[k]]};
+                    keysAndItems.push(keyAndItem);
+                    break;
+                }
+                case 'VISITNUM': {
+                    var keyAndItem = {fieldName:"VISITNUM", value: aRecord[keys[k]]};
                     keysAndItems.push(keyAndItem);
                     break;
                 }
@@ -471,51 +552,51 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
         return deferred.promise;
     }
 
-    var getParsedDemographics= function()
-    {
-        var deferred = $q.defer();
-        try {
-            var demographicAPICall = getDemographics();
-            demographicAPICall.then(function(demographics) {
-                var tempData = [];
-                var dmRecords = demographics.RecordSet;
-
-                for (var dm = 0; dm < dmRecords.length; dm++) {
-                    var aRecord = dmRecords[dm];
-                    var opt_id ='';
-                    var nhs_id ='';
-                    var age = '';
-                    var sex = '';
-                    var rficdtc = '';
-                    var aRecordItems = aRecord.RecordItems;
-                    for (var item = 0; item < aRecordItems.length; item++) {
-                        if (aRecordItems[item].fieldName == 'USUBJID')
-                            opt_id = aRecordItems[item].value;
-                        else if (aRecordItems[item].fieldName == 'NHS_USUBJID')
-                            nhs_id = aRecordItems[item].value;
-                        else if (aRecordItems[item].fieldName == 'BRTHDTC')
-                            age = '';
-                        else if (aRecordItems[item].fieldName == 'SEX')
-                            sex = aRecordItems[item].value;
-                        else if (aRecordItems[item].fieldName == 'RFICDTC')
-                            rficdtc = aRecordItems[item].value;
-                    }
-                    var row = {opt_id: opt_id, nhs_id: nhs_id, age:age, sex: sex, rficdtc: rficdtc, selected: false};
-                    tempData.push(row);
-                }
-
-                demographics.$promise
-                    .then(function() {
-                        deferred.resolve(tempData);
-                    })
-
-            });
-        }
-        catch (e) {
-            deferred.reject(e);
-        }
-        return deferred.promise;
-    }
+//    var getParsedDemographics= function()
+//    {
+//        var deferred = $q.defer();
+//        try {
+//            var demographicAPICall = getDemographics();
+//            demographicAPICall.then(function(demographics) {
+//                var tempData = [];
+//                var dmRecords = demographics.RecordSet;
+//
+//                for (var dm = 0; dm < dmRecords.length; dm++) {
+//                    var aRecord = dmRecords[dm];
+//                    var opt_id ='';
+//                    var nhs_id ='';
+//                    var age = '';
+//                    var sex = '';
+//                    var rficdtc = '';
+//                    var aRecordItems = aRecord.RecordItems;
+//                    for (var item = 0; item < aRecordItems.length; item++) {
+//                        if (aRecordItems[item].fieldName == 'USUBJID')
+//                            opt_id = aRecordItems[item].value;
+//                        else if (aRecordItems[item].fieldName == 'NHS_USUBJID')
+//                            nhs_id = aRecordItems[item].value;
+//                        else if (aRecordItems[item].fieldName == 'BRTHDTC')
+//                            age = '';
+//                        else if (aRecordItems[item].fieldName == 'SEX')
+//                            sex = aRecordItems[item].value;
+//                        else if (aRecordItems[item].fieldName == 'RFICDTC')
+//                            rficdtc = aRecordItems[item].value;
+//                    }
+//                    var row = {opt_id: opt_id, nhs_id: nhs_id, age:age, sex: sex, rficdtc: rficdtc, selected: false};
+//                    tempData.push(row);
+//                }
+//
+//                demographics.$promise
+//                    .then(function() {
+//                        deferred.resolve(tempData);
+//                    })
+//
+//            });
+//        }
+//        catch (e) {
+//            deferred.reject(e);
+//        }
+//        return deferred.promise;
+//    }
 
     var getAllDemographics = function() {
         var input = {'DOMAIN': 'DM'};
@@ -524,6 +605,24 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
         try {
             var USUBJIDData = USUBJID.getSubjects(url);
             USUBJIDData.get(input, function (data){
+                data.$promise
+                    .then(function() {
+                        deferred.resolve(data);
+                    })
+            });
+        }
+        catch (e) {
+            deferred.reject(e);
+        }
+        return deferred.promise;
+    }
+
+    var getDueAppointments = function() {
+        var deferred = $q.defer();
+        var url = getURL('Appointments');
+        try {
+            var appointmentsData = DueAppointments.getDueAppointments(url);
+            appointmentsData.get({}, function (data){
                 data.$promise
                     .then(function() {
                         deferred.resolve(data);
@@ -622,9 +721,88 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
         Record.saveData(url).save(jsonBody);
     };
 
+    var saveReminder = function (newReminder) {
+        var jsonBody = formatForPostSave(newReminder);
+        var url = getURL('Reminder');
+        //console.log(jsonBody);
+        ReminderResource.saveData(url).save(jsonBody);
+    };
+
+
+    var editRecord = function (idRecord, valueRecord) {
+        var jsonBody = formatForPostEdit(idRecord, valueRecord);
+        var url = getURL('Edit');
+        Edit.editData(url).save(jsonBody);
+    };
+
+    var editReminder = function (idRecord, valueRecord) {
+        var jsonBody = formatForPostEdit(idRecord, valueRecord);
+        var url = getURL('Reminder')+"?OID=2";
+        ReminderResource.saveData(url).save(jsonBody);
+    };
+
+    var getReminder = function (USUBJID) {
+        var jsonBody = {"USUBJID":USUBJID};
+        var url = getURL('Reminder');
+
+        var deferred = $q.defer();
+        try {
+            ReminderResource.getData(url).get(jsonBody,function(data) {
+                data.$promise.then(function(data) {
+                    deferred.resolve(data);
+                })
+            });
+        }
+        catch (e) {
+            deferred.reject(e);
+        }
+        return deferred.promise;
+
+    };
+
+    var deleteReminder = function(USUBJID) {
+
+        //console.log(recordToDelete);
+
+        if ((USUBJID!=null)&&(USUBJID != "")) {
+            var jsonBody = {"USUBJID":USUBJID};
+            var api = '';
+            if (onlineOrLocal == 'local')
+            //api = 'http://146.169.35.160/api/Optimise/';
+                api = 'http://www.optimise-ms.org/api-optimise/reminders.php';
+            else
+            //api = '/api/Optimise/';
+                api = '/api-optimise/reminders.php';
+
+            $http({url: api,
+                method: 'DELETE',
+                data: jsonBody,
+                headers: {"Content-Type": "application/json;charset=utf-8"}}).then(function(res) {
+                    console.log(res.data);
+                }, function(error) {
+                    console.log(error);
+                });
+        }
+        else
+        {
+            //console.log(recordToDelete);
+            alert ("Invalid reminder to delete");
+        }
+    }
+
+    var saveIcometrixJob = function (newJob) {
+        var api = '';
+        if (onlineOrLocal == 'local')
+            api = 'http://www.optimise-ms.org/api-optimise/icometrix/setIcometrixJobs.php';
+        else
+            api = '/icometrix/setIcometrixJobs.php';
+        //console.log(angular.toJson(newJob));
+        ICOMETRIX.saveData(api).save(angular.toJson(newJob));
+    };
+
     var createNewInterest = function (name, email) {
         var jsonBody = {"username": name, "password": "newInterestPW_"+name, "email": email, "site": "AAN", "group_ids":["daeAANUsers"]};
-        console.log(jsonBody)
+        console.log(jsonBody);
         console.log(NewUser.createNewUser().save(jsonBody));
     }
 
@@ -663,7 +841,8 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
 
     var deleteRecord = function(recordToDelete) {
 
-        console.log(recordToDelete);
+        //console.log(recordToDelete);
+
         if ((recordToDelete!=null)
             &&(recordToDelete.USUBJID != null)
             &&(recordToDelete.USUBJID != '')
@@ -672,8 +851,9 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
             &&(recordToDelete.STUDYID != null)&& (recordToDelete.STUDYID != ''))
         {
             var jsonBody = formatForDelete(recordToDelete);
-
+            console.log(jsonBody);
             var api = '';
+
 
             if (onlineOrLocal == 'local')
                 //api = 'http://146.169.35.160/api/Optimise/';
@@ -775,7 +955,13 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
         getNHSIDList: getNHSIDList,
         createNewSubject: createNewSubject,
         getAllDemographics: getAllDemographics,
-        createNewInterest: createNewInterest
+        getDueAppointments: getDueAppointments,
+        createNewInterest: createNewInterest,
+        saveIcometrixJob: saveIcometrixJob,
+        saveReminder: saveReminder,
+        getReminder: getReminder,
+        deleteReminder: deleteReminder,
+        editReminder: editReminder
 
     };
 });
