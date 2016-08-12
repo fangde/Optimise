@@ -2756,14 +2756,14 @@ headerModule.controller('headerCtrl', function ($rootScope,
 
     }
 
-    $scope.hideDOD = function () {
-        if ($scope.fileActive != null) {
-            if ($scope.fileActive) // file is active, therefore hide this field
-                return true;
-        }
-        else
-            return false;
-    }
+//    $scope.hideDOD = function () {
+//        if ($scope.fileActive != null) {
+//            if ($scope.fileActive) // file is active, therefore hide this field
+//                return true;
+//        }
+//        else
+//            return false;
+//    }
 
     $scope.toggleTimeline = function (dataToToggle) {
         //console.log(dataToToggle);
@@ -2801,6 +2801,10 @@ headerModule.controller('headerCtrl', function ($rootScope,
                 $scope.showPDDS = !$scope.showPDDS;
                 break;
             }
+            case 'LesionVolume': {
+                $scope.showLesionVolume = !$scope.showLesionVolume;
+                break;
+            }
         }
 
     }
@@ -2811,8 +2815,10 @@ headerModule.controller('headerCtrl', function ($rootScope,
     $scope.showEDSS = true;
     $scope.showMSQOL = true;
     $scope.showVAS = false;
-    $scope.showPROMIS = false;
+    //$scope.showPROMIS = false;
+    $scope.showLesionVolume = true;
     $scope.showPDDS = false;
+    $scope.testIndex = "";
     $scope.testIndex = "";
     $scope.contentOnDisplay='Patient';
 

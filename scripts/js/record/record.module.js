@@ -259,12 +259,13 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
                 api = '/api-optimise/reminders.php';
         }
 
+        /*
         if (functionName == 'Edit') {
             if (onlineOrLocal == 'local')
                 api = 'http://www.optimise-ms.org/api-optimise/opt.php?OID=2';
             else
                 api = '/api-optimise/opt.php?OID=2';
-        }
+        }*/
 
         if (functionName == 'Config') {
             if (onlineOrLocal == 'local')
@@ -360,13 +361,6 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
         var root = {"CurrentRecord":idRecord, "NewRecord":valueRecord};
         return angular.toJson(root);
     }
-
-    /*
-    var deleteSubject = function (USUBJID) {
-        var newRecordItem = {RecordItems:[{fieldName:"USUBJID", value:USUBJID}]};
-        var jsonBody = angular.toJson(newRecordItem);
-        deleteRecordGivenJSON(jsonBody);
-    }*/
 
      var deleteSubject = function (USUBJID) {
          var input = {'w_id': USUBJID};
@@ -534,7 +528,7 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
 
     var getSubject = function(subjectID)
     {
-        var input = {'USUBJID': subjectID};
+        var input = {'USUBJID': subjectID, 'token':token};
         var deferred = $q.defer();
         var url = getURL('USUBJID');
         try {
@@ -599,7 +593,7 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
 //    }
 
     var getAllDemographics = function() {
-        var input = {'DOMAIN': 'DM'};
+        var input = {'DOMAIN': 'DM', 'token':token};
         var deferred = $q.defer();
         var url = getURL('USUBJID');
         try {
@@ -636,7 +630,7 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
     }
 
     var getOptimiseID = function(NHSID) {
-        var input = {'NHS_USUBJID': NHSID};
+        var input = {'NHS_USUBJID': NHSID, 'token':token};
         var deferred = $q.defer();
         var url = getURL('USUBJID');
         try {
@@ -717,7 +711,7 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
 
     var saveRecord = function (newRecord) {
         var jsonBody = formatForPostSave(newRecord);
-        var url = getURL('Record');
+        var url = getURL('Record')+"?token="+token;
         Record.saveData(url).save(jsonBody);
     };
 
@@ -728,12 +722,18 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
         ReminderResource.saveData(url).save(jsonBody);
     };
 
-
     var editRecord = function (idRecord, valueRecord) {
         var jsonBody = formatForPostEdit(idRecord, valueRecord);
-        var url = getURL('Edit');
+        //console.log(jsonBody);
+        var url = getURL('Record')+"?OID=2&token="+token;
         Edit.editData(url).save(jsonBody);
     };
+
+//    var editRecord = function (idRecord, valueRecord) {
+//        var jsonBody = formatForPostEdit(idRecord, valueRecord);
+//        var url = getURL('Edit');
+//        Edit.editData(url).save(jsonBody);
+//    };
 
     var editReminder = function (idRecord, valueRecord) {
         var jsonBody = formatForPostEdit(idRecord, valueRecord);
@@ -802,7 +802,7 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
 
     var createNewInterest = function (name, email) {
         var jsonBody = {"username": name, "password": "newInterestPW_"+name, "email": email, "site": "AAN", "group_ids":["daeAANUsers"]};
-        console.log(jsonBody);
+        //console.log(jsonBody);
         console.log(NewUser.createNewUser().save(jsonBody));
     }
 
@@ -833,11 +833,7 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
         }
     };
 
-    var editRecord = function (idRecord, valueRecord) {
-        var jsonBody = formatForPostEdit(idRecord, valueRecord);
-        var url = getURL('Edit');
-        Edit.editData(url).save(jsonBody);
-    };
+
 
     var deleteRecord = function(recordToDelete) {
 
@@ -851,16 +847,16 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
             &&(recordToDelete.STUDYID != null)&& (recordToDelete.STUDYID != ''))
         {
             var jsonBody = formatForDelete(recordToDelete);
-            console.log(jsonBody);
+            //console.log(jsonBody);
             var api = '';
 
 
             if (onlineOrLocal == 'local')
                 //api = 'http://146.169.35.160/api/Optimise/';
-                api = 'http://www.optimise-ms.org/api-optimise/opt.php';
+                api = 'http://www.optimise-ms.org/api-optimise/opt.php?token='+token;
             else
                 //api = '/api/Optimise/';
-                api = '/api-optimise/opt.php';
+                api = '/api-optimise/opt.php?token='+token;
 
             $http({url: api,
                 method: 'DELETE',
@@ -879,28 +875,10 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
         }
     }
 
-    var deleteRecordGivenJSON = function(jsonBody) {
-        var api = '';
-        if (onlineOrLocal == 'local')
-            //api = 'http://146.169.35.160/api/Optimise/';
-            api = 'http://www.optimise-ms.org/api-optimise/opt.php';
-        else
-            //api = '/api/Optimise/';
-            api = '/api-optimise/opt.php';
-
-        $http({url: api,
-            method: 'DELETE',
-            data: jsonBody,
-            headers: {"Content-Type": "application/json;charset=utf-8"}}).then(function(res) {
-                console.log(res.data);
-            }, function(error) {
-                console.log(error);
-            });
-    }
 
     var getRecordSet = function($scope, subjectID) {
         var url = getURL('USUBJID');
-        USUBJID.getData(url).get({project: 'OPTIMISE', USUBJID: subjectID},function(data) {
+        USUBJID.getData(url).get({project: 'OPTIMISE', USUBJID: subjectID, 'token':token},function(data) {
             data.$promise.then(function() {
                 return data;
             })
@@ -910,7 +888,7 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
     var printRecord = function(subjectID) {
         //console.log(subjectID);
         var url = getURL('USUBJID');
-        USUBJID.getData(url).get({project: 'OPTIMISE', USUBJID: subjectID},function(data) {
+        USUBJID.getData(url).get({project: 'OPTIMISE', USUBJID: subjectID, 'token':token},function(data) {
         //USUBJID.get({project:'OPTIMISE', USUBJID:subjectID}, function(data) {
             console.log("Number of Records Found:"+data.RecordSet.length);
             angular.forEach(data.RecordSet, function(recordSet) {
