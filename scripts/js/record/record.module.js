@@ -919,7 +919,7 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
         getRecordSet: getRecordSet,
         deleteRecord:deleteRecord,
         formatForDeleteGivenDomain:formatForDeleteGivenDomain,
-        deleteRecordGivenJSON: deleteRecordGivenJSON,
+        //deleteRecordGivenJSON: deleteRecordGivenJSON,
         formatStringToDate:formatStringToDate,
         getEventID: getEventID,
         setToken: setToken,

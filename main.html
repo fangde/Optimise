@@ -364,6 +364,14 @@
                 </button>
             </div>
             <div>
+                <button type="button" class="btn visits-btn" ng-click="toggleTimeline('Visits')">
+                    <div class="checkbox checkbox-warning">
+                        <input type="checkbox" ng-model="showVisits">
+                        <label class="control-label">Visits</label>
+                    </div>
+                </button>
+            </div>
+            <div>
                 <button type="button" class="btn relapse-btn" ng-click="toggleTimeline('Relapses')">
                     <div class="checkbox checkbox-primary">
                         <input type="checkbox" ng-model="showRelapses">
@@ -375,7 +383,7 @@
                 <button type="button" class="btn test-btn" ng-click="toggleTimeline('Tests')">
                     <div class="checkbox checkbox-danger">
                         <input type="checkbox" ng-model="showTests">
-                        <label class="control-label">Tests</label>
+                        <label class="control-label">Lab Monitor</label>
                     </div>
                 </button>
             </div>
@@ -395,32 +403,33 @@
                     </div>
                 </button>
             </div>
-            <div>
-                <button type="button" class="btn proms-btn" ng-click="toggleTimeline('PDDS')">
-                    <div class="checkbox checkbox-warning">
-                        <input type="checkbox" ng-model="showPDDS">
-                        <label class="control-label">PDDS</label>
-                    </div>
-                </button>
-            </div>
-            <div>
-                <button type="button" class="btn proms-btn" ng-click="toggleTimeline('VAS')">
-                    <div class="checkbox checkbox-warning">
-                        <input type="checkbox" ng-model="showVAS">
-                        <label class="control-label">VAS</label>
-                    </div>
 
-                </button>
-            </div>
-            <div>
-                <button type="button" class="btn proms-btn" ng-click="toggleTimeline('LesionVolume')">
-                    <div class="checkbox checkbox-warning">
-                        <input type="checkbox" ng-model="showLesionVolume">
-                        <label class="control-label">Lesion Volume (ml)</label>
-                    </div>
+            <!--<div>-->
+                <!--<button type="button" class="btn proms-btn" ng-click="toggleTimeline('PDDS')">-->
+                    <!--<div class="checkbox checkbox-warning">-->
+                        <!--<input type="checkbox" ng-model="showPDDS">-->
+                        <!--<label class="control-label">PDDS</label>-->
+                    <!--</div>-->
+                <!--</button>-->
+            <!--</div>-->
+            <!--<div>-->
+                <!--<button type="button" class="btn proms-btn" ng-click="toggleTimeline('VAS')">-->
+                    <!--<div class="checkbox checkbox-warning">-->
+                        <!--<input type="checkbox" ng-model="showVAS">-->
+                        <!--<label class="control-label">VAS</label>-->
+                    <!--</div>-->
 
-                </button>
-            </div>
+                <!--</button>-->
+            <!--</div>-->
+            <!--<div>-->
+                <!--<button type="button" class="btn proms-btn" ng-click="toggleTimeline('LesionVolume')">-->
+                    <!--<div class="checkbox checkbox-warning">-->
+                        <!--<input type="checkbox" ng-model="showLesionVolume">-->
+                        <!--<label class="control-label">Lesion Volume (ml)</label>-->
+                    <!--</div>-->
+
+                <!--</button>-->
+            <!--</div>-->
             <!--<div>-->
                 <!--<button type="button" class="btn proms-btn" ng-click="toggleTimeline('PROMIS')">-->
                     <!--<div class="checkbox checkbox-warning">-->
@@ -572,6 +581,7 @@
 <script type="text/javascript" src="scripts/vendor/textAngular-rangy.min.js"></script>
 <script type="text/javascript" src="scripts/vendor/textAngular-sanitize.min.js"></script>
 <script type="text/javascript" src="scripts/vendor/textAngular.min.js"></script>
+
 
 <!--<script type="text/javascript" src="scripts/vendor/angular-dragdrop.min.js"></script>-->
 

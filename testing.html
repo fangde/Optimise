@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="scripts/vendor/jasmine-2.4.1/jasmine.js"></script>
+    <script type="text/javascript" src="scripts/vendor/jasmine-2.4.1/jasmine-html.js"></script>
+    <script type="text/javascript" src="scripts/vendor/jasmine-2.4.1/boot.js"></script>
+
+    <script type="text/javascript" src="scripts/vendor/angular.min.js"></script>
+    <script type="text/javascript" src="scripts/vendor/ui-bootstrap-tpls-1.2.5.min.js"></script>
+    <script type="text/javascript" src="https://code.angularjs.org/1.5.0-rc.2/angular-mocks.js"></script>
+
+
+
+    <script type="text/javascript" src="scripts/js/subjectVisit/subjectVisit.module.js"></script>
+    <link rel="shortcut icon" type="image/png" href="scripts/css/jasmine/jasmine_favicon.png">
+    <link rel="stylesheet" type="text/css" href="scripts/css/jasmine/jasmine.css">
+
+    <title>Test</title>
+</head>
+<body>
+</body>
+    <script type="text/javascript">
+
+    describe('edssCtrl_checkEDSS', function() {
+        beforeEach(module('Optimise.subjectVisit'));
+            var $controller;
+            var controller;
+            var parse;
+            var uibModalInstance;
+            var dateValidated = false;
+            var scope;
+            var EDSS = [{score:'', scopeVariable: 'edss_pyramidal', QSTEST: 'EDSS-Pyramidal'},
+                {score:'', scopeVariable: 'edss_cerebellar', QSTEST: 'EDSS-Cerebellar'},
+                {score:'', scopeVariable: 'edss_brainStem', QSTEST: 'EDSS-BrainStem'},
+                {score:'', scopeVariable: 'edss_sensory', QSTEST: 'EDSS-Sensory'},
+                {score:'', scopeVariable: 'edss_bowelBladder', QSTEST: 'EDSS-BowelBladder'},
+                {score:'', scopeVariable: 'edss_visual', QSTEST: 'EDSS-Visual'},
+                {score:'', scopeVariable: 'edss_mental', QSTEST: 'EDSS-Mental'},
+                {score:'', scopeVariable: 'edss_ambulation', QSTEST: 'EDSS-Ambulation'},
+                {score:'', scopeVariable: 'edss_human', QSTEST: 'EDSS-Total Human'},
+                {score:'', scopeVariable: 'edss_computer', QSTEST: 'EDSS-Total Computer'}];
+
+
+            beforeEach(inject(function($rootScope, _$controller_, _$parse_){
+                $controller = _$controller_;
+                parse = _$parse_;
+                scope = $rootScope.$new();
+
+
+                uibModalInstance = {                    // Create a mock object using spies
+                    close: jasmine.createSpy('uibModalInstance.close'),
+                    dismiss: jasmine.createSpy('uibModalInstance.dismiss'),
+                    result: {
+                        then: jasmine.createSpy('uibModalInstance.result.then')
+                    }
+                };
+
+                controller = $controller('edssCtrl', { $scope: scope, $parse: parse,
+                    $uibModalInstance: uibModalInstance,
+                    EDSS: EDSS,
+                    dateValidated : dateValidated});
+
+            }));
+
+            describe('edssScore', function() {
+
+                it('should instantiate the controller properly', function () {
+                    expect($controller).not.toBeUndefined();
+                });
+
+                it('checks startup values of edss scores', function() {
+
+                    scope.edss_pyramidal = 0;
+                    scope.edss_ambulation = 0;
+                    scope.edss_brainStem = 0;
+                    scope.edss_cerebellar = 0;
+                    scope.edss_sensory = 0;
+                    scope.edss_bowelBladder = 0;
+                    scope.edss_visual = 0;
+                    scope.edss_mental = 0;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    for (var v = 0; v < EDSS.length; v++){
+                        var model = parse(EDSS[v].scopeVariable);
+                        //console.log(model(scope));
+                        expect(model(scope)).toEqual(0);
+                    }
+                });
+
+                it('All FS score == 0', function() {
+                    scope.edss_pyramidal = 0;
+                    scope.edss_cerebellar = 0;
+                    scope.edss_brainStem = 0;
+                    scope.edss_sensory = 0;
+                    scope.edss_bowelBladder = 0;
+                    scope.edss_visual = 0;
+                    scope.edss_mental = 0;
+                    scope.edss_ambulation = 0;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    scope.updateEDSS();
+
+                    expect(scope.edss_computer).toEqual(0.0);
+                });
+
+
+                it('1X FS score == 1', function() {
+                    scope.edss_pyramidal = 0;
+                    scope.edss_cerebellar = 0;
+                    scope.edss_brainStem = 0;
+                    scope.edss_sensory = 0;
+                    scope.edss_bowelBladder = 0;
+                    scope.edss_visual = 0;
+                    scope.edss_mental = 0;
+                    scope.edss_ambulation = 0;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    // pick one FS at random
+                    var position = Math.floor((Math.random() * 6));
+                    var chosenFS = EDSS[position].scopeVariable;
+                    var model = parse(chosenFS);
+
+                    // assign the FS score to 1
+                    model.assign(scope, 1);
+
+                    // run the algo
+                    scope.updateEDSS();
+                    expect(scope.edss_computer).toEqual(1.0);
+                });
+
+                it('2-7X FS score == 1', function() {
+                    scope.edss_pyramidal = 1.0;
+                    scope.edss_cerebellar = 1.0;
+                    scope.edss_brainStem = Math.floor((Math.random() * 1)+1);;
+                    scope.edss_sensory = Math.floor((Math.random() * 1)+1);;
+                    scope.edss_bowelBladder = Math.floor((Math.random() * 1)+1);;
+                    scope.edss_visual = Math.floor((Math.random() * 1)+1);;
+                    scope.edss_mental = Math.floor((Math.random() * 1)+1);;
+                    scope.edss_ambulation = 0;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    scope.updateEDSS();
+
+                    expect(scope.edss_computer).toEqual(1.5);
+                });
+
+                it('1X FS score == 2', function() {
+                    scope.edss_pyramidal = Math.round((Math.random() * 1));
+                    scope.edss_cerebellar = Math.round((Math.random() * 1));
+                    scope.edss_brainStem = Math.round((Math.random() * 1));
+                    scope.edss_sensory =Math.round((Math.random() * 1));
+                    scope.edss_bowelBladder = Math.round((Math.random() * 1));
+                    scope.edss_visual = Math.round((Math.random() * 1));
+                    scope.edss_mental = Math.round((Math.random() * 1));
+                    scope.edss_ambulation = 0;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    // pick one FS at random
+                    var position = Math.floor((Math.random() * 6));
+                    var chosenFS = EDSS[position].scopeVariable;
+                    var model = parse(chosenFS);
+
+                    // assign the FS score to 1
+                    model.assign(scope, 2);
+
+                    // run the algo
+                    scope.updateEDSS();
+                    expect(scope.edss_computer).toEqual(2.0);
+                });
+
+                it('2X FS score == 2', function() {
+                    scope.edss_pyramidal = Math.round((Math.random() * 1));
+                    scope.edss_cerebellar = Math.round((Math.random() * 1));
+                    scope.edss_brainStem = Math.round((Math.random() * 1));;
+                    scope.edss_sensory = Math.round((Math.random() * 1));;
+                    scope.edss_bowelBladder = Math.round((Math.random() * 1));;
+                    scope.edss_visual = Math.round((Math.random() * 1));;
+                    scope.edss_mental = Math.round((Math.random() * 1));;
+                    scope.edss_ambulation = 0;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    // pick one FS at random
+                    var pickedPositions = [];
+                    while (pickedPositions.length < 2) {
+                        var positionAlreadyPicked = false;
+                        var position = Math.floor((Math.random() * 6));
+                        console.log(position);
+                        console.log(pickedPositions);
+                        for (var p = 0; p < pickedPositions.length; p++) {
+                            if (position == pickedPositions[p]) {
+                                p = pickedPositions.length + 1;
+                                positionAlreadyPicked = true;
+                                console.log('already there');
+                            }
+                        }
+                        if (!positionAlreadyPicked) {
+                            pickedPositions.push(position);
+                            var chosenFS = EDSS[position].scopeVariable;
+                            var model = parse(chosenFS);
+                            model.assign(scope, 2);
+                        }
+                    }
+
+                    scope.updateEDSS();
+
+                    expect(scope.edss_computer).toEqual(2.5);
+                });
+
+                it('3-4X FS score == 2', function() {
+                    scope.edss_pyramidal = Math.round((Math.random() * 1));
+                    scope.edss_cerebellar = Math.round((Math.random() * 1));
+                    scope.edss_brainStem = Math.round((Math.random() * 1));;
+                    scope.edss_sensory = Math.round((Math.random() * 1));;
+                    scope.edss_bowelBladder = Math.round((Math.random() * 1));;
+                    scope.edss_visual = Math.round((Math.random() * 1));;
+                    scope.edss_mental = Math.round((Math.random() * 1));;
+                    scope.edss_ambulation = 0;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    // pick one FS at random
+                    var pickedPositions = [];
+                    while (pickedPositions.length < 3) {
+                        var positionAlreadyPicked = false;
+                        var position = Math.floor((Math.random() * 6));
+                        console.log(position);
+                        console.log(pickedPositions);
+                        for (var p = 0; p < pickedPositions.length; p++) {
+                            if (position == pickedPositions[p]) {
+                                p = pickedPositions.length + 1;
+                                positionAlreadyPicked = true;
+                                console.log('already there');
+                            }
+                        }
+                        if (!positionAlreadyPicked) {
+                            pickedPositions.push(position);
+                            var chosenFS = EDSS[position].scopeVariable;
+                            var model = parse(chosenFS);
+                            model.assign(scope, 2);
+                        }
+                    }
+
+                    scope.updateEDSS();
+
+                    expect(scope.edss_computer).toEqual(3.0);
+                });
+
+                it('0X FS == 2, 1X FS score == 3', function() {
+                    scope.edss_pyramidal = 1.0;
+                    scope.edss_cerebellar = Math.round((Math.random() * 1));
+                    scope.edss_brainStem = Math.round((Math.random() * 1));;
+                    scope.edss_sensory = Math.round((Math.random() * 1));;
+                    scope.edss_bowelBladder = Math.round((Math.random() * 1));;
+                    scope.edss_visual = Math.round((Math.random() * 1));;
+                    scope.edss_mental = Math.round((Math.random() * 1));;
+                    scope.edss_ambulation = 0;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    // pick one FS at random
+                    var position = Math.floor((Math.random() * 5));
+                    var chosenFS = EDSS[position+1].scopeVariable;
+                    var model = parse(chosenFS);
+
+                    // assign the FS score to 1
+                    model.assign(scope, 3);
+
+                    scope.updateEDSS();
+
+                    expect(scope.edss_computer).toEqual(3.0);
+                });
+
+                it('5X FS score == 2', function() {
+                    scope.edss_pyramidal = Math.round((Math.random() * 1));
+                    scope.edss_cerebellar = Math.round((Math.random() * 1));
+                    scope.edss_brainStem = Math.round((Math.random() * 1));;
+                    scope.edss_sensory = Math.round((Math.random() * 1));;
+                    scope.edss_bowelBladder = Math.round((Math.random() * 1));;
+                    scope.edss_visual = Math.round((Math.random() * 1));;
+                    scope.edss_mental = Math.round((Math.random() * 1));;
+                    scope.edss_ambulation = 0;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    var pickedPositions = [];
+                    while (pickedPositions.length < 5) {
+                        var positionAlreadyPicked = false;
+                        var position = Math.floor((Math.random() * 6));
+                        //console.log(position);
+                        //console.log(pickedPositions);
+                        for (var p = 0; p < pickedPositions.length; p++) {
+                            if (position == pickedPositions[p]) {
+                                p = pickedPositions.length + 1;
+                                positionAlreadyPicked = true;
+                                //console.log('already there');
+                            }
+                        }
+                        if (!positionAlreadyPicked) {
+                            pickedPositions.push(position);
+                            var chosenFS = EDSS[position].scopeVariable;
+                            var model = parse(chosenFS);
+                            model.assign(scope, 2);
+                        }
+                    }
+
+                    scope.updateEDSS();
+
+                    expect(scope.edss_computer).toEqual(3.5);
+                });
+
+                it('1-2X FS score == 2 && 1X FS == 3', function() {
+                    scope.edss_pyramidal = Math.round((Math.random() * 1));
+                    scope.edss_cerebellar = Math.round((Math.random() * 1));
+                    scope.edss_brainStem = Math.round((Math.random() * 1));;
+                    scope.edss_sensory = Math.round((Math.random() * 1));;
+                    scope.edss_bowelBladder = Math.round((Math.random() * 1));;
+                    scope.edss_visual = Math.round((Math.random() * 1));;
+                    scope.edss_mental = Math.round((Math.random() * 1));;
+                    scope.edss_ambulation = 0;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    var pickedPositions = [];
+                    while (pickedPositions.length < 2) {
+                        var positionAlreadyPicked = false;
+                        var position = Math.floor((Math.random() * 6));
+                        //console.log(position);
+                        //console.log(pickedPositions);
+                        for (var p = 0; p < pickedPositions.length; p++) {
+                            if (position == pickedPositions[p]) {
+                                p = pickedPositions.length + 1;
+                                positionAlreadyPicked = true;
+                                //console.log('already there');
+                            }
+                        }
+                        if (!positionAlreadyPicked) {
+                            pickedPositions.push(position);
+                            var chosenFS = EDSS[position].scopeVariable;
+                            var model = parse(chosenFS);
+                            model.assign(scope, 2);
+                        }
+                    }
+
+                    while (pickedPositions.length < 3) {
+                        var positionAlreadyPicked = false;
+                        var position = Math.floor((Math.random() * 6));
+                        //console.log(position);
+                        //console.log(pickedPositions);
+                        for (var p = 0; p < pickedPositions.length; p++) {
+                            if (position == pickedPositions[p]) {
+                                p = pickedPositions.length + 1;
+                                positionAlreadyPicked = true;
+                                //console.log('already there');
+                            }
+                        }
+                        if (!positionAlreadyPicked) {
+                            pickedPositions.push(position);
+                            var chosenFS = EDSS[position].scopeVariable;
+                            var model = parse(chosenFS);
+                            model.assign(scope, 3);
+                        }
+                    }
+
+                    scope.updateEDSS();
+
+                    expect(scope.edss_computer).toEqual(3.5);
+                });
+
+                it('0X FS score == 2 && 2X FS == 3', function() {
+                    scope.edss_pyramidal = Math.round((Math.random() * 1));
+                    scope.edss_cerebellar = Math.round((Math.random() * 1));
+                    scope.edss_brainStem = Math.round((Math.random() * 1));;
+                    scope.edss_sensory = Math.round((Math.random() * 1));;
+                    scope.edss_bowelBladder = Math.round((Math.random() * 1));;
+                    scope.edss_visual = Math.round((Math.random() * 1));;
+                    scope.edss_mental = Math.round((Math.random() * 1));;
+                    scope.edss_ambulation = 0;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    var pickedPositions = [];
+                    while (pickedPositions.length < 2) {
+                        var positionAlreadyPicked = false;
+                        var position = Math.floor((Math.random() * 6));
+                        //console.log(position);
+                        //console.log(pickedPositions);
+                        for (var p = 0; p < pickedPositions.length; p++) {
+                            if (position == pickedPositions[p]) {
+                                p = pickedPositions.length + 1;
+                                positionAlreadyPicked = true;
+                                //console.log('already there');
+                            }
+                        }
+                        if (!positionAlreadyPicked) {
+                            pickedPositions.push(position);
+                            var chosenFS = EDSS[position].scopeVariable;
+                            var model = parse(chosenFS);
+                            model.assign(scope, 3);
+                        }
+                    }
+
+                    scope.updateEDSS();
+
+                    expect(scope.edss_computer).toEqual(3.5);
+                });
+
+                it('6-7X FS score == 2', function() {
+                    scope.edss_pyramidal = Math.round((Math.random() * 1));
+                    scope.edss_cerebellar = Math.round((Math.random() * 1));
+                    scope.edss_brainStem = Math.round((Math.random() * 1));;
+                    scope.edss_sensory = Math.round((Math.random() * 1));;
+                    scope.edss_bowelBladder = Math.round((Math.random() * 1));;
+                    scope.edss_visual = Math.round((Math.random() * 1));;
+                    scope.edss_mental = Math.round((Math.random() * 1));;
+                    scope.edss_ambulation = 0;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    var pickedPositions = [];
+                    while (pickedPositions.length < 6) {
+                        var positionAlreadyPicked = false;
+                        var position = Math.floor((Math.random() * 6));
+                        //console.log(position);
+                        //console.log(pickedPositions);
+                        for (var p = 0; p < pickedPositions.length; p++) {
+                            if (position == pickedPositions[p]) {
+                                p = pickedPositions.length + 1;
+                                positionAlreadyPicked = true;
+                                //console.log('already there');
+                            }
+                        }
+                        if (!positionAlreadyPicked) {
+                            pickedPositions.push(position);
+                            var chosenFS = EDSS[position].scopeVariable;
+                            var model = parse(chosenFS);
+                            model.assign(scope, 2);
+                        }
+                    }
+
+                    scope.updateEDSS();
+
+                    expect(scope.edss_computer).toEqual(4.0);
+                });
+
+                it('2-4X FS score == 3', function() {
+                    scope.edss_pyramidal = Math.round((Math.random() * 1)+1);
+                    scope.edss_cerebellar = Math.round((Math.random() * 1)+1);
+                    scope.edss_brainStem = Math.round((Math.random() * 1)+1);;
+                    scope.edss_sensory = Math.round((Math.random() * 1)+1);;
+                    scope.edss_bowelBladder = Math.round((Math.random() * 1)+1);;
+                    scope.edss_visual = Math.round((Math.random() * 1)+1);;
+                    scope.edss_mental = Math.round((Math.random() * 1)+1);;
+                    scope.edss_ambulation = 0;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    var pickedPositions = [];
+                    while (pickedPositions.length < 4) {
+                        var positionAlreadyPicked = false;
+                        var position = Math.floor((Math.random() * 6));
+                        //console.log(position);
+                        //console.log(pickedPositions);
+                        for (var p = 0; p < pickedPositions.length; p++) {
+                            if (position == pickedPositions[p]) {
+                                p = pickedPositions.length + 1;
+                                positionAlreadyPicked = true;
+                                //console.log('already there');
+                            }
+                        }
+                        if (!positionAlreadyPicked) {
+                            pickedPositions.push(position);
+                            var chosenFS = EDSS[position].scopeVariable;
+                            var model = parse(chosenFS);
+                            model.assign(scope, 3);
+                        }
+                    }
+
+                    scope.updateEDSS();
+
+                    expect(scope.edss_computer).toEqual(4.0);
+                });
+
+                it('0X FS score == 2 && 0X FS score == 3 && 1X FS score == 4', function() {
+                    scope.edss_pyramidal = Math.round((Math.random() * 1));
+                    scope.edss_cerebellar = Math.round((Math.random() * 1));
+                    scope.edss_brainStem = Math.round((Math.random() * 1));
+                    scope.edss_sensory = Math.round((Math.random() * 1));
+                    scope.edss_bowelBladder = Math.round((Math.random() * 1));
+                    scope.edss_visual = Math.round((Math.random() * 1));
+                    scope.edss_mental = Math.round((Math.random() * 1));
+                    scope.edss_ambulation = 0;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    // pick one FS at random
+                    var position = Math.floor((Math.random() * 6));
+                    var chosenFS = EDSS[position].scopeVariable;
+                    var model = parse(chosenFS);
+
+                    // assign the FS score to 1
+                    model.assign(scope, 4);
+
+                    scope.updateEDSS();
+
+                    expect(scope.edss_computer).toEqual(4.0);
+                });
+
+
+                it('5X FS score == 3', function() {
+                    scope.edss_pyramidal = Math.round((Math.random() * 2));
+                    scope.edss_cerebellar = Math.round((Math.random() * 2));
+                    scope.edss_brainStem = Math.round((Math.random() * 2));
+                    scope.edss_sensory = Math.round((Math.random() * 2));
+                    scope.edss_bowelBladder = Math.round((Math.random() * 2));
+                    scope.edss_visual = Math.round((Math.random() * 2));
+                    scope.edss_mental = Math.round((Math.random() * 2));
+                    scope.edss_ambulation = 2;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    var pickedPositions = [];
+                    while (pickedPositions.length < 5) {
+                        var positionAlreadyPicked = false;
+                        var position = Math.floor((Math.random() * 6));
+                        for (var p = 0; p < pickedPositions.length; p++) {
+                            if (position == pickedPositions[p]) {
+                                p = pickedPositions.length + 1;
+                                positionAlreadyPicked = true;
+                            }
+                        }
+                        if (!positionAlreadyPicked) {
+                            pickedPositions.push(position);
+                            var chosenFS = EDSS[position].scopeVariable;
+                            var model = parse(chosenFS);
+                            model.assign(scope, 3);
+                        }
+                    }
+
+                    scope.updateEDSS();
+
+                    expect(scope.edss_computer).toEqual(4.5);
+                });
+
+                it('1-2X FS score == 3 && 1X FSscore ==4', function() {
+                    scope.edss_pyramidal = Math.round((Math.random() * 2));
+                    scope.edss_cerebellar = Math.round((Math.random() * 2));
+                    scope.edss_brainStem = Math.round((Math.random() * 2));
+                    scope.edss_sensory = Math.round((Math.random() * 2));
+                    scope.edss_bowelBladder = Math.round((Math.random() * 2));
+                    scope.edss_visual = Math.round((Math.random() * 2));
+                    scope.edss_mental = Math.round((Math.random() * 2));
+                    scope.edss_ambulation = 2;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    var pickedPositions = [];
+                    while (pickedPositions.length < 2) {
+                        var positionAlreadyPicked = false;
+                        var position = Math.floor((Math.random() * 6));
+                        for (var p = 0; p < pickedPositions.length; p++) {
+                            if (position == pickedPositions[p]) {
+                                p = pickedPositions.length + 1;
+                                positionAlreadyPicked = true;
+                            }
+                        }
+                        if (!positionAlreadyPicked) {
+                            pickedPositions.push(position);
+                            var chosenFS = EDSS[position].scopeVariable;
+                            var model = parse(chosenFS);
+                            model.assign(scope, 3);
+                        }
+                    }
+
+                    while (pickedPositions.length < 3) {
+                        var positionAlreadyPicked = false;
+                        var position = Math.floor((Math.random() * 6));
+                        for (var p = 0; p < pickedPositions.length; p++) {
+                            if (position == pickedPositions[p]) {
+                                p = pickedPositions.length + 1;
+                                positionAlreadyPicked = true;
+                            }
+                        }
+                        if (!positionAlreadyPicked) {
+                            pickedPositions.push(position);
+                            var chosenFS = EDSS[position].scopeVariable;
+                            var model = parse(chosenFS);
+                            model.assign(scope, 4);
+                        }
+                    }
+
+                    scope.updateEDSS();
+
+                    expect(scope.edss_computer).toEqual(4.5);
+                });
+
+                it('6-7X FS score == 3', function() {
+                    scope.edss_pyramidal = Math.round((Math.random() * 2));
+                    scope.edss_cerebellar = Math.round((Math.random() * 2));
+                    scope.edss_brainStem = Math.round((Math.random() * 2));
+                    scope.edss_sensory = Math.round((Math.random() * 2));
+                    scope.edss_bowelBladder = Math.round((Math.random() * 2));
+                    scope.edss_visual = Math.round((Math.random() * 2));
+                    scope.edss_mental = Math.round((Math.random() * 2));
+                    scope.edss_ambulation = 3;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    var pickedPositions = [];
+                    while (pickedPositions.length < 7) {
+                        var positionAlreadyPicked = false;
+                        var position = Math.floor((Math.random() * 7));
+                        for (var p = 0; p < pickedPositions.length; p++) {
+                            if (position == pickedPositions[p]) {
+                                p = pickedPositions.length + 1;
+                                positionAlreadyPicked = true;
+                            }
+                        }
+                        if (!positionAlreadyPicked) {
+                            pickedPositions.push(position);
+                            var chosenFS = EDSS[position].scopeVariable;
+                            var model = parse(chosenFS);
+                            model.assign(scope, 3);
+                        }
+                    }
+                    console.log(pickedPositions.length);
+
+                    scope.updateEDSS();
+
+                    expect(scope.edss_computer).toEqual(5.0);
+                });
+
+                it('2-7X FS score == 4', function() {
+                    scope.edss_pyramidal = Math.round((Math.random() * 3));
+                    scope.edss_cerebellar = Math.round((Math.random() * 3));
+                    scope.edss_brainStem = Math.round((Math.random() * 3));
+                    scope.edss_sensory = Math.round((Math.random() * 3));
+                    scope.edss_bowelBladder = Math.round((Math.random() * 3));
+                    scope.edss_visual = Math.round((Math.random() * 3));
+                    scope.edss_mental = Math.round((Math.random() * 3));
+                    scope.edss_ambulation = 3;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    var pickedPositions = [];
+                    while (pickedPositions.length < 3) {
+                        var positionAlreadyPicked = false;
+                        var position = Math.floor((Math.random() * 7));
+                        for (var p = 0; p < pickedPositions.length; p++) {
+                            if (position == pickedPositions[p]) {
+                                p = pickedPositions.length + 1;
+                                positionAlreadyPicked = true;
+                            }
+                        }
+                        if (!positionAlreadyPicked) {
+                            pickedPositions.push(position);
+                            var chosenFS = EDSS[position].scopeVariable;
+                            var model = parse(chosenFS);
+                            model.assign(scope, 4);
+                        }
+                    }
+
+                    scope.updateEDSS();
+
+                    expect(scope.edss_computer).toEqual(5.0);
+                });
+
+                it('1-7X FS score == 5', function() {
+                    scope.edss_pyramidal = Math.round((Math.random() * 4));
+                    scope.edss_cerebellar = Math.round((Math.random() * 4));
+                    scope.edss_brainStem = Math.round((Math.random() * 4));
+                    scope.edss_sensory = Math.round((Math.random() * 4));
+                    scope.edss_bowelBladder = Math.round((Math.random() * 4));
+                    scope.edss_visual = Math.round((Math.random() * 4));
+                    scope.edss_mental = Math.round((Math.random() * 4));
+                    scope.edss_ambulation = 3;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    var pickedPositions = [];
+                    while (pickedPositions.length < 3) {
+                        var positionAlreadyPicked = false;
+                        var position = Math.floor((Math.random() * 7));
+                        for (var p = 0; p < pickedPositions.length; p++) {
+                            if (position == pickedPositions[p]) {
+                                p = pickedPositions.length + 1;
+                                positionAlreadyPicked = true;
+                            }
+                        }
+                        if (!positionAlreadyPicked) {
+                            pickedPositions.push(position);
+                            var chosenFS = EDSS[position].scopeVariable;
+                            var model = parse(chosenFS);
+                            model.assign(scope, 5);
+                        }
+                    }
+
+                    scope.updateEDSS();
+
+                    expect(scope.edss_computer).toEqual(5.0);
+                });
+
+                it('Ambulation score == 4, should return 5.0', function() {
+
+                    var maxScore = 6;
+                    scope.edss_pyramidal = Math.round((Math.random() * maxScore));
+                    scope.edss_cerebellar = Math.round((Math.random() * maxScore));
+                    scope.edss_brainStem = Math.round((Math.random() * maxScore));
+                    scope.edss_sensory = Math.round((Math.random() * maxScore));
+                    scope.edss_bowelBladder = Math.round((Math.random() * maxScore));
+                    scope.edss_visual = Math.round((Math.random() * maxScore));
+                    scope.edss_mental = Math.round((Math.random() * maxScore));
+                    scope.edss_ambulation = 4;
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    scope.updateEDSS();
+
+                    expect(scope.edss_computer).toEqual(5.5);
+                });
+
+                it('Ambulation score == 5/6/7, should return 6.0', function() {
+
+                    var maxScore = 6;
+                    scope.edss_pyramidal = Math.round((Math.random() * maxScore));
+                    scope.edss_cerebellar = Math.round((Math.random() * maxScore));
+                    scope.edss_brainStem = Math.round((Math.random() * maxScore));
+                    scope.edss_sensory = Math.round((Math.random() * maxScore));
+                    scope.edss_bowelBladder = Math.round((Math.random() * maxScore));
+                    scope.edss_visual = Math.round((Math.random() * maxScore));
+                    scope.edss_mental = Math.round((Math.random() * maxScore));
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    scope.edss_ambulation = 5;
+                    scope.updateEDSS();
+                    expect(scope.edss_computer).toEqual(6.0);
+
+                    scope.edss_ambulation = 6;
+                    scope.updateEDSS();
+                    expect(scope.edss_computer).toEqual(6.0);
+
+                    scope.edss_ambulation = 7;
+                    scope.updateEDSS();
+                    expect(scope.edss_computer).toEqual(6.0);
+                });
+
+                it('Ambulation score == 8/9, should return 6.5', function() {
+
+                    var maxScore = 6;
+                    scope.edss_pyramidal = Math.round((Math.random() * maxScore));
+                    scope.edss_cerebellar = Math.round((Math.random() * maxScore));
+                    scope.edss_brainStem = Math.round((Math.random() * maxScore));
+                    scope.edss_sensory = Math.round((Math.random() * maxScore));
+                    scope.edss_bowelBladder = Math.round((Math.random() * maxScore));
+                    scope.edss_visual = Math.round((Math.random() * maxScore));
+                    scope.edss_mental = Math.round((Math.random() * maxScore));
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    scope.edss_ambulation = 8;
+                    scope.updateEDSS();
+                    expect(scope.edss_computer).toEqual(6.5);
+
+                    scope.edss_ambulation = 9;
+                    scope.updateEDSS();
+                    expect(scope.edss_computer).toEqual(6.5);
+                });
+
+                it('Ambulation score == 10, should return 7.0', function() {
+
+                    var maxScore = 6;
+                    scope.edss_pyramidal = Math.round((Math.random() * maxScore));
+                    scope.edss_cerebellar = Math.round((Math.random() * maxScore));
+                    scope.edss_brainStem = Math.round((Math.random() * maxScore));
+                    scope.edss_sensory = Math.round((Math.random() * maxScore));
+                    scope.edss_bowelBladder = Math.round((Math.random() * maxScore));
+                    scope.edss_visual = Math.round((Math.random() * maxScore));
+                    scope.edss_mental = Math.round((Math.random() * maxScore));
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    scope.edss_ambulation = 10;
+                    scope.updateEDSS();
+                    expect(scope.edss_computer).toEqual(7);
+                });
+
+                it('Ambulation score == 11, should return 7.5', function() {
+
+                    var maxScore = 6;
+                    scope.edss_pyramidal = Math.round((Math.random() * maxScore));
+                    scope.edss_cerebellar = Math.round((Math.random() * maxScore));
+                    scope.edss_brainStem = Math.round((Math.random() * maxScore));
+                    scope.edss_sensory = Math.round((Math.random() * maxScore));
+                    scope.edss_bowelBladder = Math.round((Math.random() * maxScore));
+                    scope.edss_visual = Math.round((Math.random() * maxScore));
+                    scope.edss_mental = Math.round((Math.random() * maxScore));
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    scope.edss_ambulation = 11;
+                    scope.updateEDSS();
+                    expect(scope.edss_computer).toEqual(7.5);
+                });
+
+                it('Ambulation score == 12, should return 8.0', function() {
+
+                    var maxScore = 6;
+                    scope.edss_pyramidal = Math.round((Math.random() * maxScore));
+                    scope.edss_cerebellar = Math.round((Math.random() * maxScore));
+                    scope.edss_brainStem = Math.round((Math.random() * maxScore));
+                    scope.edss_sensory = Math.round((Math.random() * maxScore));
+                    scope.edss_bowelBladder = Math.round((Math.random() * maxScore));
+                    scope.edss_visual = Math.round((Math.random() * maxScore));
+                    scope.edss_mental = Math.round((Math.random() * maxScore));
+                    scope.edss_computer = 0;
+                    scope.edss_human = 0;
+
+                    scope.edss_ambulation = 12;
+                    scope.updateEDSS();
+                    expect(scope.edss_computer).toEqual(8.0);
+                });
+
+            });
+    });
+    </script>
+</html>

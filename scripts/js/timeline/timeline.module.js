@@ -105,6 +105,8 @@ timelineModule.directive('timeline', function() {
                         return 'blue';
                     case 'Tests':
                         return 'red';
+                    case 'Lesion Volume':
+                        return 'red';
                     case 'EDSS':
                         return 'yellow';
                     case 'MSQOL':
@@ -130,11 +132,10 @@ timelineModule.directive('timeline', function() {
             .attr('dy', '1.5ex')
             .attr('text-anchor', 'start')
             .style('font-weight', function (d){
-                /*
-                if ((d.id == 0) || (d.id == 4) || (d.id == 7))
-                    return 'bold'
-                else*/
                     return 'normal'
+            })
+            .style('font-size', function (d){
+                return '100%'
             })
             .attr('class', 'laneText');
 
@@ -147,6 +148,7 @@ timelineModule.directive('timeline', function() {
             .attr('y1', function(d) { return d3.round(y2(d.id)) + 0.5; })
             .attr('x2', width)
             .attr('y2', function(d) { return d3.round(y2(d.id)) + 0.5; })
+
             .attr('stroke', function(d) { return d.label === '' ? 'white' : 'lightgray' });
 
         mini.append('g').selectAll('.laneLegends')
@@ -156,6 +158,9 @@ timelineModule.directive('timeline', function() {
             .attr('y', function(d) { return y2(d.id +.25); })
             .attr('width',5)
             .attr('height',5)
+            .style('font-size', function (d){
+                return '100%'
+            })
             .attr('fill', function(d) {
                 switch (d.label){
                     case 'Treatments':
@@ -163,6 +168,8 @@ timelineModule.directive('timeline', function() {
                     case 'Relapses':
                         return 'blue';
                     case 'Tests':
+                        return 'red';
+                    case 'Lesion Volume':
                         return 'red';
                     case 'EDSS':
                         return 'yellow';
@@ -716,6 +723,12 @@ timelineModule.directive('timeline', function() {
                     return d.id;
                 })
                 .attr('cx', function(d) { return x1(d.start); });
+
+            var circs2 = itemRects.selectAll('circle2')
+                .data(visItems.filter(function (d) {return d.domain == "MO";}), function (d) {
+                    return d.id;
+                })
+                .attr('cx', function(d) { return x1(d.start); });
 //
 
 //            circs.enter().append('circle')
@@ -735,12 +748,14 @@ timelineModule.directive('timeline', function() {
                     var elementId = "#"+d.url;
                     angular.element('#relapseID').trigger('click');
                     angular.element(elementId).trigger('click');
-                    console.log(elementId);
+                    //console.log(elementId);
                 })
                 .attr('cx', function(d) { return x1(d.start); })
                 .attr('cy', function(d) { return y1(d.lane) + .4 * y1(1) + 0.5; })
                 .attr('r', function(d) { return .25 * y1(1); })
                 .attr('class', function(d) { return 'mainItem ' + d.class; });
+
+
 
 
 
@@ -896,7 +911,7 @@ timelineModule.factory('patientEvents', function(exposures,
                                                immunogenicitySpecimenAssessments,
                                                nervousSystemFindings,
                                                procedures,
-                                               questionnaires){
+                                               questionnaires, morphologyServices){
 
     var getPatientEvents = function(dataToView) {
         //console.log(dataToView);
@@ -1011,6 +1026,9 @@ timelineModule.factory('patientEvents', function(exposures,
 
             if (dataToView.indexOf('PROMIS') > -1)
                 getPROMIS(data);
+
+            if (dataToView.indexOf('LesionVolume') > -1)
+                getLesionVolume(data);
 
             consolidateItemID(data);
 
@@ -1389,6 +1407,28 @@ timelineModule.factory('patientEvents', function(exposures,
         }
     }
 
+    var getLesionVolume = function (data) {
+        var lesions = morphologyServices.getFindingByTest('Lesion volume');
+        for (var t = 0; t < lesions.length; t++) {
+
+            var stdtc = lesions[t].MODTC;
+            var endtc = new Date(stdtc);
+            endtc.setDate(stdtc.getDate()+1);
+            var workItem = {
+                id: '',
+                name: 'work item ' + '',
+                lane: "Lesion Volume (ml)",
+                start: stdtc,
+                end: endtc,
+                desc: lesions[t].MOORRES,
+                domain: 'MO',
+                value: lesions[t].MOORRES,
+                url: ''
+            };
+            data.push(workItem);
+        }
+    }
+
     return {
         getPatientEvents: getPatientEvents
     }
@@ -1408,7 +1448,7 @@ timelineModule.controller('timelineCtrl', function ($rootScope, $scope, patientE
             return false;
     }
 
-    $scope.dataToView = ['Treatments', 'Relapses', 'EDSS', 'MSQOL'];
+    $scope.dataToView = ['Treatments', 'Relapses', 'EDSS', 'MSQOL', 'LesionVolume'];
     //$scope.dataToView = ['MSQOL', 'PDDS', 'VAS', 'PROMIS'];
 
     $rootScope.toggleTimelineData = function(dataToViewName) {

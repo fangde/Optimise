@@ -266,7 +266,7 @@ section>.container-fluid{
     border-color: red;
     */
 
-background-color: hsl(360, 65%, 28%) !important;
+    background-color: hsl(360, 65%, 28%) !important;
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#db5656", endColorstr="#751818");
     background-image: -khtml-gradient(linear, left top, left bottom, from(#db5656), to(#751818));
@@ -299,6 +299,24 @@ background-color: hsl(360, 65%, 28%) !important;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.23);
     -webkit-font-smoothing: antialiased;
 }
+
+.visits-btn {
+    background-color: hsl(180, 42%, 21%) !important;
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3d4dc4", endColorstr="#3b16b7");
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#2f5858), to(#204f4f));
+    background-image: -moz-linear-gradient(top, #2f5858, #204f4f);
+    background-image: -ms-linear-gradient(top, #2f5858, #204f4f);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2f5858), color-stop(100%, #204f4f));
+    background-image: -webkit-linear-gradient(top, #2f5858, #204f4f);
+    background-image: -o-linear-gradient(top, #2f5858, #204f4f);
+    background-image: linear-gradient(#2f5858, #204f4f);
+    border-color: #204f4f #204f4f hsl(180, 42%, 21%);
+    color: #fff !important;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.23);
+    -webkit-font-smoothing: antialiased;
+}
+
 
 #navigation ul li {
     display: inline-block;

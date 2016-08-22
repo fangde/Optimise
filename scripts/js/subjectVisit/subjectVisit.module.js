@@ -17,7 +17,7 @@
 //    'Optimise.adverseEvent',
 //    'Optimise.communication']);
 
-var visitModule = angular.module('Optimise.subjectVisit',[]);
+var visitModule = angular.module('Optimise.subjectVisit',['ui.bootstrap']);
 
 
 visitModule.service('subjectVisits', function(subjectVisit, records, viewService, symptoms, signs, communications) {
@@ -294,7 +294,7 @@ visitModule.factory('subjectVisit', function() {
 
 
 
-visitModule.controller('visitInfoCtrl', function ($rootScope, $scope, $parse, $uibModal, //locationScopeVariables,
+visitModule.controller('visitInfoCtrl', function ($rootScope, $scope, $parse, $uibModal,//locationScopeVariables,
                                                subjectVisit, subjectVisits,
                                                clinicalEvent, clinicalEvents,
                                                question, questionnaires,
@@ -881,6 +881,7 @@ visitModule.controller('visitInfoCtrl', function ($rootScope, $scope, $parse, $u
     }
 
     $scope.openEDSS = function () {
+
         var modalInstance = $uibModal.open({
             templateUrl: 'edss.html',
             controller: 'edssCtrl',
@@ -948,6 +949,12 @@ visitModule.controller('visitInfoCtrl', function ($rootScope, $scope, $parse, $u
     };
 });
 
+
+visitModule.controller('edssTestCtrl', function ($scope) {
+    $scope.edss_pyramidal = 0;
+
+});
+
 visitModule.controller('edssCtrl', function ($scope, $parse, $uibModalInstance,
                                              EDSS, dateValidated) {
 
@@ -975,6 +982,7 @@ visitModule.controller('edssCtrl', function ($scope, $parse, $uibModalInstance,
         console.log(fnScore);
 
         fnScore.sort();
+
         Array.prototype.max = function() {
             return Math.max.apply(null, this);
         };
@@ -989,9 +997,15 @@ visitModule.controller('edssCtrl', function ($scope, $parse, $uibModalInstance,
             return counts;
         };
 
+
         var highestScore = fnScore.max();
+        // highest frequency
         var counts = fnScore.frequency();
+
+        // remove the highest scores from the array
         fnScore.splice(fnScore.length-counts[highestScore], counts[highestScore]);
+
+        // the second highest is now the highest of the array
         var secondHighest = fnScore.max();
 
         if ($scope.edss_ambulation==12)
@@ -1034,9 +1048,20 @@ visitModule.controller('edssCtrl', function ($scope, $parse, $uibModalInstance,
             && ($scope.edss_ambulation==2))
             $scope.edss_computer = 4.5;
 
-        else if ((highestScore == 4) && (counts[4]==1) && (!counts[3]) && (!counts[2])
+        else if ((highestScore == 4) && (counts[4]==1)
+            && (counts[3]==undefined)
+            && (counts[2]==undefined)
             && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
             $scope.edss_computer = 4.0;
+
+        else if ((highestScore == 3) && (counts[3]==2)
+            && (counts[2]==undefined)
+            && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1))){
+            if (counts[2]==undefined)
+                $scope.edss_computer = 3.5;
+            else
+                $scope.edss_computer = 4.0;
+        }
 
         else if ((highestScore == 3) && (counts[3]>=2) && (counts[3]<=4)
             && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
@@ -1045,11 +1070,6 @@ visitModule.controller('edssCtrl', function ($scope, $parse, $uibModalInstance,
         else if ((highestScore == 2) && (counts[2]>=6) && (counts[2]<=7)
             && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
             $scope.edss_computer = 4.0;
-
-        else if ((highestScore == 3) && (counts[3]==2)
-            && (!counts[2])
-            && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
-            $scope.edss_computer = 3.5;
 
         else if ((highestScore == 3) && (counts[3]==1)
             && (secondHighest == 2) && (counts[2]>=1) && (counts[2]<=2)
@@ -1061,7 +1081,7 @@ visitModule.controller('edssCtrl', function ($scope, $parse, $uibModalInstance,
             $scope.edss_computer = 3.5;
 
         else if ((highestScore == 3) && ((counts[3]==1)
-            &&(!counts[2]))
+            &&(counts[2]==undefined))
             && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
             $scope.edss_computer = 3.0;
 
@@ -1178,7 +1198,7 @@ visitModule.controller('edssCtrl', function ($scope, $parse, $uibModalInstance,
         for (var q = 0; q < EDSS.length; q++){
             var model = $parse(EDSS[q].scopeVariable);
             model.assign($scope, EDSS[q].score);
-            console.log(EDSS[q].scopeVariable+": "+EDSS[q].score);
+            //console.log(EDSS[q].scopeVariable+": "+EDSS[q].score);
         }
     }
     else {
@@ -1187,6 +1207,8 @@ visitModule.controller('edssCtrl', function ($scope, $parse, $uibModalInstance,
             model.assign($scope,'');
         }
     }
+
+   // console.log($scope.edss_pyramidal);
 
     $scope.enableInput = function() {
         return !dateValidated;
@@ -1242,6 +1264,7 @@ visitModule.directive('visitEntry', function() {
         templateUrl:'scripts/js/subjectVisit/visit.html'
     };
 });
+
 
 //visitModule.directive('symptomsEntry', function() {
 //    return {

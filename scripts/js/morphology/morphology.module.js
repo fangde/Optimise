@@ -135,6 +135,7 @@ morphologyModule.service('morphologyServices', function(Morphology, records, vie
             }
         }
         morphologicalFindings.push(aFinding);
+        //console.log(aFinding);
     }
 
     var getPossiblyTrueFalseValues = function (value) {
@@ -222,7 +223,7 @@ morphologyModule.service('morphologyServices', function(Morphology, records, vie
         return findings;
     }
 
-    var getFindingByTest = function(MODTC, MOTEST) {
+    var getFindingByDateTest = function(MODTC, MOTEST) {
 
         for (var e = 0; e < morphologicalFindings.length; e++) {
             if ((morphologicalFindings[e].MODTC.toDateString() == MODTC.toDateString())&&
@@ -232,6 +233,17 @@ morphologyModule.service('morphologyServices', function(Morphology, records, vie
             }
         }
         return null;
+    }
+
+    var getFindingByTest = function(MOTEST) {
+        var listMOTests = [];
+        for (var e = 0; e < morphologicalFindings.length; e++) {
+            if (morphologicalFindings[e].MOTEST == MOTEST)
+            {
+                listMOTests.push(morphologicalFindings[e]);
+            }
+        }
+        return listMOTests;
     }
 
     var getFindingByTestAndLocation = function(MODTC, MOTEST, MOLOC) {
