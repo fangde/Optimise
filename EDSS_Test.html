@@ -21,7 +21,7 @@
 </body>
     <script type="text/javascript">
 
-    describe('edssCtrl_checkEDSS', function() {
+    describe('edssCtrl', function() {
         beforeEach(module('Optimise.subjectVisit'));
             var $controller;
             var controller;
@@ -46,8 +46,8 @@
                 parse = _$parse_;
                 scope = $rootScope.$new();
 
-
-                uibModalInstance = {                    // Create a mock object using spies
+                // Create a mock object using spies
+                uibModalInstance = {
                     close: jasmine.createSpy('uibModalInstance.close'),
                     dismiss: jasmine.createSpy('uibModalInstance.dismiss'),
                     result: {
@@ -62,7 +62,8 @@
 
             }));
 
-            describe('edssScore', function() {
+            // this test
+            describe('Tests edss scoring function according to NeuroStatus algorithm', function() {
 
                 it('should instantiate the controller properly', function () {
                     expect($controller).not.toBeUndefined();
@@ -88,7 +89,7 @@
                     }
                 });
 
-                it('All FS score == 0', function() {
+                it('sets all FS score == 0. Expect 0.0', function() {
                     scope.edss_pyramidal = 0;
                     scope.edss_cerebellar = 0;
                     scope.edss_brainStem = 0;
@@ -106,7 +107,7 @@
                 });
 
 
-                it('1X FS score == 1', function() {
+                it('sets 1X FS score == 1, expect 1.0', function() {
                     scope.edss_pyramidal = 0;
                     scope.edss_cerebellar = 0;
                     scope.edss_brainStem = 0;
@@ -123,7 +124,7 @@
                     var chosenFS = EDSS[position].scopeVariable;
                     var model = parse(chosenFS);
 
-                    // assign the FS score to 1
+                    // assign that FS score to 1
                     model.assign(scope, 1);
 
                     // run the algo
@@ -131,7 +132,7 @@
                     expect(scope.edss_computer).toEqual(1.0);
                 });
 
-                it('2-7X FS score == 1', function() {
+                it('sets 2-7X FS score == 1, expect 1.5', function() {
                     scope.edss_pyramidal = 1.0;
                     scope.edss_cerebellar = 1.0;
                     scope.edss_brainStem = Math.floor((Math.random() * 1)+1);;
@@ -148,7 +149,7 @@
                     expect(scope.edss_computer).toEqual(1.5);
                 });
 
-                it('1X FS score == 2', function() {
+                it('sets 1X FS score == 2. Expect 2.0', function() {
                     scope.edss_pyramidal = Math.round((Math.random() * 1));
                     scope.edss_cerebellar = Math.round((Math.random() * 1));
                     scope.edss_brainStem = Math.round((Math.random() * 1));
@@ -173,7 +174,7 @@
                     expect(scope.edss_computer).toEqual(2.0);
                 });
 
-                it('2X FS score == 2', function() {
+                it('sets 2X FS score == 2. Expect 2.5', function() {
                     scope.edss_pyramidal = Math.round((Math.random() * 1));
                     scope.edss_cerebellar = Math.round((Math.random() * 1));
                     scope.edss_brainStem = Math.round((Math.random() * 1));;
@@ -185,18 +186,15 @@
                     scope.edss_computer = 0;
                     scope.edss_human = 0;
 
-                    // pick one FS at random
+                    // pick two FS at random
                     var pickedPositions = [];
                     while (pickedPositions.length < 2) {
                         var positionAlreadyPicked = false;
                         var position = Math.floor((Math.random() * 6));
-                        console.log(position);
-                        console.log(pickedPositions);
                         for (var p = 0; p < pickedPositions.length; p++) {
                             if (position == pickedPositions[p]) {
                                 p = pickedPositions.length + 1;
                                 positionAlreadyPicked = true;
-                                console.log('already there');
                             }
                         }
                         if (!positionAlreadyPicked) {
@@ -212,7 +210,7 @@
                     expect(scope.edss_computer).toEqual(2.5);
                 });
 
-                it('3-4X FS score == 2', function() {
+                it('sets 3-4X FS score == 2. Expect 3.0', function() {
                     scope.edss_pyramidal = Math.round((Math.random() * 1));
                     scope.edss_cerebellar = Math.round((Math.random() * 1));
                     scope.edss_brainStem = Math.round((Math.random() * 1));;
@@ -235,7 +233,6 @@
                             if (position == pickedPositions[p]) {
                                 p = pickedPositions.length + 1;
                                 positionAlreadyPicked = true;
-                                console.log('already there');
                             }
                         }
                         if (!positionAlreadyPicked) {
@@ -251,7 +248,7 @@
                     expect(scope.edss_computer).toEqual(3.0);
                 });
 
-                it('0X FS == 2, 1X FS score == 3', function() {
+                it('sets 0X FS == 2 and 1X FS score == 3. Expect 3.0', function() {
                     scope.edss_pyramidal = 1.0;
                     scope.edss_cerebellar = Math.round((Math.random() * 1));
                     scope.edss_brainStem = Math.round((Math.random() * 1));;
@@ -276,7 +273,7 @@
                     expect(scope.edss_computer).toEqual(3.0);
                 });
 
-                it('5X FS score == 2', function() {
+                it('sets 5X FS score == 2. Expect 3.5', function() {
                     scope.edss_pyramidal = Math.round((Math.random() * 1));
                     scope.edss_cerebellar = Math.round((Math.random() * 1));
                     scope.edss_brainStem = Math.round((Math.random() * 1));;
@@ -292,13 +289,10 @@
                     while (pickedPositions.length < 5) {
                         var positionAlreadyPicked = false;
                         var position = Math.floor((Math.random() * 6));
-                        //console.log(position);
-                        //console.log(pickedPositions);
                         for (var p = 0; p < pickedPositions.length; p++) {
                             if (position == pickedPositions[p]) {
                                 p = pickedPositions.length + 1;
                                 positionAlreadyPicked = true;
-                                //console.log('already there');
                             }
                         }
                         if (!positionAlreadyPicked) {
@@ -314,7 +308,7 @@
                     expect(scope.edss_computer).toEqual(3.5);
                 });
 
-                it('1-2X FS score == 2 && 1X FS == 3', function() {
+                it('sets 1-2X FS score == 2 and 1X FS == 3. Expect 3.5', function() {
                     scope.edss_pyramidal = Math.round((Math.random() * 1));
                     scope.edss_cerebellar = Math.round((Math.random() * 1));
                     scope.edss_brainStem = Math.round((Math.random() * 1));;
@@ -350,8 +344,7 @@
                     while (pickedPositions.length < 3) {
                         var positionAlreadyPicked = false;
                         var position = Math.floor((Math.random() * 6));
-                        //console.log(position);
-                        //console.log(pickedPositions);
+
                         for (var p = 0; p < pickedPositions.length; p++) {
                             if (position == pickedPositions[p]) {
                                 p = pickedPositions.length + 1;
@@ -372,7 +365,7 @@
                     expect(scope.edss_computer).toEqual(3.5);
                 });
 
-                it('0X FS score == 2 && 2X FS == 3', function() {
+                it('sets 0X FS score == 2 && 2X FS == 3. Expect 3.5', function() {
                     scope.edss_pyramidal = Math.round((Math.random() * 1));
                     scope.edss_cerebellar = Math.round((Math.random() * 1));
                     scope.edss_brainStem = Math.round((Math.random() * 1));;
@@ -410,7 +403,7 @@
                     expect(scope.edss_computer).toEqual(3.5);
                 });
 
-                it('6-7X FS score == 2', function() {
+                it('sets 6-7X FS score == 2. Expect 4.0', function() {
                     scope.edss_pyramidal = Math.round((Math.random() * 1));
                     scope.edss_cerebellar = Math.round((Math.random() * 1));
                     scope.edss_brainStem = Math.round((Math.random() * 1));;
@@ -426,13 +419,10 @@
                     while (pickedPositions.length < 6) {
                         var positionAlreadyPicked = false;
                         var position = Math.floor((Math.random() * 6));
-                        //console.log(position);
-                        //console.log(pickedPositions);
                         for (var p = 0; p < pickedPositions.length; p++) {
                             if (position == pickedPositions[p]) {
                                 p = pickedPositions.length + 1;
                                 positionAlreadyPicked = true;
-                                //console.log('already there');
                             }
                         }
                         if (!positionAlreadyPicked) {
@@ -448,7 +438,7 @@
                     expect(scope.edss_computer).toEqual(4.0);
                 });
 
-                it('2-4X FS score == 3', function() {
+                it('sets 2-4X FS score == 3. Expect 4.0', function() {
                     scope.edss_pyramidal = Math.round((Math.random() * 1)+1);
                     scope.edss_cerebellar = Math.round((Math.random() * 1)+1);
                     scope.edss_brainStem = Math.round((Math.random() * 1)+1);;
@@ -464,13 +454,10 @@
                     while (pickedPositions.length < 4) {
                         var positionAlreadyPicked = false;
                         var position = Math.floor((Math.random() * 6));
-                        //console.log(position);
-                        //console.log(pickedPositions);
                         for (var p = 0; p < pickedPositions.length; p++) {
                             if (position == pickedPositions[p]) {
                                 p = pickedPositions.length + 1;
                                 positionAlreadyPicked = true;
-                                //console.log('already there');
                             }
                         }
                         if (!positionAlreadyPicked) {
@@ -486,7 +473,7 @@
                     expect(scope.edss_computer).toEqual(4.0);
                 });
 
-                it('0X FS score == 2 && 0X FS score == 3 && 1X FS score == 4', function() {
+                it('sets 0X FS score == 2, 0X FS score == 3 and 1X FS score == 4. Expect 4.0', function() {
                     scope.edss_pyramidal = Math.round((Math.random() * 1));
                     scope.edss_cerebellar = Math.round((Math.random() * 1));
                     scope.edss_brainStem = Math.round((Math.random() * 1));
@@ -503,7 +490,7 @@
                     var chosenFS = EDSS[position].scopeVariable;
                     var model = parse(chosenFS);
 
-                    // assign the FS score to 1
+                    // assign the FS score to 4
                     model.assign(scope, 4);
 
                     scope.updateEDSS();
@@ -512,7 +499,7 @@
                 });
 
 
-                it('5X FS score == 3', function() {
+                it('sets 5X FS score == 3. Expect 4.5', function() {
                     scope.edss_pyramidal = Math.round((Math.random() * 2));
                     scope.edss_cerebellar = Math.round((Math.random() * 2));
                     scope.edss_brainStem = Math.round((Math.random() * 2));
@@ -547,7 +534,7 @@
                     expect(scope.edss_computer).toEqual(4.5);
                 });
 
-                it('1-2X FS score == 3 && 1X FSscore ==4', function() {
+                it('sets 1-2X FS score == 3 and 1X FS score == 4. Expect 4.5', function() {
                     scope.edss_pyramidal = Math.round((Math.random() * 2));
                     scope.edss_cerebellar = Math.round((Math.random() * 2));
                     scope.edss_brainStem = Math.round((Math.random() * 2));
@@ -599,7 +586,7 @@
                     expect(scope.edss_computer).toEqual(4.5);
                 });
 
-                it('6-7X FS score == 3', function() {
+                it('sets 6-7X FS score == 3. Expect 5.0', function() {
                     scope.edss_pyramidal = Math.round((Math.random() * 2));
                     scope.edss_cerebellar = Math.round((Math.random() * 2));
                     scope.edss_brainStem = Math.round((Math.random() * 2));
@@ -628,14 +615,13 @@
                             model.assign(scope, 3);
                         }
                     }
-                    console.log(pickedPositions.length);
 
                     scope.updateEDSS();
 
                     expect(scope.edss_computer).toEqual(5.0);
                 });
 
-                it('2-7X FS score == 4', function() {
+                it('sets 2-7X FS score == 4. Expect 5.0', function() {
                     scope.edss_pyramidal = Math.round((Math.random() * 3));
                     scope.edss_cerebellar = Math.round((Math.random() * 3));
                     scope.edss_brainStem = Math.round((Math.random() * 3));
@@ -670,7 +656,7 @@
                     expect(scope.edss_computer).toEqual(5.0);
                 });
 
-                it('1-7X FS score == 5', function() {
+                it('sets 1-7X FS score == 5. Expect 5.0', function() {
                     scope.edss_pyramidal = Math.round((Math.random() * 4));
                     scope.edss_cerebellar = Math.round((Math.random() * 4));
                     scope.edss_brainStem = Math.round((Math.random() * 4));
@@ -705,7 +691,7 @@
                     expect(scope.edss_computer).toEqual(5.0);
                 });
 
-                it('Ambulation score == 4, should return 5.0', function() {
+                it('sets ambulation score == 4, expect 5.0', function() {
 
                     var maxScore = 6;
                     scope.edss_pyramidal = Math.round((Math.random() * maxScore));
@@ -724,7 +710,7 @@
                     expect(scope.edss_computer).toEqual(5.5);
                 });
 
-                it('Ambulation score == 5/6/7, should return 6.0', function() {
+                it('sets ambulation score == 5/6/7, expect 6.0', function() {
 
                     var maxScore = 6;
                     scope.edss_pyramidal = Math.round((Math.random() * maxScore));
@@ -750,7 +736,7 @@
                     expect(scope.edss_computer).toEqual(6.0);
                 });
 
-                it('Ambulation score == 8/9, should return 6.5', function() {
+                it('sets ambulation score == 8/9, expect 6.5', function() {
 
                     var maxScore = 6;
                     scope.edss_pyramidal = Math.round((Math.random() * maxScore));
@@ -762,7 +748,6 @@
                     scope.edss_mental = Math.round((Math.random() * maxScore));
                     scope.edss_computer = 0;
                     scope.edss_human = 0;
-
                     scope.edss_ambulation = 8;
                     scope.updateEDSS();
                     expect(scope.edss_computer).toEqual(6.5);
@@ -772,7 +757,7 @@
                     expect(scope.edss_computer).toEqual(6.5);
                 });
 
-                it('Ambulation score == 10, should return 7.0', function() {
+                it('sets ambulation score == 10, expect 7.0', function() {
 
                     var maxScore = 6;
                     scope.edss_pyramidal = Math.round((Math.random() * maxScore));
@@ -790,7 +775,7 @@
                     expect(scope.edss_computer).toEqual(7);
                 });
 
-                it('Ambulation score == 11, should return 7.5', function() {
+                it('sets ambulation score == 11, expect 7.5', function() {
 
                     var maxScore = 6;
                     scope.edss_pyramidal = Math.round((Math.random() * maxScore));
@@ -808,7 +793,7 @@
                     expect(scope.edss_computer).toEqual(7.5);
                 });
 
-                it('Ambulation score == 12, should return 8.0', function() {
+                it('sets ambulation score == 12, expect 8.0', function() {
 
                     var maxScore = 6;
                     scope.edss_pyramidal = Math.round((Math.random() * maxScore));
