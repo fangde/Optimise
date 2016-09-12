@@ -680,6 +680,7 @@ interventionModule.controller('exposureInfoCtrl', function($scope,
                     break;
                 }
             }
+            console.log(exposuresToTrt);
         }
     }
 

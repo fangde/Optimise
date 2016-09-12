@@ -1,14 +1,14 @@
 .timeline {
-    overflow: scroll;
+    overflow: hidden;
     shape-rendering: crispEdges;
 }
 
 .mini text {
-    font: 9px sans-serif;
+    font: 90% sans-serif;
 }
 
 .main text {
-    font: 12px sans-serif;
+    font: 110% sans-serif;
 }
 
 .month text {
@@ -73,16 +73,17 @@
 }
 
 .CE {
-    stroke: blue;
-    fill: lightblue;
+    stroke: rgb(140, 0, 0);
+    fill: rgb(125, 0, 0);
 }
 
 .LB {
-    stroke: red;
-    fill: pink;
+    stroke: rgb(0, 0, 140);
+    fill: rgb(0, 0, 170);
 }
 
 .QS {
-    stroke: lightgrey;
+    stroke: rgb(0, 38, 112);;
     fill: none;
 }
+

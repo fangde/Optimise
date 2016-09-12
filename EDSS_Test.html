@@ -29,16 +29,16 @@
             var uibModalInstance;
             var dateValidated = false;
             var scope;
-            var EDSS = [{score:'', scopeVariable: 'edss_pyramidal', QSTEST: 'EDSS-Pyramidal'},
-                {score:'', scopeVariable: 'edss_cerebellar', QSTEST: 'EDSS-Cerebellar'},
-                {score:'', scopeVariable: 'edss_brainStem', QSTEST: 'EDSS-BrainStem'},
-                {score:'', scopeVariable: 'edss_sensory', QSTEST: 'EDSS-Sensory'},
-                {score:'', scopeVariable: 'edss_bowelBladder', QSTEST: 'EDSS-BowelBladder'},
-                {score:'', scopeVariable: 'edss_visual', QSTEST: 'EDSS-Visual'},
-                {score:'', scopeVariable: 'edss_mental', QSTEST: 'EDSS-Mental'},
-                {score:'', scopeVariable: 'edss_ambulation', QSTEST: 'EDSS-Ambulation'},
-                {score:'', scopeVariable: 'edss_human', QSTEST: 'EDSS-Total Human'},
-                {score:'', scopeVariable: 'edss_computer', QSTEST: 'EDSS-Total Computer'}];
+            var EDSS = [{score:0, scopeVariable: 'edss_pyramidal', QSTEST: 'EDSS-Pyramidal'},
+                {score:0, scopeVariable: 'edss_cerebellar', QSTEST: 'EDSS-Cerebellar'},
+                {score:0, scopeVariable: 'edss_brainStem', QSTEST: 'EDSS-BrainStem'},
+                {score:0, scopeVariable: 'edss_sensory', QSTEST: 'EDSS-Sensory'},
+                {score:0, scopeVariable: 'edss_bowelBladder', QSTEST: 'EDSS-BowelBladder'},
+                {score:0, scopeVariable: 'edss_visual', QSTEST: 'EDSS-Visual'},
+                {score:0, scopeVariable: 'edss_mental', QSTEST: 'EDSS-Mental'},
+                {score:0, scopeVariable: 'edss_ambulation', QSTEST: 'EDSS-Ambulation'},
+                {score:0, scopeVariable: 'edss_human', QSTEST: 'EDSS-Total Human'},
+                {score:0, scopeVariable: 'edss_computer', QSTEST: 'EDSS-Total Computer'}];
 
 
             beforeEach(inject(function($rootScope, _$controller_, _$parse_){
@@ -63,24 +63,17 @@
             }));
 
             // this test
-            describe('Tests edss scoring function according to NeuroStatus algorithm', function() {
+            describe('Tests edss controller instantiated', function() {
 
                 it('should instantiate the controller properly', function () {
                     expect($controller).not.toBeUndefined();
                 });
+            });
 
+            describe('Test EDSS scoring function according to Neurostatus', function() {
                 it('checks startup values of edss scores', function() {
 
-                    scope.edss_pyramidal = 0;
-                    scope.edss_ambulation = 0;
-                    scope.edss_brainStem = 0;
-                    scope.edss_cerebellar = 0;
-                    scope.edss_sensory = 0;
-                    scope.edss_bowelBladder = 0;
-                    scope.edss_visual = 0;
-                    scope.edss_mental = 0;
-                    scope.edss_computer = 0;
-                    scope.edss_human = 0;
+                    scope.initScores();
 
                     for (var v = 0; v < EDSS.length; v++){
                         var model = parse(EDSS[v].scopeVariable);
@@ -105,7 +98,6 @@
 
                     expect(scope.edss_computer).toEqual(0.0);
                 });
-
 
                 it('sets 1X FS score == 1, expect 1.0', function() {
                     scope.edss_pyramidal = 0;
@@ -497,7 +489,6 @@
 
                     expect(scope.edss_computer).toEqual(4.0);
                 });
-
 
                 it('sets 5X FS score == 3. Expect 4.5', function() {
                     scope.edss_pyramidal = Math.round((Math.random() * 2));

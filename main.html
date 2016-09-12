@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!--<html manifest="optimise.appcache?v=V0.0.50">-->
+<!--<html manifest="optimise.appcache?v=V0.0.52">-->
 <html>
 <head>
     <title>OPTIMISE</title>
@@ -76,8 +76,8 @@
     </div>
 </header>
 
-<div id="mainContent">
-    <div id="events" class="container-fluid">
+        <div id="mainContent">
+            <div id="events" class="container-fluid">
         <div class="eventStatus" ng-show="showEventsBar()">
             <div class="row" ng-show="enableNewDate()&&(contentOnDisplay=='Relapse')">
                 <div class="col-sm-12" >
@@ -476,7 +476,7 @@
                 </ul>
             </div>
 
-            <section id="section">
+            <div id="section" class="container">
                 <div timeline-entry ng-controller="timelineCtrl" ng-show="showThisContent()">
                 </div>
 
@@ -511,7 +511,7 @@
                 <!--Communication -->
                 <div reminder-entry ng-controller="reminderInfoCtrl" ng-show="showThisContent()">
                 </div>
-        </section>
+            </div>
         </div>
 
     </div>

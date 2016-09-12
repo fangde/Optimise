@@ -377,12 +377,12 @@ visitModule.controller('visitInfoCtrl', function ($rootScope, $scope, $parse, $u
                 var questionOnThisVisit = questionnaires.getQuestionByTest($scope.EDSS[q].QSTEST, currentVisit[0].SVSTDTC);
                 if (questionOnThisVisit != null) {  // if a question was answered and recorded
                     $scope.EDSS[q].score = questionOnThisVisit.QSSTRESC.toString();
-//                    console.log($scope.EDSS[q].score);
-//                    console.log($scope.EDSS[q].scopeVariable);
-//                    console.log($scope.EDSS[q].QSTEST);
+                    console.log($scope.EDSS[q].score);
+                    console.log($scope.EDSS[q].scopeVariable);
+                    console.log($scope.EDSS[q].QSTEST);
                     var model = $parse($scope.EDSS[q].scopeVariable);
                     model.assign($scope, $scope.EDSS[q].score);
-//                    console.log($scope.edss_human);
+                    console.log($scope.edss_human);
                 }
             }
 
@@ -477,21 +477,21 @@ visitModule.controller('visitInfoCtrl', function ($rootScope, $scope, $parse, $u
 
         //subjectVisits.setVisitParametersForSymptomAndSign($scope.SVSTDTC, "");
 
-        $scope.EDSS = [{score:'', scopeVariable: 'edss_pyramidal', QSTEST: 'EDSS-Pyramidal'},
-            {score:'', scopeVariable: 'edss_cerebellar', QSTEST: 'EDSS-Cerebellar'},
-            {score:'', scopeVariable: 'edss_brainStem', QSTEST: 'EDSS-BrainStem'},
-            {score:'', scopeVariable: 'edss_sensory', QSTEST: 'EDSS-Sensory'},
-            {score:'', scopeVariable: 'edss_bowelBladder', QSTEST: 'EDSS-BowelBladder'},
-            {score:'', scopeVariable: 'edss_visual', QSTEST: 'EDSS-Visual'},
-            {score:'', scopeVariable: 'edss_mental', QSTEST: 'EDSS-Mental'},
-            {score:'', scopeVariable: 'edss_ambulation', QSTEST: 'EDSS-Ambulation'},
-            {score:'', scopeVariable: 'edss_human', QSTEST: 'EDSS-Total Human'},
-            {score:'', scopeVariable: 'edss_computer', QSTEST: 'EDSS-Total Computer'}];
+        $scope.EDSS = [{score:0, scopeVariable: 'edss_pyramidal', QSTEST: 'EDSS-Pyramidal'},
+            {score:0, scopeVariable: 'edss_cerebellar', QSTEST: 'EDSS-Cerebellar'},
+            {score:0, scopeVariable: 'edss_brainStem', QSTEST: 'EDSS-BrainStem'},
+            {score:0, scopeVariable: 'edss_sensory', QSTEST: 'EDSS-Sensory'},
+            {score:0, scopeVariable: 'edss_bowelBladder', QSTEST: 'EDSS-BowelBladder'},
+            {score:0, scopeVariable: 'edss_visual', QSTEST: 'EDSS-Visual'},
+            {score:0, scopeVariable: 'edss_mental', QSTEST: 'EDSS-Mental'},
+            {score:0, scopeVariable: 'edss_ambulation', QSTEST: 'EDSS-Ambulation'},
+            {score:0, scopeVariable: 'edss_human', QSTEST: 'EDSS-Total Human'},
+            {score:0, scopeVariable: 'edss_computer', QSTEST: 'EDSS-Total Computer'}];
 
         for (var k = 0; k < $scope.EDSS.length; k++){
 
             var model = $parse($scope.EDSS[k].scopeVariable);
-            model.assign($scope, '');
+            model.assign($scope, 0);
         }
 
         $scope.EDMUS = {score:'', QSTEST: 'EDMUS'};
@@ -958,19 +958,28 @@ visitModule.controller('edssTestCtrl', function ($scope) {
 visitModule.controller('edssCtrl', function ($scope, $parse, $uibModalInstance,
                                              EDSS, dateValidated) {
 
-    
-    $scope.edss_pyramidal = 0;
-    $scope.edss_ambulation = 0;
-    $scope.edss_brainStem = 0;
-    $scope.edss_cerebellar = 0;
-    $scope.edss_sensory = 0;
-    $scope.edss_bowelBladder = 0;
-    $scope.edss_visual = 0;
-    $scope.edss_mental = 0;
-    $scope.edss_computer = "";
-    $scope.edss_human = "";
+
+    // initialise edss functional scores
+    $scope.initScores = function () {
+        if (dateValidated) {
+            for (var q = 0; q < EDSS.length; q++){
+                var model = $parse(EDSS[q].scopeVariable);
+                model.assign($scope, EDSS[q].score);
+            }
+        }
+        else {
+            for (var q = 0; q < EDSS.length; q++) {
+                var model = $parse(EDSS[q].scopeVariable);
+                model.assign($scope,0);
+            }
+        }
+    }
+
+    $scope.initScores();
 
     $scope.updateEDSS = function() {
+
+        // place all scores into an array
         var fnScore = [$scope.edss_pyramidal,
             $scope.edss_cerebellar,
             $scope.edss_brainStem,
@@ -979,14 +988,22 @@ visitModule.controller('edssCtrl', function ($scope, $parse, $uibModalInstance,
             $scope.edss_visual,
             $scope.edss_mental];
 
-        console.log(fnScore);
-
+        // sort scores, from lowest to highest
+        // will need this for the getting highest and second highest scores
         fnScore.sort();
 
+        /*
+         *  Takes an array
+         *  Returns largest value in array
+         */
         Array.prototype.max = function() {
             return Math.max.apply(null, this);
         };
 
+        /*
+         *  Takes an array
+         *  Returns a dictionary with array items as key, and frequency of those items as value
+         */
         Array.prototype.frequency = function() {
             var counts = {};
 
@@ -997,9 +1014,9 @@ visitModule.controller('edssCtrl', function ($scope, $parse, $uibModalInstance,
             return counts;
         };
 
-
         var highestScore = fnScore.max();
-        // highest frequency
+
+        // dict {score: frequencyOfScore}
         var counts = fnScore.frequency();
 
         // remove the highest scores from the array
@@ -1008,116 +1025,144 @@ visitModule.controller('edssCtrl', function ($scope, $parse, $uibModalInstance,
         // the second highest is now the highest of the array
         var secondHighest = fnScore.max();
 
-        if ($scope.edss_ambulation==12)
-            $scope.edss_computer = 8.0;
+        // EDSS Neuro scoring algorithm from http://edss.neurol.ru
+        try {
+            if ($scope.edss_ambulation==12)
+                $scope.edss_computer = 8.0;
 
-        else if ($scope.edss_ambulation==11)
-            $scope.edss_computer = 7.5;
+            else if ($scope.edss_ambulation==11)
+                $scope.edss_computer = 7.5;
 
-        else if ($scope.edss_ambulation==10)
-            $scope.edss_computer = 7.0;
+            else if ($scope.edss_ambulation==10)
+                $scope.edss_computer = 7.0;
 
-        else if (($scope.edss_ambulation==8)||($scope.edss_ambulation==9))
-            $scope.edss_computer = 6.5;
+            else if (($scope.edss_ambulation==8)||($scope.edss_ambulation==9))
+                $scope.edss_computer = 6.5;
 
-        else if (($scope.edss_ambulation==5)||($scope.edss_ambulation==6)||($scope.edss_ambulation==7))
-            $scope.edss_computer = 6.0;
+            else if (($scope.edss_ambulation==5)||($scope.edss_ambulation==6)||($scope.edss_ambulation==7))
+                $scope.edss_computer = 6.0;
 
-        else if ($scope.edss_ambulation==4)
-            $scope.edss_computer = 5.5;
+            else if ($scope.edss_ambulation==4)
+                $scope.edss_computer = 5.5;
 
-        else if (((highestScore == 5)&&(counts[5]>=1)&&(counts[5]<=7))
-            ||((highestScore==6)&&(counts[6]>=1)&&(counts[6]<=7))
-            && ($scope.edss_ambulation==3))
-            $scope.edss_computer = 5.0;
+            /*  (IF : highest is '5'
+             *      : frequency of '5' > 5 but less then 7
+             *  OR : highest is '6'
+             *     : frequency of  '6' > 1 but less or same as 7 )
+             *  AND
+             *  ( ambulation score is 3 )
+             */
+            else if (((highestScore == 5)&&(counts[5]>=1)&&(counts[5]<=7))
+                ||((highestScore==6)&&(counts[6]>=1)&&(counts[6]<=7))
+                && ($scope.edss_ambulation==3))
+                $scope.edss_computer = 5.0;
 
-        else if ((highestScore == 4) && ((counts[4]>=2)&&(counts[4]<=7))
-            && ($scope.edss_ambulation==3))
-            $scope.edss_computer = 5.0;
+            /*  (IF : highest is '4'
+             *      : frequency of '4' >= 2 but <= as 7)
+             *  AND
+             *  ( ambulation score is 3 )
+             */
+            else if ((highestScore == 4) && ((counts[4]>=2)&&(counts[4]<=7))
+                && ($scope.edss_ambulation==3))
+                $scope.edss_computer = 5.0;
 
-        else if ((highestScore == 3) && ((counts[3]>=6)&&(counts[3]<=7))
-            && ($scope.edss_ambulation==3))
-            $scope.edss_computer = 5.0;
+            else if ((highestScore == 3) && ((counts[3]>=6)&&(counts[3]<=7))
+                && ($scope.edss_ambulation==3))
+                $scope.edss_computer = 5.0;
 
-        else if ((highestScore == 4) && (counts[4]==1)
-            && (secondHighest == 3) && (counts[3]>=1)&&(counts[3]<=2)
-            && ($scope.edss_ambulation==2))
-            $scope.edss_computer = 4.5;
+            else if ((highestScore == 4) && (counts[4]==1)
+                && (secondHighest == 3) && (counts[3]>=1)&&(counts[3]<=2)
+                && ($scope.edss_ambulation==2))
+                $scope.edss_computer = 4.5;
 
-        else if ((highestScore == 3) && ((counts[3]==5))
-            && ($scope.edss_ambulation==2))
-            $scope.edss_computer = 4.5;
+            else if ((highestScore == 3) && ((counts[3]==5))
+                && ($scope.edss_ambulation==2))
+                $scope.edss_computer = 4.5;
 
-        else if ((highestScore == 4) && (counts[4]==1)
-            && (counts[3]==undefined)
-            && (counts[2]==undefined)
-            && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
-            $scope.edss_computer = 4.0;
-
-        else if ((highestScore == 3) && (counts[3]==2)
-            && (counts[2]==undefined)
-            && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1))){
-            if (counts[2]==undefined)
-                $scope.edss_computer = 3.5;
-            else
+            /*  (IF : highest is '4'
+             *      : frequency of '4' is 1
+             *      : frequency of 3 is undefined
+             *      : frequency of 2 is undefined )
+             *  AND
+             *  ( ambulation score is '0' or '1')
+             *
+             *  NOTE: Undefined == 0
+             */
+            else if ((highestScore == 4) && (counts[4]==1)
+                && (counts[3]==undefined)
+                && (counts[2]==undefined)
+                && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
                 $scope.edss_computer = 4.0;
+
+            /*  (IF : highest is '4'
+             *      : frequency of '4' >= 2 but <= as 7)
+             *  AND
+             *  ( ambulation score is 3 )
+             */
+            else if ((highestScore == 3) && (counts[3]==2)
+                && (counts[2]==undefined)
+                && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1))){
+                if (counts[2]==undefined)
+                    $scope.edss_computer = 3.5;
+                else
+                    $scope.edss_computer = 4.0;
+            }
+
+            else if ((highestScore == 3) && (counts[3]>=2) && (counts[3]<=4)
+                && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
+                $scope.edss_computer = 4.0;
+
+            else if ((highestScore == 2) && (counts[2]>=6) && (counts[2]<=7)
+                && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
+                $scope.edss_computer = 4.0;
+
+            else if ((highestScore == 3) && (counts[3]==1)
+                && (secondHighest == 2) && (counts[2]>=1) && (counts[2]<=2)
+                && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
+                $scope.edss_computer = 3.5;
+
+            else if ((highestScore == 2) && (counts[2]==5)
+                && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
+                $scope.edss_computer = 3.5;
+
+            else if ((highestScore == 3) && ((counts[3]==1)
+                &&(counts[2]==undefined))
+                && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
+                $scope.edss_computer = 3.0;
+
+            else if ((highestScore == 2) && ((counts[2]>=3)
+                &&(counts[2]<=4))
+                && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
+                $scope.edss_computer = 3.0;
+
+            else if ((highestScore == 2) && (counts[2]==2)
+                && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
+                $scope.edss_computer = 2.5;
+
+            else if ((highestScore == 2) && (counts[2]==1)
+                && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
+                $scope.edss_computer = 2.0;
+
+            else if ((highestScore == 1) && ((counts[1]>=2)
+                &&(counts[1]<=7))
+                && ($scope.edss_ambulation==0))
+                $scope.edss_computer = 1.5;
+
+            else if ((highestScore == 1) && (counts[1]==1)
+                && ($scope.edss_ambulation==0))
+                $scope.edss_computer = 1.0;
+
+            else if ((highestScore == 0) && (counts[0]==7)
+                && ($scope.edss_ambulation==0))
+                $scope.edss_computer = 0.0;
+
+            else {
+                throw ("Error on this combination of functional scores: "+fnScore);
+            }
+
+        } catch (err) {
+            alert(err);
         }
-
-        else if ((highestScore == 3) && (counts[3]>=2) && (counts[3]<=4)
-            && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
-            $scope.edss_computer = 4.0;
-
-        else if ((highestScore == 2) && (counts[2]>=6) && (counts[2]<=7)
-            && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
-            $scope.edss_computer = 4.0;
-
-        else if ((highestScore == 3) && (counts[3]==1)
-            && (secondHighest == 2) && (counts[2]>=1) && (counts[2]<=2)
-            && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
-            $scope.edss_computer = 3.5;
-
-        else if ((highestScore == 2) && (counts[2]==5)
-            && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
-            $scope.edss_computer = 3.5;
-
-        else if ((highestScore == 3) && ((counts[3]==1)
-            &&(counts[2]==undefined))
-            && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
-            $scope.edss_computer = 3.0;
-
-        else if ((highestScore == 2) && ((counts[2]>=3)
-            &&(counts[2]<=4))
-            && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
-            $scope.edss_computer = 3.0;
-
-        else if ((highestScore == 2) && (counts[2]==2)
-            && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
-            $scope.edss_computer = 2.5;
-
-        else if ((highestScore == 2) && (counts[2]==1)
-            && (($scope.edss_ambulation==0)||($scope.edss_ambulation==1)))
-            $scope.edss_computer = 2.0;
-
-        else if ((highestScore == 1) && ((counts[1]>=2)
-            &&(counts[1]<=7))
-            && ($scope.edss_ambulation==0))
-            $scope.edss_computer = 1.5;
-
-        else if ((highestScore == 1) && (counts[1]==1)
-            && ($scope.edss_ambulation==0))
-            $scope.edss_computer = 1.0;
-
-        else if ((highestScore == 0) && (counts[0]==7)
-            && ($scope.edss_ambulation==0))
-            $scope.edss_computer = 0.0;
-
-        else {
-
-            console.log("Error on this combo:"+fnScore);
-        }
-
-        //console.log($scope.edss_computer);
-
     }
 
     $scope.save = function () {
@@ -1185,30 +1230,12 @@ visitModule.controller('edssCtrl', function ($scope, $parse, $uibModalInstance,
 
 
     $scope.showHelpPanel = function(thisPanel) {
-        //console.log($scope.helpPanel);
         if (thisPanel == $scope.helpPanel){
             return true;}
         else
             return false;
     };
 
-    //console.log(dateValidated);
-    //console.log(EDSS);
-    if (dateValidated) {
-        for (var q = 0; q < EDSS.length; q++){
-            var model = $parse(EDSS[q].scopeVariable);
-            model.assign($scope, EDSS[q].score);
-            //console.log(EDSS[q].scopeVariable+": "+EDSS[q].score);
-        }
-    }
-    else {
-        for (var q = 0; q < EDSS.length; q++) {
-            var model = $parse(EDSS[q].scopeVariable);
-            model.assign($scope,'');
-        }
-    }
-
-   // console.log($scope.edss_pyramidal);
 
     $scope.enableInput = function() {
         return !dateValidated;

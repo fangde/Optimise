@@ -3,77 +3,234 @@
         <div class="panel-group">
             <div class="panel panel-default">
                 <div class="panel-heading myPanel">
-                    <h3 class="panel-title">Laboratory</h3>
+                    <h3 class="panel-title">Reminders</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="form-group">
-                        <div class="row">
-                            <!--<div class="col-sm-3">-->
-                                <!--<div class="input-group">-->
-                                    <!--<label>Start Reminders</label>-->
-                                    <!--<div class="DTC_DayMonthYear"></div>-->
+                    <table class ="table">
+                    <tbody>
+                    <tr ng-repeat="thisReminder in getReminders()">
+                        <td class="form-group">
+                            <div class="row marginTop">
+                                <!--<div class="col-sm-5">-->
+                                    <!--<div class="input-daterange input-group">-->
+                                        <!--<span class="input-group-addon">Start Date</span>-->
+                                        <!--<input type="text" class="input-sm form-control"-->
+                                               <!--ng-disabled = "true"-->
+                                               <!--ng-model="thisReminder.REMINDERSTDTC"-->
+                                               <!--ng-change="editReminder(thisReminder, 'REMINDERSTDTC')"/>-->
+                                        <!--<span class="input-group-addon">to</span>-->
+                                        <!--<input type="text" class="input-sm form-control"-->
+                                               <!--ng-disabled = "true"-->
+                                               <!--ng-model="thisReminder.REMINDERENDTC"-->
+                                               <!--ng-change="editReminder(thisReminder, 'REMINDERENDTC')"/>-->
+                                    <!--</div>-->
                                 <!--</div>-->
-                            <!--</div>-->
+                                <div class="col-sm-4">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(thisReminder.REMINDERCATEGORY=="LB")}'
+                                                ng-model="thisReminder.REMINDERCATEGORY"
+                                                uib-btn-radio="'LB'"
+                                                ng-change="editThisReminder(thisReminder, 'REMINDERCATEGORY', 'LB')">
+                                            Blood
+                                        </button>
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(thisReminder.REMINDERCATEGORY=="IS")}'
+                                                ng-model="thisReminder.REMINDERCATEGORY"
+                                                uib-btn-radio="'IS'"
+                                                ng-change="editThisReminder(thisReminder, 'REMINDERCATEGORY', 'IS')">
+                                            Serological
+                                        </button>
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(thisReminder.REMINDERCATEGORY=="MRI")}'
+                                                ng-model="thisReminder.REMINDERCATEGORY"
+                                                uib-btn-radio="'MRI'"
+                                                ng-change="editThisReminder(thisReminder, 'REMINDERCATEGORY', 'MRI')">
+                                            MRI
+                                        </button>
+                                    </div>
+                                </div>
 
-                            <!--<div class="col-sm-3">-->
-                                <!--<div class="input-group">-->
-                                    <!--<label>End Reminders</label>-->
-                                    <!--<div class="DTC_DayMonthYear"></div>-->
-                                <!--</div>-->
-                            <!--</div>-->
+                                <div class="col-sm-5">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(getFrequency(thisReminder.REMINDERFREQUENCY)=="Once/ Week")}'
+                                                ng-model="thisReminder.REMINDERFREQUENCY"
+                                                uib-btn-radio="'Once/ Week'"
+                                                ng-change="editThisReminder(thisReminder, 'REMINDERFREQUENCY', 'Once/ Week')">
+                                            1/ Wk
+                                        </button>
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(getFrequency(thisReminder.REMINDERFREQUENCY)=="Once/ Month")}'
+                                                ng-model="thisReminder.REMINDERFREQUENCY"
+                                                uib-btn-radio="'Once/ Month'"
+                                                ng-change="editThisReminder(thisReminder, 'REMINDERFREQUENCY', 'Once/ Month')">
+                                            1/ Mth
+                                        </button>
 
-                            <div class="col-sm-6">
-                                <label>Start Reminders</label>
-                                <div class="input-daterange input-group" id="datepicker">
-                                    <input type="text" class="input-sm form-control" ng-model="reminder.start"
-                                           ng-change="editReminder('REMINDERSTDTC')"/>
-                                    <span class="input-group-addon">to</span>
-                                    <input type="text" class="input-sm form-control" ng-model="reminder.end"
-                                           ng-change="editReminder('REMINDERENDTC')"/>
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(getFrequency(thisReminder.REMINDERFREQUENCY)=="Twice/ Month")}'
+                                                ng-model="thisReminder.REMINDERFREQUENCY"
+                                                uib-btn-radio="'Twice/ Month'"
+                                                ng-change="editThisReminder(thisReminder, 'REMINDERFREQUENCY', 'Twice/ Month')">
+                                            2/ Mth
+                                        </button>
+
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(getFrequency(thisReminder.REMINDERFREQUENCY)=="Once/ Year")}'
+                                                ng-model="thisReminder.REMINDERFREQUENCY"
+                                                uib-btn-radio="'Once/ Year'"
+                                                ng-change="editReminder(thisReminder, 'REMINDERFREQUENCY', 'Once/ Year')">
+                                            1/ Yr
+                                        </button>
+
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(getFrequency(thisReminder.REMINDERFREQUENCY)=="Twice/ Year")}'
+                                                ng-model="thisReminder.REMINDERFREQUENCY"
+                                                uib-btn-radio="'Twice/ Year'"
+                                                ng-change="editReminder(thisReminder, 'REMINDERFREQUENCY', 'Twice/ Year')">
+                                            2/ Yr
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(thisReminder.REMINDERACTIVE=="On")}' ng-model="thisReminder.REMINDERACTIVE"
+                                                uib-btn-radio="'On'"
+                                                ng-change="setThisReminder(thisReminder, 'On')">
+                                            On
+                                        </button>
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(thisReminder.REMINDERACTIVE=="Off")}' ng-model="thisReminder.REMINDERACTIVE"
+                                                uib-btn-radio="'Off'"
+                                                ng-change="setThisReminder(thisReminder, 'Off')">
+                                            Off
+                                        </button>
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(thisReminder.REMINDERACTIVE=="Delete")}' ng-model="thisReminder.REMINDERACTIVE"
+                                                uib-btn-radio="'Delete'"
+                                                ng-change="setThisReminder(thisReminder, 'Delete')">
+                                            Delete
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="col-sm-3">
-                                <label>Frequency</label>
-                                <select class="form-control" ng-model="reminder.frequency"
-                                        ng-change="editReminder('REMINDERFREQUENCY')">
-                                    <option>Once/ Week</option>
-                                    <option>Once/ Month</option>
-                                    <option>Twice/ Month</option>
-                                    <option>Once/ Year</option>
-                                    <option>Twice/ Year</option></select>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <div class="btn-group  pull-right">
-                                    <button type="button" class="btn btn-primary"
-                                            ng-class='{inactive: !(reminder.on=="On")}' ng-model="reminder.on"
-                                            uib-btn-radio="'On'"
-                                            ng-change="setReminder()">
-                                        On
-                                    </button>
-                                    <button type="button" class="btn btn-primary"
-                                            ng-class='{inactive: !(reminder.on=="Off")}' ng-model="reminder.on"
-                                            uib-btn-radio="'Off'"
-                                            ng-change="setReminder()">
-                                        Off
-                                    </button>
+                            <div class="row doubleMarginTop">
+                                <div class="col-sm-12">
+                                    <textarea rows='1' class="form-control" ng-disabled='true'
+                                              ng-model="thisReminder.REMINDERNOTES"></textarea>
                                 </div>
                             </div>
-                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form-group doubleMarginTop">
+                            <div class="row marginTop">
+                                <!--<div class="col-sm-5">-->
+                                    <!--<div class="input-daterange input-group">-->
+                                        <!--<span class="input-group-addon">Start Date</span>-->
+                                        <!--<input type="text" class="input-sm form-control" ng-model="reminder.start"-->
+                                               <!--ng-change="editReminder('REMINDERSTDTC')"/>-->
+                                        <!--<span class="input-group-addon">to</span>-->
+                                        <!--<input type="text" class="input-sm form-control" ng-model="reminder.end"-->
+                                               <!--ng-change="editReminder('REMINDERENDTC')"/>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <div class="col-sm-4">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(reminder.category=="LB")}'
+                                                ng-model="reminder.category"
+                                                uib-btn-radio="'LB'"
+                                                ng-change="editReminder('REMINDERCATEGORY')">
+                                            Blood
+                                        </button>
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(reminder.category=="IS")}'
+                                                ng-model="reminder.category"
+                                                uib-btn-radio="'IS'"
+                                                ng-change="editReminder('REMINDERCATEGORY')">
+                                            Serological
+                                        </button>
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(reminder.category=="MRI")}'
+                                                ng-model="reminder.category"
+                                                uib-btn-radio="'MRI'"
+                                                ng-change="editReminder('REMINDERCATEGORY')">
+                                            MRI
+                                        </button>
+                                    </div>
+                                </div>
 
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="input-group">
-                                    <label>Notes</label>
-                                    <textarea rows='2' class="form-control"
+                                <div class="col-sm-5">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(reminder.frequency=="Once/ Week")}'
+                                                ng-model="reminder.frequency"
+                                                uib-btn-radio="'Once/ Week'"
+                                                ng-change="editReminder('REMINDERFREQUENCY')">
+                                            1/ Wk
+                                        </button>
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(reminder.frequency=="Once/ Month")}'
+                                                ng-model="reminder.frequency"
+                                                uib-btn-radio="'Once/ Month'"
+                                                ng-change="editReminder('REMINDERFREQUENCY')">
+                                            1/ Mnth
+                                        </button>
+
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(reminder.frequency=="Twice/ Month")}'
+                                                ng-model="reminder.frequency"
+                                                uib-btn-radio="'Twice/ Month'"
+                                                ng-change="editReminder('REMINDERFREQUENCY')">
+                                            2/ Mnth
+                                        </button>
+
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(reminder.frequency=="Once/ Year")}'
+                                                ng-model="reminder.frequency"
+                                                uib-btn-radio="'Once/ Year'"
+                                                ng-change="editReminder('REMINDERFREQUENCY')">
+                                            1/ Yr
+                                        </button>
+
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(reminder.frequency=="Twice/ Year")}'
+                                                ng-model="reminder.frequency"
+                                                uib-btn-radio="'Twice/ Year'"
+                                                ng-change="editReminder('REMINDERFREQUENCY')">
+                                            2/ Yr
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary"
+                                                ng-class='{inactive: !(reminder.on=="On")}' ng-model="reminder.on"
+                                                uib-btn-radio="'On'"
+                                                ng-change="setReminder(reminder.on)">
+                                            On
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row doubleMarginTop">
+
+                                <div class="col-sm-12">
+                                    <textarea rows='1' class="form-control"
                                               ng-model="reminder.notes"
                                               placeholder="Notes"
                                               ng-blur="editReminder('REMINDERNOTES')"></textarea>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>
                 </div>
             </div>
         </div>

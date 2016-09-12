@@ -301,16 +301,19 @@ headerModule.controller('newInterestCtrl', function($scope, $uibModalInstance) {
     };
 });
 
-
-headerModule.controller('appointmentsCtrl', function ($scope, $uibModalInstance) {
-    $scope.ok = function () {
-        $uibModalInstance.close();
-    };
-
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-    };
-});
+//
+//headerModule.controller('appointmentsCtrl', function ($scope, $uibModalInstance, remindersForAppointmentsDue) {
+//
+//    remindersForAppointmentsDue.getSubjectList();
+//
+//    $scope.ok = function () {
+//        $uibModalInstance.close();
+//    };
+//
+//    $scope.cancel = function () {
+//        $uibModalInstance.dismiss('cancel');
+//    };
+//});
 
 
 headerModule.controller('newPatientInstanceCtrl', function ($scope, $uibModalInstance, sourceMode, viewService, records, siteID) {
@@ -481,7 +484,7 @@ headerModule.controller('newPatientInstanceCtrl', function ($scope, $uibModalIns
         $scope.$apply(function() {
             $scope.search_USUBJID="";
             var sourceFile = element.files[0];
-
+            console.log(sourceFile);
             var textType = /json.*/;
             if (sourceFile.type.match(textType)) {
                 var reader = new FileReader();
@@ -649,33 +652,46 @@ headerModule.controller('newPatientInstanceCtrl', function ($scope, $uibModalIns
 
 });
 
-headerModule.controller('appointmentsCtrl', function ($scope, $uibModalInstance, records, NgTableParams, $timeout) {
+headerModule.controller('appointmentsCtrl', function ($scope, $uibModalInstance, records, NgTableParams, sourceMode, remindersForAppointmentsDue) {
 
     $scope.data = [];
 
     var makeAppointmentsAPICall = function() {
         var appointments = [];
 
-        var appointmentsAPICall = records.getDueAppointments();
-        appointmentsAPICall.then(function(data) {
-            var reminders = data.Reminders;
-            var subjectIDs = Object.keys(reminders);
+        console.log(sourceMode);
 
-            for (var s = 0; s < subjectIDs.length; s++) {
-                var id = subjectIDs[s];
-                var lastAppointment = reminders[id]['LastAppointment'];
-                var due = reminders[id]['DueAppointment'];
-                var notes = reminders[id]['Notes'];
+        if (sourceMode == 'internet') {
+            var appointmentsAPICall = records.getDueAppointments();
+            appointmentsAPICall.then(function(data) {
+                var reminders = data.Reminders;
+                var subjectIDs = Object.keys(reminders);
 
-                var aReminder = {'id':id, 'last':lastAppointment, 'due':due, 'notes':notes};
-                appointments.push(aReminder);
-            }
+                for (var s = 0; s < subjectIDs.length; s++) {
+                    var id = subjectIDs[s];
+                    var lastAppointment = reminders[id]['LastAppointment'];
+                    var due = reminders[id]['DueAppointment'];
+                    var notes = reminders[id]['Notes'];
 
-            $scope.tableParams.settings({
-                    dataset: appointments
-                });
-                $scope.data = appointments.slice(0);
+                    var aReminder = {'id':id, 'last':lastAppointment, 'due':due, 'notes':notes};
+                    appointments.push(aReminder);
+                }
+
+
+            });
+        }
+        else {
+            remindersForAppointmentsDue.getAppointments().then(function(reminders) {
+                for (var r = 0; r < reminders.length; r++) {
+                    appointments.push(reminders[r]);
+                }
+            });
+        }
+
+        $scope.tableParams.settings({
+            dataset: appointments
         });
+        $scope.data = appointments.slice(0);
     }
     $scope.tableParams = new NgTableParams({}, { dataset: []});
 
@@ -814,27 +830,30 @@ headerModule.controller('depositoryCtrl', function ($scope, $uibModalInstance, s
                     var sex = '';
                     var rficdtc = '';
                     for (var r = 0; r < RecordSet.length; r++) {
-                        var RecordItem = RecordSet[r].RecordItems;
-                        for (var item = 0; item < RecordItem.length; item++) {
-                            if ((RecordItem[item].fieldName=="DOMAIN") && (RecordItem[item].value=="DM")) {
-                                for (var i = 0; i < RecordItem.length; i++) {
-                                    if (RecordItem[i].fieldName == 'USUBJID')
-                                        opt_id = RecordItem[i].value;
-                                    else if (RecordItem[i].fieldName == 'NHS_USUBJID')
-                                        nhs_id = RecordItem[i].value;
-                                    else if (RecordItem[i].fieldName == 'BRTHDTC')
-                                        age = getAge (records.formatStringToDate(RecordItem[i].value));
-                                    else if (RecordItem[i].fieldName == 'SEX')
-                                        sex = RecordItem[i].value;
-                                    else if (RecordItem[i].fieldName == 'RFICDTC') {
-                                        rficdtc = RecordItem[i].value;
-                                    }
+                        if (RecordSet[r] != null) {
+                            var RecordItem = RecordSet[r].RecordItems;
+                            for (var item = 0; item < RecordItem.length; item++) {
+                                if ((RecordItem[item].fieldName=="DOMAIN") && (RecordItem[item].value=="DM")) {
+                                    for (var i = 0; i < RecordItem.length; i++) {
+                                        if (RecordItem[i].fieldName == 'USUBJID')
+                                            opt_id = RecordItem[i].value;
+                                        else if (RecordItem[i].fieldName == 'NHS_USUBJID')
+                                            nhs_id = RecordItem[i].value;
+                                        else if (RecordItem[i].fieldName == 'BRTHDTC')
+                                            age = getAge (records.formatStringToDate(RecordItem[i].value));
+                                        else if (RecordItem[i].fieldName == 'SEX')
+                                            sex = RecordItem[i].value;
+                                        else if (RecordItem[i].fieldName == 'RFICDTC') {
+                                            rficdtc = RecordItem[i].value;
+                                        }
 
+                                    }
+                                    var row = {opt_id: opt_id, nhs_id: nhs_id, age:age, sex: sex, rficdtc: rficdtc, selected: false};
+                                    dmData.push(row);
                                 }
-                                var row = {opt_id: opt_id, nhs_id: nhs_id, age:age, sex: sex, rficdtc: rficdtc, selected: false};
-                                dmData.push(row);
                             }
                         }
+
                     }
                 }
                 $timeout(function() {
@@ -937,7 +956,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
                                             morphologyServices, Country,
                                             substanceUse, subjectCharacteristic,
                                             deviceInUseServices,
-                                            reminders) {
+                                            reminders, $http) {
 
 
 
@@ -1372,7 +1391,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
             }
             case 'REMINDER':
             {
-                reminders.populateDeviceInUse(aRecordItems);
+                reminders.populateReminder(aRecordItems);
                 break;
             }
         }
@@ -1381,14 +1400,17 @@ headerModule.controller('headerCtrl', function ($rootScope,
     var populateFromScriptedFile = function (records) {
 
         var Records = records;
+        //console.log(Records);
         var RecordSet = Records.RecordSet;
-        for (var i = 0; i < RecordSet.length; i++) {
-            var RecordItem = RecordSet[i].RecordItems;
-            var domain = getDomain(RecordItem);
-            populate(domain, RecordItem);
+            if (Records.RecordSet != null) {
+            for (var i = 0; i < RecordSet.length; i++) {
+                var RecordItem = RecordSet[i].RecordItems;
+                var domain = getDomain(RecordItem);
+                populate(domain, RecordItem);
+            }
+            exposures.populateInteruptions();
+            displayCurrentPatient();
         }
-        exposures.populateInteruptions();
-        displayCurrentPatient();
     };
 
     var populateFromDB = function (recordSet) {
@@ -1590,6 +1612,12 @@ headerModule.controller('headerCtrl', function ($rootScope,
             var duRecordItem = getRecordItem(DU[du]);
 
             RecordItems.push(duRecordItem);
+        }
+
+        var REMINDERS = reminders.getReminders();
+        for (var rm = 0; rm < REMINDERS.length; rm++) {
+            var rmRecordItem = getRecordItem(REMINDERS[rm]);
+            RecordItems.push(rmRecordItem);
         }
 
         return(root);
@@ -1852,6 +1880,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
         substanceUse.deleteSubstanceUse();
         deviceInUseServices.deleteDevicesInUse();
         reminders.deleteReminders();
+        vitalSigns.deleteVitalSigns();
     }
 
     $scope.deletePatient = function () {
@@ -2850,9 +2879,11 @@ headerModule.controller('headerCtrl', function ($rootScope,
             templateUrl: 'appointments.html',
             controller: 'appointmentsCtrl',
             resolve: {
-
+                sourceMode: function () {
+                    return $scope.sourceMode;
+                }
             }
-        });
+            });
 
         modalInstance.result.then(function() {
             console.log("ok");
@@ -2862,14 +2893,18 @@ headerModule.controller('headerCtrl', function ($rootScope,
     }
 
     var populateReminders = function() {
-        var reminderForPatient = records.getReminder(patients.getCurrentPatient().USUBJID);
-        reminderForPatient.then(function(reminderData) {
-            if ((reminderData.RecordSet != null)&&(reminderData.RecordSet.length >0)) {
-                //console.log(reminderData.RecordSet[0]);
-                reminders.populateReminder(reminderData.RecordSet[0]);
-                $scope.displayReminder();
-            }
-        });
+        if ($scope.sourceMode == 'internet') {
+            var reminderForPatient = records.getReminder(patients.getCurrentPatient().USUBJID);
+            reminderForPatient.then(function(reminderData) {
+                if ((reminderData.RecordSet != null)&&(reminderData.RecordSet.length >0)) {
+                    //console.log(reminderData.RecordSet[0]);
+                    for (var rm = 0; rm < reminderData.RecordSet.length; rm ++) {
+                        reminders.populateReminder(reminderData.RecordSet);
+                    }
+                    $scope.displayReminder();
+                }
+            });
+        }
     }
 
     $scope.openDepository = function () {
@@ -2898,6 +2933,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
                     //$scope.USUBJID = newData.USUBJID;
                     populateFromScriptedFile(selectionData.recordSet);
                 };
+
             }
             else if (selectionData.actionMode == 'Download') {
                 var dataToDownload;
@@ -2927,41 +2963,6 @@ headerModule.controller('headerCtrl', function ($rootScope,
             console.log("Cancelled");
         });
     };
-
-
-
-
-//     var valuePairs = {login_method: "Database",
-//     j_username: "myong",
-//     j_password: "130915_Pc",
-//     login: "Login",
-//     XNAT_CSRF: ""};
-
-//    var valuePairs = {login_method: "Database",
-//        j_username: "myyong",
-//        j_password: "150914_Bg",
-//        login: "Login",
-//        XNAT_CSRF: ""};
-
-//     $http({url: 'https://central.xnat.org/j_spring_security_check',
-//        method: 'GET',
-//        data: valuePairs,
-//        headers: {"Content-Type": "application/json;charset=utf-8"}}).then(function(res) {
-//            console.log(res);
-//        }, function(error) {
-//            console.log(error);
-//        });
-
-
-//     XNATLogin.get(valuePairs, function(data) {
-//        data.$promise.then(function (theReturned) {
-//            var t = '';
-//            console.log(data);
-//            console.log(theReturned);
-//        });
-//     });
-
-    //connectionServices.getSubjectsFromCIF();
 
 });
 

@@ -68,6 +68,16 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
         return days/7;
     }
 
+    var thisADate = function(ddmmyy) {
+        if ( Object.prototype.toString.call(ddmmyy) === "[object Date]" ) {
+            return true;
+        }
+        else {
+            //console.log("not a date");
+            return false;
+        }
+    }
+
     $rootScope.displayRelapse = function() {
         clearFields();
         var currentRelapse = clinicalEvents.getCurrentEvent();  // get relapse, with affected functional systems
@@ -78,7 +88,8 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
             $scope.datesValidated = true;
             $scope.CESTDTC_displayDate = parseInt($scope.CESTDTC.getMonth()+1)+"/"+$scope.CESTDTC.getFullYear();
 
-            $scope.duration = getDuration(currentRelapse[0].CESTDTC, currentRelapse[0].CEENDTC);
+            if (thisADate(currentRelapse[0].CEENDTC))
+                $scope.duration = getDuration(currentRelapse[0].CESTDTC, currentRelapse[0].CEENDTC);
 
             $scope.CESEV = currentRelapse[0].CESEV;
             $scope.CEOUT = currentRelapse[0].CEOUT;
@@ -108,7 +119,7 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
                         $scope.visual = true;
                         break;
                     case 'Higher Function':
-                        $scope.higherFunction = true;
+                        $scope.higherFunctional = true;
                         break;
                     default:
                         $scope.otherBodySys = currentRelapse[bodSys].CEBODSYS;
@@ -140,7 +151,7 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
         $scope.bowelBladder = false;
         $scope.sensory = false;
         $scope.visual = false;
-        $scope.higherFunction = false;
+        $scope.higherFunctional = false;
         $scope.adlScore = '';
         $scope.steroidsPrescribed = '';
     }

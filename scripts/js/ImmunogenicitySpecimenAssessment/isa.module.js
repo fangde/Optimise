@@ -39,22 +39,22 @@ immunogenicitySpecimenAssessmentModule.factory('ImmunogenicitySpecimenAssessment
 immunogenicitySpecimenAssessmentModule.service('immunogenicitySpecimenAssessments', function(ImmunogenicitySpecimenAssessment,
                                                                                             viewService,
                                                                                             records){
-    var immunogenicitySpecimenAssessments = [];
+    var immunogenicitySpecimenAssessmentsList = [];
 
     var deleteISAs = function() {
-        immunogenicitySpecimenAssessments=[];
+        immunogenicitySpecimenAssessmentsList=[];
     }
     var currentCollectionDate = new Date();
 
     var printISAs= function () {
-        console.log(immunogenicitySpecimenAssessments);
+        console.log(immunogenicitySpecimenAssessmentsList);
     }
 
     var getAssessments = function () {
-        return immunogenicitySpecimenAssessments;
+        return immunogenicitySpecimenAssessmentsList;
     }
 
-    var populateISA = function (RecordItems) {
+    var createNewISA = function(RecordItems) {
         var newISA = new ImmunogenicitySpecimenAssessment();
         for (var i = 0; i < RecordItems.length; i++){
             switch (RecordItems[i].fieldName) {
@@ -118,11 +118,6 @@ immunogenicitySpecimenAssessmentModule.service('immunogenicitySpecimenAssessment
                     newISA.ISMETHOD = RecordItems[i].value;
                     break;
                 }
-                /*
-                case 'VISITNUM':{
-                    newISA.VISITNUM = RecordItems[i].value;
-                    break;
-                }*/
                 case 'VISIT':{
                     newISA.VISIT = RecordItems[i].value;
                     break;
@@ -141,16 +136,19 @@ immunogenicitySpecimenAssessmentModule.service('immunogenicitySpecimenAssessment
                 }
             }
         }
-        immunogenicitySpecimenAssessments.push(newISA);
+        return newISA;
+    }
 
+    var populateISA = function (RecordItems) {
+        immunogenicitySpecimenAssessmentsList.push(createNewISA(RecordItems));
     }
 
     var getAssessmentResult = function(ISTEST,ISDTC) {
         var dateCriteria = ISDTC.toDateString();
-        for (var t = 0; t < immunogenicitySpecimenAssessments.length; t++){
-            if (dateCriteria==immunogenicitySpecimenAssessments[t].ISDTC.toDateString()){
-                if (ISTEST==immunogenicitySpecimenAssessments[t].ISTEST) {
-                    return immunogenicitySpecimenAssessments[t];
+        for (var t = 0; t < immunogenicitySpecimenAssessmentsList.length; t++){
+            if (dateCriteria==immunogenicitySpecimenAssessmentsList[t].ISDTC.toDateString()){
+                if (ISTEST==immunogenicitySpecimenAssessmentsList[t].ISTEST) {
+                    return immunogenicitySpecimenAssessmentsList[t];
                 }
             }
         }
@@ -175,15 +173,15 @@ immunogenicitySpecimenAssessmentModule.service('immunogenicitySpecimenAssessment
 
     var compileAssessments = function () {
         var seq = [];
-        for (var e = 0; e < immunogenicitySpecimenAssessments.length; e++) {
-            seq.push(immunogenicitySpecimenAssessments[e].ISSEQ);
+        for (var e = 0; e < immunogenicitySpecimenAssessmentsList.length; e++) {
+            seq.push(immunogenicitySpecimenAssessmentsList[e].ISSEQ);
         }
         return seq;
     }
 
     var addResult = function (IS){
         IS.ISSEQ = generateSEQ();
-        immunogenicitySpecimenAssessments.push(IS);
+        immunogenicitySpecimenAssessmentsList.push(IS);
         if (!viewService.workOffline())
             records.saveRecord(IS);
     }
@@ -201,27 +199,37 @@ immunogenicitySpecimenAssessmentModule.service('immunogenicitySpecimenAssessment
     }
 
     var deleteResult = function (IS){
-        var index = immunogenicitySpecimenAssessments.indexOf(IS);
-        console.log('deleting');
-        console.log(IS);
+        var index = immunogenicitySpecimenAssessmentsList.indexOf(IS);
+        //console.log('deleting');
+        //console.log(IS);
         if (index > -1) {
-            immunogenicitySpecimenAssessments.splice(index, 1);
+            immunogenicitySpecimenAssessmentsList.splice(index, 1);
             if (!viewService.workOffline())
                 records.deleteRecord(IS);
         }
     }
 
-    var getUniqueDates = function () {
+    var getUniqueDatesGivenList = function (assessments) {
         var uniqueDates = [];
-
-        for (var d = 0; d < immunogenicitySpecimenAssessments.length; d++){   // select events that happened on different days
-            //console.log(immunogenicitySpecimenAssessments[d].ISDTC);
-            //console.log(immunogenicitySpecimenAssessments[d].ISDTC.toDateString());
-            if (!dateExists(uniqueDates, immunogenicitySpecimenAssessments[d].ISDTC.toDateString())){
-                uniqueDates.push(immunogenicitySpecimenAssessments[d]);
+        for (var d = 0; d < assessments.length; d++){   // select events that happened on different days
+            if (!dateExists(uniqueDates, assessments[d].ISDTC.toDateString())){
+                uniqueDates.push(assessments[d]);
             }
         }
         return uniqueDates;
+    }
+
+    var getUniqueDates = function () {
+//        var uniqueDates = [];
+//
+//        for (var d = 0; d < immunogenicitySpecimenAssessmentsList.length; d++){   // select events that happened on different days
+//            if (!dateExists(uniqueDates, immunogenicitySpecimenAssessmentsList[d].ISDTC.toDateString())){
+//                uniqueDates.push(immunogenicitySpecimenAssessmentsList[d]);
+//            }
+//        }
+//        return uniqueDates;
+//        console.log(immunogenicitySpecimenAssessments);
+        return getUniqueDatesGivenList(immunogenicitySpecimenAssessmentsList);
     }
 
     var dateExists = function (uniqueDates, ISDTC){
@@ -236,11 +244,9 @@ immunogenicitySpecimenAssessmentModule.service('immunogenicitySpecimenAssessment
     var getAssessmentResultsByDate = function (LBDTC) {
         var testsOnDate = [];
         var dateCriteria = LBDTC.toDateString();
-        for (var t = 0; t < immunogenicitySpecimenAssessments.length; t++){
-            //console.log(immunogenicitySpecimenAssessments[t].ISDTC.toDateString());
-            //console.log(LBDTC.toDateString());
-            if (dateCriteria==immunogenicitySpecimenAssessments[t].ISDTC.toDateString()){
-                testsOnDate.push(immunogenicitySpecimenAssessments[t]);
+        for (var t = 0; t < immunogenicitySpecimenAssessmentsList.length; t++){
+            if (dateCriteria==immunogenicitySpecimenAssessmentsList[t].ISDTC.toDateString()){
+                testsOnDate.push(immunogenicitySpecimenAssessmentsList[t]);
             }
         }
         return testsOnDate;
@@ -267,11 +273,11 @@ immunogenicitySpecimenAssessmentModule.service('immunogenicitySpecimenAssessment
     var getAssessmentByDate = function (ISDTC) {
         var testsOnDate = [];
         var dateCriteria = ISDTC.toDateString();
-        for (var t = 0; t < immunogenicitySpecimenAssessments.length; t++){
+        for (var t = 0; t < immunogenicitySpecimenAssessmentsList.length; t++){
             //console.log(immunogenicitySpecimenAssessments[t].ISDTC.toDateString());
             //console.log(ISDTC.toDateString());
-            if (dateCriteria==immunogenicitySpecimenAssessments[t].ISDTC.toDateString()){
-                testsOnDate.push(immunogenicitySpecimenAssessments[t]);
+            if (dateCriteria==immunogenicitySpecimenAssessmentsList[t].ISDTC.toDateString()){
+                testsOnDate.push(immunogenicitySpecimenAssessmentsList[t]);
             }
         }
         return testsOnDate;
@@ -290,6 +296,8 @@ immunogenicitySpecimenAssessmentModule.service('immunogenicitySpecimenAssessment
         getAssessmentByDate:getAssessmentByDate,
         editResult:editResult,
         deleteISAs:deleteISAs,
-        getAssessments:getAssessments
+        getAssessments:getAssessments,
+        createNewISA: createNewISA,
+        getUniqueDatesGivenList: getUniqueDatesGivenList
     };
 });

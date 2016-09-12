@@ -36,7 +36,7 @@ timelineModule.directive('timeline', function() {
             windowX = e.clientWidth || g.clientWidth,
             windowY = e.clientHeight|| g.clientHeight;
 
-        var margin = {top: 30, right: 10, bottom: 20, left: 140}
+        var margin = {top: 30, right: 10, bottom: 10, left: 140}
             , width = (0.8*windowX) - margin.left - margin.right
             , height = (0.8*windowY) - margin.top - margin.bottom
             , miniHeight = lanes.length * 12 + 50
@@ -102,21 +102,13 @@ timelineModule.directive('timeline', function() {
                     case 'Treatments':
                         return d3.rgb(31,128,50);
                     case 'Relapses':
-                        return 'blue';
+                        return d3.rgb(140,0,0);
                     case 'Tests':
-                        return 'red';
-                    case 'Lesion Volume':
-                        return 'red';
+                        return d3.rgb(79,132,190);
                     case 'EDSS':
-                        return 'yellow';
+                        return d3.rgb(10,29,98);
                     case 'MSQOL':
-                        return 'yellow';
-                    case 'PDDS':
-                        return 'yellow';
-                    case 'VAS':
-                        return 'yellow';
-                    case 'PROMIS':
-                        return 'yellow';
+                        return d3.rgb(10,29,98);
                     default:
                         return 'grey';
                 }
@@ -127,6 +119,22 @@ timelineModule.directive('timeline', function() {
             .data(lanes)
             .enter().append('text')
             .text(function(d) { return d.label; })
+            .style('fill', function(d) {
+                switch (d.label){
+                    case 'Treatments':
+                        return d3.rgb(31,128,50);
+                    case 'Relapses':
+                        return d3.rgb(140,0,0);
+                    case 'Tests':
+                        return d3.rgb(79,132,190);
+                    case 'EDSS':
+                        return d3.rgb(10,29,98);
+                    case 'MSQOL':
+                        return d3.rgb(10,29,98);
+                    default:
+                        return 'grey';
+                }
+            })
             .attr('x', -110)
             .attr('y', function(d) { return y1(d.id + .5); })
             .attr('dy', '1.5ex')
@@ -158,29 +166,20 @@ timelineModule.directive('timeline', function() {
             .attr('y', function(d) { return y2(d.id +.25); })
             .attr('width',5)
             .attr('height',5)
-            .style('font-size', function (d){
-                return '100%'
-            })
             .attr('fill', function(d) {
                 switch (d.label){
                     case 'Treatments':
                         return d3.rgb(31,128,50);
                     case 'Relapses':
-                        return 'blue';
+                        return d3.rgb(140,0,0);
                     case 'Tests':
-                        return 'red';
-                    case 'Lesion Volume':
-                        return 'red';
+                        return d3.rgb(79,132,190);
                     case 'EDSS':
-                        return 'yellow';
+                        return d3.rgb(10,29,98);
                     case 'MSQOL':
-                        return 'yellow';
-                    case 'PDDS':
-                        return 'yellow';
-                    case 'VAS':
-                        return 'yellow';
-                    case 'PROMIS':
-                        return 'yellow';
+                        return d3.rgb(10,29,98);
+                    default:
+                        return 'grey';
                 }
             })
             .attr('class', 'laneLegend');
@@ -190,12 +189,9 @@ timelineModule.directive('timeline', function() {
             .enter().append('text')
             .text(function(d) { return d.label; })
             .attr('x', -110)
-            .attr('y', function(d) { return y2(d.id + .25); })
+            .attr('y', function(d) { return y2(d.id + .5); })
             .attr('dy', '.5ex')
             .attr('text-anchor', 'start')
-            .style('font-weight', function (d){
-                  return 'normal'
-            })
             .attr('class', 'laneText');
 
         // draw the x axis
@@ -330,7 +326,7 @@ timelineModule.directive('timeline', function() {
         main.append("svg:path")
             .attr("d", edssFunc(edssItems))
             //.style("stroke-dasharray", ("3, 3"))
-            .attr("stroke", "grey")
+            .attr("stroke", d3.rgb(0,0,140))
             .attr("stroke-width", 1)
             .attr("fill", "none")
             .attr('id','edssLineChart');
@@ -656,7 +652,7 @@ timelineModule.directive('timeline', function() {
 
         function redraw () {
 
-            var rects, labels
+            var rects, labels, smallRects
                 , minExtent = d3.time.day(brush.extent()[0])
                 , maxExtent = d3.time.day(brush.extent()[1])
                 , visItems = items.filter(function (d) { return d.start < maxExtent && d.end > minExtent});
@@ -706,17 +702,48 @@ timelineModule.directive('timeline', function() {
 
             // upate the item rects
             rects = itemRects.selectAll('rect')
-                .data(visItems.filter(function (d) {return d.domain != "CE";}), function (d) {return d.id;})
+                .data(visItems.filter(function (d) {
+                return ((d.domain == "EX")||(d.domain == "LB2"));}), function (d) {
+                                                return d.id;})
                 .attr('x', function(d) { return x1(d.start); })
-                .attr('width', function(d) { return x1(d.end) - x1(d.start); });
+                .attr('width', function(d) { return (x1(d.end) - x1(d.start)); });
 
             rects.enter().append('rect')
                 .attr('x', function(d) { return x1(d.start); })
-                .attr('y', function(d) { return y1(d.lane) + .1 * y1(1) + 0.5; })
-                .attr('width', function(d) { return x1(d.end) - x1(d.start); })
-                .attr('height', function(d) { return .8 * y1(1); })
+                .attr('y', function(d) { return y1(d.lane) + .5 * y1(1) + 0.0; })
+                .attr('width', function(d) { return (x1(d.end) - x1(d.start)); })
+                .attr('height', function(d) { return .4 * y1(1); })
                 .attr('class', function(d) {
                     return 'mainItem ' + d.domain; });
+
+            var triangle = itemRects.selectAll('path')
+                .data(visItems.filter(function (d) {return d.domain == "LB";}), function (d) {
+                    return d.id;
+                })
+                .attr("transform", function(d) {
+                    var y = y1(d.lane) + 0.4 * y1(1) + 0.5;
+                    var x = x1(d.start);
+                    return "translate("+x+","+y+")";});
+
+            triangle.enter().append('path')
+                .attr("d", d3.svg.symbol()
+                    .type( function(d) {
+                        if (d.desc == "MRI")
+                            return "triangle-up";
+                        else if (d.desc == "Lumbar Puncture")
+                            return "diamond";
+                        else if (d.desc == "Evoked Potential")
+                            return "square";
+                        else
+                            return "cross";}))
+                .style("fill", "steelblue")
+                .attr("transform", function(d) {
+                    var y = y1(d.lane) + 0.4 * y1(1) + 0.5;
+                    var x = x1(d.start);
+                    return "translate("+x+","+y+")";})
+                .attr('class', function(d) { return 'mainItem ' + d.class; });
+
+            triangle.exit().remove();
 
             var circs = itemRects.selectAll('circle')
                 .data(visItems.filter(function (d) {return d.domain == "CE";}), function (d) {
@@ -724,40 +751,23 @@ timelineModule.directive('timeline', function() {
                 })
                 .attr('cx', function(d) { return x1(d.start); });
 
-            var circs2 = itemRects.selectAll('circle2')
-                .data(visItems.filter(function (d) {return d.domain == "MO";}), function (d) {
-                    return d.id;
-                })
-                .attr('cx', function(d) { return x1(d.start); });
-//
-
-//            circs.enter().append('circle')
-//                .on("click", function(d) {
-//                    var elementId = "#"+d.url;
-//
-//                    angular.element(elementId).trigger('click');
-//                    console.log(angular.element(elementId));
-//                    console.log(angular.element("#"+d.url));
-//                })
-//                .attr('cx', function(d) { return x1(d.start); })
-//                .attr('cy', function(d) { return y1(d.lane) + .4 * y1(1) + 0.5; })
-//                .attr('r', function(d) { return .25 * y1(1); })
-//                .attr('class', function(d) { return 'mainItem ' + d.class; });
             circs.enter().append('circle')
                 .on("click", function(d) {
                     var elementId = "#"+d.url;
                     angular.element('#relapseID').trigger('click');
                     angular.element(elementId).trigger('click');
-                    //console.log(elementId);
                 })
                 .attr('cx', function(d) { return x1(d.start); })
                 .attr('cy', function(d) { return y1(d.lane) + .4 * y1(1) + 0.5; })
-                .attr('r', function(d) { return .25 * y1(1); })
-                .attr('class', function(d) { return 'mainItem ' + d.class; });
-
-
-
-
+                .attr('r', function(d) {
+                    if(d.desc == 'Mild')
+                        return .05 * y1(1);
+                    else if (d.desc =='Moderate')
+                        return .1 * y1(1);
+                    else
+                        return .15 * y1(1); })
+                .attr('class', function(d) {
+                    return 'mainItem ' + d.class; });
 
             circs.exit().remove();
 
@@ -766,15 +776,35 @@ timelineModule.directive('timeline', function() {
             // update the item labels
 
             labels = itemRects.selectAll('text')
-                .data(visItems, function (d) { return d.id; })
+                .data(visItems.filter(function (d) {return (d.domain != "CE")&&(d.domain != "LB");}), function (d) {return d.id;})
                 .attr('x', function(d) { return x1(Math.max(d.start, minExtent)) + 2 ; });
 
             labels.enter().append('text')
-                //.text(function (d) { return 'Item\n\n\n\n Id: ' + d.desc; })
-                .text(function (d) { return d.desc; })
-                //.text(function (d) { return d.displayLabel; })
+                .text(function (d) {return d.desc})
                 .attr('x', function(d) { return x1(Math.max(d.start, minExtent)) + 2 ; })
-                .attr('y', function(d) { return y1(d.lane) + .4 * y1(1) + 0.5; })
+                .attr('y', function(d) {
+                    if (d.domain == 'QS') {
+                        return y1(d.lane) + edssYRange(d.value);
+                    }
+                    else
+                        return y1(d.lane) + .4 * y1(1) + 0.5;
+                    })
+                .attr('fill', function(d) {
+                    switch (d.domain){
+                        case 'EX':
+                            return d3.rgb(31,128,50);
+                        case 'CE':
+                            return d3.rgb(140,0,0);
+                        case 'LB':
+                            return d3.rgb(79,132,190);
+                        case 'QS':
+                            return d3.rgb(10,29,98);
+                        case 'QS':
+                            return d3.rgb(10,29,98);
+                        default:
+                            return 'grey';
+                    }
+                })
                 .attr('text-anchor', 'start')
                 .attr('class', 'itemLabel');
 
@@ -867,14 +897,13 @@ timelineModule.directive('timeline', function() {
             var paths = {}, d, offset = .5 * y2(1) + 0.5, result = [];
             for (var i = 0; i < items.length; i++) {
                 d = items[i];
-                if (!paths[d.class]) paths[d.class] = '';
+                if (!paths[d.class])
+                    paths[d.class] = '';
                 paths[d.class] += ['M',x(d.start),(y2(d.lane) + offset),'H',x(d.end)].join(' ');
             }
-
             for (var className in paths) {
                 result.push({class: className, path: paths[className]});
             }
-
             return result;
         }
     }
@@ -888,12 +917,8 @@ timelineModule.directive('timeline', function() {
         link: function ($scope, element){
 
             $scope.$watch('randomData', function(){
-                //console.log("watching: "+$scope.randomData);
-                //console.log($scope.randomData);
 
                 if (($scope.randomData != null)&&($scope.randomData.lanes.length > 0)) {
-                    //console.log("displaying: "+$scope.randomData);
-                    //console.log($scope.randomData);
                     display($scope, element);
                 }
                 else {
@@ -1180,7 +1205,6 @@ timelineModule.factory('patientEvents', function(exposures,
                 {
                     endtc = events[t].EXENDTC;
                 }
-
 
                 var workItem = {
                     id: '',

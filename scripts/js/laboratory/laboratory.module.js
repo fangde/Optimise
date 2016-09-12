@@ -480,7 +480,7 @@ laboratoryTestResultModule.service('laboratoryTestResults', function(LaboratoryT
         console.log(labTestResults);
     }
 
-    var populateLabTestResults = function (RecordItems) {
+    var createNewLabTestResult = function(RecordItems) {
         var newTestResult = new LaboratoryTestResult();
         for (var i = 0; i < RecordItems.length; i++){
 
@@ -571,8 +571,11 @@ laboratoryTestResultModule.service('laboratoryTestResults', function(LaboratoryT
                 }
             }
         }
-        labTestResults.push(newTestResult);
-        //printLabTestResults();
+        return newTestResult;
+    }
+
+    var populateLabTestResults = function (RecordItems) {
+        labTestResults.push(createNewLabTestResult(RecordItems));
     }
 
     var generateSEQ = function () {
@@ -671,6 +674,17 @@ laboratoryTestResultModule.service('laboratoryTestResults', function(LaboratoryT
         return uniqueDates;
     }
 
+    var getUniqueDatesGivenList = function (labTestList) {
+        var uniqueDates = [];
+        for (var d = 0; d < labTestList.length; d++){   // select events that happened on different days
+            if (!dateExists(uniqueDates, labTestList[d].LBDTC.toDateString())){
+                if (labTestList[d].LBSPEC != 'CSF')
+                    uniqueDates.push(labTestList[d]);
+            }
+        }
+        return uniqueDates;
+    }
+
     var dateExists = function (uniqueDates, LBDTC){
         for (var d = 0; d < uniqueDates.length; d++) {
             if (uniqueDates[d].LBDTC.toDateString() == LBDTC) {
@@ -711,7 +725,9 @@ laboratoryTestResultModule.service('laboratoryTestResults', function(LaboratoryT
         getLabTestResults: getLabTestResults,
         editResult:editResult,
         deleteLabTestResults: deleteLabTestResults,
-        getTestResultBySpecAndDate: getTestResultBySpecAndDate
+        getTestResultBySpecAndDate: getTestResultBySpecAndDate,
+        createNewLabTestResult: createNewLabTestResult,
+        getUniqueDatesGivenList: getUniqueDatesGivenList
     };
 });
 
@@ -1171,7 +1187,7 @@ laboratoryTestResultModule.controller('laboratoryInfoCtrl', function($scope, $ro
     $scope.saveSEPFinding = function(NVTEST, NVLAT, NVLOC, NVORRES) {
         var collectionDate = $scope.LBDTC;
         var aFinding = nervousSystemFindings.getSEPFinding(NVTEST, NVLAT, collectionDate, NVLOC);
-        console.log(aFinding);
+        //console.log(aFinding);
         if (aFinding!=null) {
             aFinding.NVORRES = NVORRES;
             nervousSystemFindings.editFinding(aFinding, NVORRES);

@@ -101,7 +101,7 @@ procedureModule.service('procedures', function (procedure, records, viewService)
         return dates;
     }
 
-    var populateProcedures = function (RecordItems) {
+    var createNewProcedure = function (RecordItems) {
         var aProcedure = new procedure();
         for (var i = 0; i < RecordItems.length; i++){
             switch (RecordItems[i].fieldName) {
@@ -159,7 +159,11 @@ procedureModule.service('procedures', function (procedure, records, viewService)
                 }
             }
         }
-        procedures.push(aProcedure);
+        return aProcedure;
+    }
+    var populateProcedures = function (RecordItems) {
+
+        procedures.push(createNewProcedure(RecordItems));
     }
 
     var generateSEQ = function () {
@@ -293,6 +297,7 @@ procedureModule.service('procedures', function (procedure, records, viewService)
         deleteProcedures: deleteProcedures,
         getImagingProceduresByDate: getImagingProceduresByDate,
         getImagingProcedures: getImagingProcedures,
-        getProcedureDates: getProcedureDates
+        getProcedureDates: getProcedureDates,
+        createNewProcedure: createNewProcedure
     };
 })
