@@ -69,7 +69,7 @@ morphologyModule.service('morphologyServices', function(Morphology, records, vie
                     break;
                 }
                 case 'MOSEQ':{
-                    aFinding.MOSEQ = parseInt(RecordItems[i].value);
+                    aFinding.MOSEQ = (RecordItems[i].value);
                     break;
                 }
                 case 'MOLNKID':{
@@ -274,6 +274,7 @@ morphologyModule.service('morphologyServices', function(Morphology, records, vie
         populateMorphologicalFindings: populateMorphologicalFindings,
         getFindingByTestAndLocation:getFindingByTestAndLocation,
         getMorphologicalFindings:getMorphologicalFindings,
-        deleteMorphologicalFindings:deleteMorphologicalFindings
+        deleteMorphologicalFindings:deleteMorphologicalFindings,
+        getFindingByDateTest: getFindingByDateTest
     }
 });

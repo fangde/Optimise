@@ -374,55 +374,58 @@ div#events.container-fluid {
 
 #visitContent {
     overflow: scroll;
-    height: 80vh;
+    height: 75vh;
     overflow-y: scroll;
     overflow-x: hidden;
     margin-left: 5px;
+    margin-bottom: 5px;
 }
 
 #profileContent {
     overflow: scroll;
-    height:80vh;
+    height:75vh;
     margin-left: 5px;
     margin-bottom: 5px;
 }
 
 #relapseContent {
     overflow: scroll;
-    height:80vh;
+    height:75vh;
     margin-left: 5px;
     margin-bottom: 5px;
 }
 
 #interventionContent {
     overflow: scroll;
-    height:80vh;
+    height:75vh;
     margin-left: 5px;
     margin-bottom: 5%;
 }
 
 #eventContent {
     overflow: scroll;
-    height:80vh;
+    height:75vh;
     margin-left: 10px;
     margin-bottom: 5px;
 }
 
 #laboratoryContent {
     overflow: scroll;
-    height:80vh;
+    height:65vh;
     margin-left: 10px;
+    margin-bottom: 5px;
 }
 
 #csfContent {
     overflow: scroll;
-    height:80vh;
+    height:75vh;
     margin-left: 10px;
+    margin-bottom: 5px;
 }
 
 #imageContent {
     overflow: scroll;
-    height:80vh;
+    height:75vh;
     margin-left: 10px;
     margin-bottom: 5px;
 }

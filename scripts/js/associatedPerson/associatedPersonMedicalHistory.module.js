@@ -224,81 +224,32 @@ associatedPersonMedicalHistory.service('associatedPersonMedicalHistories',functi
 
     var deleteAPMH = function(AP){
         var indexOfAP = associatedPersonMedicalHistories.indexOf(AP);
-        var APWithMS = getAPMHWithMS(AP.SREL);
-        if (APWithMS != null) {
-            var indexOFAPWithMS = associatedPersonMedicalHistories.indexOf(APWithMS);
-            if (indexOFAPWithMS > -1) {
-                associatedPersonMedicalHistories.splice(indexOFAPWithMS, 1);
-                /*
-                for (var v = 0; v < associatedPersonMedicalHistories.length; v++)
-                {
-                    associatedPersonMedicalHistories[v].APMHSEQ = v;
-                    associatedPersonMedicalHistories[v].APID = associatedPersonMedicalHistories[v].USUBJID+"-"+associatedPersonMedicalHistories.APMHSEQ;
-                }*/
-                if (!viewService.workOffline())
-                    records.deleteRecord(APWithMS);
-            }
-        }
+//        var APWithMS = getAPMHWithMS(AP.SREL);
+//        if (APWithMS != null) {
+//            var indexOFAPWithMS = associatedPersonMedicalHistories.indexOf(APWithMS);
+//            if (indexOFAPWithMS > -1) {
+//                associatedPersonMedicalHistories.splice(indexOFAPWithMS, 1);
+//                /*
+//                for (var v = 0; v < associatedPersonMedicalHistories.length; v++)
+//                {
+//                    associatedPersonMedicalHistories[v].APMHSEQ = v;
+//                    associatedPersonMedicalHistories[v].APID = associatedPersonMedicalHistories[v].USUBJID+"-"+associatedPersonMedicalHistories.APMHSEQ;
+//                }*/
+//                if (!viewService.workOffline())
+//                    records.deleteRecord(APWithMS);
+//            }
+//        }
 
         if (indexOfAP > -1) {
             associatedPersonMedicalHistories.splice(indexOfAP, 1);
-            /*
-            for (var v = 0; v < associatedPersonMedicalHistories.length; v++)
-            {
-                associatedPersonMedicalHistories[v].APMHSEQ = v;
-                associatedPersonMedicalHistories[v].APID = associatedPersonMedicalHistories[v].USUBJID+"-"+associatedPersonMedicalHistories.APMHSEQ;
-            }*/
             if (!viewService.workOffline())
                 records.deleteRecord(AP);
         }
     }
 
     var getAPMHList = function(){
-        var APMHList = [];
-        for (var ap = 0; ap < associatedPersonMedicalHistories.length; ap++){
-//            if (associatedPersonMedicalHistories[ap].MHTERM != 'Multiple Sclerosis') {
-                APMHList.push(associatedPersonMedicalHistories[ap]);
-//            }
-        }
-        return APMHList;
-        //return APMHList;
+        return associatedPersonMedicalHistories;
 
-        /*
-        var currentSREL = '';
-        var currentApmh = null;
-
-        var apmhList = [];
-
-        for (var ap = 0; ap < associatedPersonMedicalHistories.length; ap++) {
-            if (associatedPersonMedicalHistories[ap].SREL!=currentSREL) {
-                if ((currentApmh!=null) && (currentApmh.srel!="")){
-                    //console.log("Pushing");
-                    apmhList.push(currentApmh);
-                }
-                currentApmh = new APMH(associatedPersonMedicalHistories[ap].SREL);
-                currentSREL = associatedPersonMedicalHistories[ap].SREL;
-            }
-
-            if (associatedPersonMedicalHistories[ap].MHTERM=="Multiple Sclerosis")
-                currentApmh.hasms = true;
-            else
-            {
-                if (currentApmh.apmhterm1==''){
-                    currentApmh.apmhterm1 = (associatedPersonMedicalHistories[ap].MHTERM);
-                }
-                else if (currentApmh.apmhterm2==''){
-                    currentApmh.apmhterm2 = (associatedPersonMedicalHistories[ap].MHTERM);
-                }
-                else
-                {
-                    currentApmh.apmhterm3 = (associatedPersonMedicalHistories[ap].MHTERM);
-                }
-            }
-        }
-        if (currentApmh != null)
-            apmhList.push(currentApmh);
-
-        return associatedPersonMedicalHistories; */
     }
 
     return {

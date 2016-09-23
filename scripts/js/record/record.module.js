@@ -180,7 +180,7 @@ recordModule.factory('CONFIG', function ($resource) {
 
 recordModule.factory('USERID', function ($resource) {
 
-    var onlineOrLocal = 'online';
+    var onlineOrLocal = 'local';
 
     if (onlineOrLocal=='local')
         return $resource('http://www.optimise-ms.org/api-optimise/wh/gettoken4c.php',{},{
@@ -205,7 +205,7 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
     }
 
     //var onlineOrLocal = 'local';
-    var onlineOrLocal = 'online';
+    var onlineOrLocal = 'local';
 
     var getURL = function(functionName) {
 
@@ -833,11 +833,7 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
         }
     };
 
-
-
     var deleteRecord = function(recordToDelete) {
-
-        //console.log(recordToDelete);
 
         if ((recordToDelete!=null)
             &&(recordToDelete.USUBJID != null)
@@ -847,7 +843,6 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
             &&(recordToDelete.STUDYID != null)&& (recordToDelete.STUDYID != ''))
         {
             var jsonBody = formatForDelete(recordToDelete);
-            //console.log(jsonBody);
             var api = '';
 
 

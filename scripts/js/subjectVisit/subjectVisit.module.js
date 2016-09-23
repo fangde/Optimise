@@ -377,12 +377,8 @@ visitModule.controller('visitInfoCtrl', function ($rootScope, $scope, $parse, $u
                 var questionOnThisVisit = questionnaires.getQuestionByTest($scope.EDSS[q].QSTEST, currentVisit[0].SVSTDTC);
                 if (questionOnThisVisit != null) {  // if a question was answered and recorded
                     $scope.EDSS[q].score = questionOnThisVisit.QSSTRESC.toString();
-                    console.log($scope.EDSS[q].score);
-                    console.log($scope.EDSS[q].scopeVariable);
-                    console.log($scope.EDSS[q].QSTEST);
                     var model = $parse($scope.EDSS[q].scopeVariable);
                     model.assign($scope, $scope.EDSS[q].score);
-                    console.log($scope.edss_human);
                 }
             }
 
@@ -398,7 +394,7 @@ visitModule.controller('visitInfoCtrl', function ($rootScope, $scope, $parse, $u
                 var findingsByPRLNKID = findingsAbout.getFindingsByLNKID(procedureOnDate[0].PRLNKID);  // get findings from procedure
                 //console.log(findingsByPRLNKID);
                 if (findingsByPRLNKID.length != 2) {
-                    console.log("Expected 2 findings, found: "+findingsByPRLNKID.length);
+                    alert("Expected 2 findings, found: "+findingsByPRLNKID.length);
                 }
                 if (findingsByPRLNKID.length > 0) {
                     var model = $parse('eightMFirst');

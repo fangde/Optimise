@@ -150,7 +150,7 @@ signsModule.service('signs', function(clinicalEvents, clinicalEvent) {
             if ((event!= null)&&(event.length > 0)) {
                 newSign.CEGRPID = event[0].CEGRPID;
             } else {
-                console.log("associating symptom with a non-event")
+                alert("Associating symptom with a non-event");
             }
         }
 
@@ -168,7 +168,7 @@ signsModule.service('signs', function(clinicalEvents, clinicalEvent) {
             if ((event!= null)&&(event.length > 0)) {
                 newSign.CEGRPID = event[0].CEGRPID;
             } else {
-                console.log("associating sign with a non-event")
+                alert("Associating symptom with a non-event");
             }
         }
         clinicalEvents.addEvent(newSign);
@@ -202,7 +202,6 @@ signsModule.service('signs', function(clinicalEvents, clinicalEvent) {
                         &&(editStatus(signsOnDate)[0] == true)
                         &&(editStatus(signsOnDate)[1] == false)) {
                         createEvent(CETERM, CEBODSYS, CELAT, useRelapseGrpID);
-                        console.log(1);
                     }
 
                     // visit sign, relapse sign already recorded
@@ -231,26 +230,17 @@ signsModule.service('signs', function(clinicalEvents, clinicalEvent) {
                         &&(signsOnDate[s].CEGRPID==-1)
                         &&(editStatus(signsOnDate)[0] == true)) {
                         editEvent(signsOnDate[s], CELAT);
-                        console.log('Editing an existing visit sign, a visit sign exists');
                     }
-
-//                    console.log('Relapse:'+ useRelapseGrpID);
-//                    console.log('Edit action:'+ editStatus(signsOnDate));
-//                    console.log('GroupID:'+signsOnDate[s].CEGRPID);
                 }
 
             }
             else {
                 createEvent(CETERM, CEBODSYS, CELAT, useRelapseGrpID);
             }
-
-
-            clinicalEvents.printEvents();
+            //clinicalEvents.printEvents();
         }
         else {
-            console.log("failed to add sign");
-            console.log("signsDate"+signDate.toLocaleString());
-            console.log(USUBJID);
+            alert("Failed to add sign");
         }
     }
 
@@ -369,14 +359,9 @@ signsModule.service('signs', function(clinicalEvents, clinicalEvent) {
                 createEventSev(CETERM, CEBODSYS, CELAT, CESEV, useRelapseGrpID);
             }
 
-            var signsOnDate = clinicalEvents.getEventByTermBodsysOnDate('Sign', CETERM, CEBODSYS, signDate);
-            console.log(signsOnDate);
-
         }
         else {
-            console.log("failed to add sign");
-            console.log("signsDate"+signDate.toLocaleString());
-            console.log(USUBJID);
+            alert ("Failed to add sign");
         }
     }
 
@@ -386,9 +371,7 @@ signsModule.service('signs', function(clinicalEvents, clinicalEvent) {
             return signsOnDate;
         }
         else {
-            console.log("failed to find signs");
-            console.log("signsDate"+signDate.toLocaleString());
-            console.log(USUBJID);
+            alert ("Failed to find sign");
         }
         return [];
     }

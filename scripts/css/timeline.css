@@ -72,6 +72,11 @@
     fill: rgb(19, 149, 40);
 }
 
+.SV {
+    stroke: rgb(31,76,76);
+    fill: rgb(31,76,76);
+}
+
 .CE {
     stroke: rgb(140, 0, 0);
     fill: rgb(125, 0, 0);

@@ -102,13 +102,10 @@ medicalHistoryModule.service('medicalHistory', function(MedicalEvent, records, v
         medicalHistory.push(newOccurence);
         if (!viewService.workOffline())
             records.saveRecord(newOccurence);
-        printMedicalHistory();
     }
 
     var deleteOccurence = function (occurence) {
         var index = medicalHistory.indexOf(occurence);
-        console.log(occurence);
-        console.log(index);
         if (index > -1) {
             medicalHistory.splice(index, 1);
             if (!viewService.workOffline())
@@ -160,7 +157,6 @@ medicalHistoryModule.service('medicalHistory', function(MedicalEvent, records, v
     }
 
     var getMedicalHistory = function() {
-        printMedicalHistory();
         return medicalHistory;
     }
 

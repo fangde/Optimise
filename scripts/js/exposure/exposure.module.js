@@ -532,7 +532,17 @@ interventionModule.controller('exposureInfoCtrl', function($scope,
     }
 
     $scope.setEXENDTC = function() {
-        $scope.EXENDTC = new Date($scope.EXENDTC_displayDate.substr(6), parseInt($scope.EXENDTC_displayDate.substr(3,2))-1, $scope.EXENDTC_displayDate.substr(0,2));
+        $scope.EXENDTC = new Date($scope.EXENDTC_displayDate.substr(6),
+                            parseInt($scope.EXENDTC_displayDate.substr(3,2))-1,
+                            $scope.EXENDTC_displayDate.substr(0,2));
+        if (thisIsADate($scope.EXENDTC)) {
+            var thisExposure = exposures.getExposuresAscending(exposures.getCurrentExposure().EXTRT);
+            if (thisExposure.length > 0) {
+                var lastExposure = thisExposure[thisExposure.length -1];
+                lastExposure.EXENDTC =  $scope.EXENDTC;
+                exposures.editExposure(lastExposure, 'EXENDTC', $scope.EXENDTC);
+            }
+        }
         //console.log($scope.EXENDTC);
     }
 
@@ -602,13 +612,6 @@ interventionModule.controller('exposureInfoCtrl', function($scope,
         $scope.EXADJ_Interuption='';
     }
 
-//    var clearOtherFields = function() {
-//        $scope.Other_EXDOSE = "";
-//        $scope.Other_EXTRT = "";
-//        $scope.Other_EXDOSU = "";
-//        $scope.Other_EXDOSFRM = "";
-//        $scope.Other_EXDOSFRQ = "";
-//    }
 
     $rootScope.displayExposure = function() {
         clearFields();
@@ -620,24 +623,13 @@ interventionModule.controller('exposureInfoCtrl', function($scope,
         $scope.EXSTDTC = sortedExposures[0].EXSTDTC;
         $scope.EXSTDTC_displayDate = $scope.EXSTDTC.getDate()+"/"+(parseInt($scope.EXSTDTC.getMonth()+1))+"/"+$scope.EXSTDTC.getFullYear();// set date
 
-        //if (DrugFactory.isKnown(sortedExposures[0].EXTRT))  {
-            $scope.EXTRT = sortedExposures[0].EXTRT;
-            $scope.EXDOSE = sortedExposures[0].EXDOSE;
-            $scope.EXDOSU = sortedExposures[0].EXDOSU;
-            $scope.EXDOSFRM = sortedExposures[0].EXDOSFRM;
-            $scope.EXDOSFRQ = sortedExposures[0].EXDOSFRQ;
-            $scope.EXCAT = sortedExposures[0].EXCAT;
-//        } else {
-//
-//            $scope.Other_EXTRT = sortedExposures[0].EXTRT;
-//            $scope.Other_EXDOSE = sortedExposures[0].EXDOSE;
-//            $scope.Other_EXDOSU = sortedExposures[0].EXDOSU;
-//            $scope.Other_EXDOSFRM = sortedExposures[0].EXDOSFRM;
-//            $scope.Other_EXDOSFRQ = sortedExposures[0].EXDOSFRQ;
-//            $scope.Other_EXCAT = sortedExposures[0].EXCAT;
-//
-//            $scope.EXTRT = 'Other';
-//        }
+        $scope.EXTRT = sortedExposures[0].EXTRT;
+        $scope.EXDOSE = sortedExposures[0].EXDOSE;
+        $scope.EXDOSU = sortedExposures[0].EXDOSU;
+        $scope.EXDOSFRM = sortedExposures[0].EXDOSFRM;
+        $scope.EXDOSFRQ = sortedExposures[0].EXDOSFRQ;
+        $scope.EXCAT = sortedExposures[0].EXCAT;
+
 
         $scope.EXENDTC = sortedExposures[sortedExposures.length-1].EXENDTC;
         if (($scope.EXENDTC!= null)&&($scope.EXENDTC!= ''))
@@ -686,7 +678,6 @@ interventionModule.controller('exposureInfoCtrl', function($scope,
 
     $scope.addExposure = function () {
         if ($scope.EXTRT != '') {
-            console.log($scope.EXTRT);
             if (exposures.getCurrentExposure() != null) { // currently a treatment already
                 if (exposures.getCurrentExposure().EXTRT != $scope.EXTRT) {    // new name different from current treatment
                     console.log(exposures.getCurrentExposure().EXTRT);

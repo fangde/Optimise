@@ -276,7 +276,6 @@ adverseEventModule.service('adverseEventService', function(records, viewService,
     return {
         addAdverseEvent:addAdverseEvent,
         deleteAdverseEvent:deleteAdverseEvent,
-        //editAdverseEvent:editAdverseEvent,
         populateAdverseEvents:populateAdverseEvents,
         getAdverseEventByDate:getAdverseEventByDate,
         editAdverseEvent:editAdverseEvent,

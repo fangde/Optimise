@@ -97,7 +97,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row marginTop">
+                    <div class="row marginTop" ng-show="!isUnder18()">
                         <div class='col-sm-3'>
                             <div class="btn-group" uib-dropdown is-open=false>
                                 <button type="button" id="dmSmokingButton" class="btn btn-info" uib-dropdown-toggle
@@ -128,39 +128,6 @@
             </div>
         </div>
 
-        <!--<div class="panel panel-default">-->
-            <!--<div class="panel-heading myPanel" role="tab" id="headingPaed">-->
-                <!--<h4 class="panel-title" role="button" data-toggle="collapse"-->
-                    <!--data-parent="#accordion" href="#collapsePaed">-->
-                    <!--Immunisations-->
-                <!--</h4>-->
-            <!--</div>-->
-            <!--<div id="collapsePaed" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">-->
-                <!--<div class="panel-body" ng-show="isUnder16()">-->
-                    <!--<table class="table">-->
-                        <!--<thead><tr>-->
-                            <!--<th>Immunisation</th>-->
-                            <!--<th>Date</th>-->
-                            <!--<th></th>-->
-                        <!--</tr></thead>-->
-                        <!--<tbody>-->
-                        <!--<tr ng-repeat="newOccurence in getMedicalHistory('Immunisation')">-->
-                            <!--<td>{{newOccurence.MHTERM}}</td>-->
-                            <!--<td>{{newOccurence.displaySTDTC}}></td>-->
-                            <!--<td><a href="#" role="button" ng-click="deleteOccurence(newOccurence)">Delete</a></td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td><input type="text" class="form-control" ng-model="ImmunisationTERM" placeholder="eg. HPV"></td>-->
-                            <!--<td><input type="text" class="form-control DTC_DayMonthYear"-->
-                                       <!--ng-model="ImmunisationSTDTC"></td>-->
-                            <!--<td><a href="#" ng-click="addImmunisation()">Add</a></td>-->
-                        <!--</tr>-->
-                        <!--</tbody>-->
-                    <!--</table>-->
-                <!--</div>-->
-            <!--</div>-->
-
-        <!--</div>-->
 
         <div class="panel panel-default">
             <div class="panel-heading myPanel" role="tab" id="headingMH">
@@ -170,23 +137,57 @@
             </div>
             <div id="collapseMH" class="panel-collapse collapse" role="tabpanel">
                 <div class="panel-body" ng-show="thereIsAPatient();">
-                      <table class="table" ng-show="isUnder18()">
+                        <table class="table" ng-show="showImmunisationTable()">
+                            <thead><tr>
+                                <th>Immunisations</th>
+                                <th>Date</th>
+                                <th></th>
+                            </tr></thead>
+                            <tbody>
+                            <tr ng-repeat="newOccurence in getMedicalHistory('Immunisation')">
+                                <td>{{newOccurence.MHTERM}}</td>
+                                <td>{{newOccurence.displaySTDTC}}</td>
+                                <td><a href="#" role="button" ng-click="deleteOccurence(newOccurence)">Delete</a></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="form-control" ng-model="ImmunisationTERM" placeholder="New Immunisation eg. HPV"></td>
+                                <td><input type="text" class="form-control DTC_DayMonthYear"
+                                           ng-model="ImmunisationSTDTC"></td>
+                                <td><a href="#" ng-click="addImmunisation()">Add</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    <table class="table" ng-show="showPregnancyTable()">
                         <thead><tr>
-                            <th>Immunisations</th>
-                            <th>Date</th>
+                            <th>Pregnancy</th>
+                            <th>Year</th>
+                            <th>Outcome</th>
                             <th></th>
                         </tr></thead>
                         <tbody>
-                        <tr ng-repeat="newOccurence in getMedicalHistory('Immunisation')">
+                        <tr ng-repeat="newOccurence in getMedicalHistory('Pregnancy')">
                             <td>{{newOccurence.MHTERM}}</td>
                             <td>{{newOccurence.displaySTDTC}}</td>
+                            <td><select class="form-control"
+                                        ng-model="newOccurence.MHENRTPT"
+                                        ng-change="editGeneralOccurence(newOccurence, 'MHENRTPT')">
+                                <option>Ongoing</option>
+                                <option>Resolved</option>
+                                <option>Unknown</option></select></td>
                             <td><a href="#" role="button" ng-click="deleteOccurence(newOccurence)">Delete</a></td>
                         </tr>
                         <tr>
-                            <td><input type="text" class="form-control" ng-model="ImmunisationTERM" placeholder="eg. HPV"></td>
-                            <td><input type="text" class="form-control DTC_DayMonthYear"
-                                       ng-model="ImmunisationSTDTC"></td>
-                            <td><a href="#" ng-click="addImmunisation()">Add</a></td>
+                            <td>Pregnancy</td>
+                            <td><input type="text" class="form-control DTC_Year"
+                                       ng-model="PregnancySTDTC"></td>
+                            <td><select class="form-control" ng-model="PregnancyENRTPT">
+                                <option>Ongoing</option>
+                                <option>Resolved</option>
+                                <option>Unknown</option>
+                            </select>
+                            </td>
+                            <td><a href="#" ng-click="addPregnancy()">Add</a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -218,7 +219,7 @@
                             <td><a href="#" role="button" ng-click="deleteOccurence(newOccurence)">Delete</a></td>
                         </tr>
                         <tr >
-                            <td><input type="text" class="form-control" ng-model="GenMHTERM" placeholder="eg. Asthma"></td>
+                            <td><input type="text" class="form-control" ng-model="GenMHTERM" placeholder="New Medical History eg. Asthma"></td>
                             <td><input type="text" class="form-control DTC_Year" ng-model="GenMHSTDTC" ng-change="validateEndDate()"></td>
                             <td> <select class="form-control" ng-model="GenMHENRTPT">
                                 <option>Ongoing</option>

@@ -125,7 +125,6 @@ patientModule.service('patients',function(medicalHistory, MedicalEvent, Patient,
     var age = '';
 
     var deleteCurrentPatient = function() {
-        console.log('deleting current patient');
         currentPatient = null;
     }
 
@@ -147,18 +146,8 @@ patientModule.service('patients',function(medicalHistory, MedicalEvent, Patient,
 
     var newPatient = function(USUBJID, SITEID, NHS_USUBJID, RFICDTC) {
         currentPatient = new Patient(USUBJID);
-//        currentPatient.BRTHDTC = BRTHDTC;
-//        currentPatient.SEX = SEX;
-//        currentPatient.ETHNIC = ETHNIC;
-//        currentPatient.COUNTRY = COUNTRY;
-//        currentPatient.SITEID = SITEID;
         currentPatient.NHS_USUBJID = NHS_USUBJID;
         currentPatient.RFICDTC = RFICDTC;
-
-//        if (currentPatient.BRTHDTC!= "")
-//            age = getAge((currentPatient.BRTHDTC.getFullYear()));
-        //if (!viewService.workOffline())
-        //    records.saveRecord(currentPatient);
     }
 
     var populatePatient = function(RecordItems){
@@ -261,8 +250,17 @@ patientModule.service('patients',function(medicalHistory, MedicalEvent, Patient,
             return "";
     }
 
+    var getCurrentPatientGender = function() {
+        if (currentPatient!=null){
+            if (currentPatient.SEX != ""){
+                return currentPatient.SEX;
+            }
+        }
+        else
+            return "";
+    }
+
     var editDemographic = function(resName, resValue) {
-        console.log(viewService.workOffline());
         if (!viewService.workOffline())
         {
             var USUBJID = {fieldName: "USUBJID", value: currentPatient.USUBJID};
@@ -284,7 +282,8 @@ patientModule.service('patients',function(medicalHistory, MedicalEvent, Patient,
         getCurrentPatient: getCurrentPatient,
         deleteCurrentPatient: deleteCurrentPatient,
         getCurrentPatientAge: getCurrentPatientAge,
-        editDemographic: editDemographic
+        editDemographic: editDemographic,
+        getCurrentPatientGender: getCurrentPatientGender
     }
 });
 
@@ -310,6 +309,7 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
     $scope.newDiagnosis.MHTERM = "";
     $scope.newDiagnosis.MHSTDTC = "";
     $scope.newDiagnosis.displayNote = "";
+    $scope.PregnancyTERM = "Pregnancy";
 
 
     $scope.showThisContent = function() {
@@ -342,8 +342,40 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
         vaccine.displaySTDTC = $scope.ImmunisationSTDTC;
         medicalHistory.addOccurence(vaccine);
 
-        medicalHistory.printMedicalHistory();
         clearImmunisationFields();
+    }
+
+    $scope.addPregnancy = function() {
+        var pregnancy = new MedicalEvent(patients.getCurrentPatient().USUBJID, 'Pregnancy');
+        pregnancy.MHTERM = 'Pregnancy';
+        pregnancy.MHSTDTC = new Date($scope.PregnancySTDTC, 0, 1);
+        pregnancy.displaySTDTC = $scope.PregnancySTDTC;
+        pregnancy.MHENRTPT = $scope.PregnancyENRTPT;
+        medicalHistory.addOccurence(pregnancy);
+        medicalHistory.printMedicalHistory();
+        clearPregnancyFields();
+    }
+
+    $scope.showPregnancyTable = function() {
+        if (!$scope.isUnder18()&&$scope.isFemale()) {
+            return true;
+        }
+        return false;
+    }
+
+    var immunisationDataExists = function() {
+        var immunisations = medicalHistory.getOccurencesInCategory('Immunisation');
+        if (immunisations.length > 0)
+            return true;
+        else
+            return false;
+    }
+
+    $scope.showImmunisationTable = function() {
+        if ($scope.isUnder18() || (immunisationDataExists())) {
+            return true;
+        }
+        return false;
     }
 
     $scope.getMedicalHistory = function(MHCAT) {
@@ -375,9 +407,7 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
         mh.MHSCAT= 'Other'; // MHSCAT = Respiratory, CNS, Others
 
         medicalHistory.addOccurence(mh);
-        //medicalHistory.printMedicalHistory();
         clearGHFields();
-
         setDateElements();
     }
 
@@ -425,30 +455,90 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
         }
     }
 
-    var clearFields = function () {
-        $scope.GenMHTERM= '';      //Visit Name
-        $scope.GenMHDTC= '';     //Date/Time of History Collection
-        $scope.GenMHSTDTC= '';    //End Date/Time of Visit
-        $scope.GenMHENDTC= '';    //End Date/Time of Visit
-        $scope.GenMHENRTPT='Unknown';
+    $scope.editSubstanceUse = function(propertyName, propertyValue) {
 
-        $scope.symptomMHTERM= '';      //Visit Name
-        $scope.symptomMHLAT= '';     //Date/Time of History Collection
-        $scope.symptomMHLOC= '';    //End Date/Time of Visit
-        $scope.symptomMHSTDTC='';
+        switch (propertyName) {
+            case 'ALCOHOL': {
+                $scope.ALCOHOL = propertyValue;
+                break;
+            };
+        }
+        var aUse = substanceUse.getThisSubstanceUse(propertyName);
+        if ((aUse == null)||(aUse.length == 0)){
+            var newSubstance = new SubstanceUse(patients.getCurrentPatient().USUBJID, propertyName);
+            newSubstance.SUDOSFRQ = propertyValue;
+            substanceUse.addSubstanceUse(newSubstance);
+        }
+        else {
+            aUse.SUDOSFRQ = propertyValue;
+            substanceUse.editSubstanceUse(aUse[0], propertyName, propertyValue);
+        }
+    }
 
-        $scope.APMHTERM = "";
-        $scope.APMHIncludesMS = "";
-        $scope.SREL = "";
-        $scope.overallDiagnosis = "";
+    $scope.editDemographic = function(propertyName, propertyValue) {
+        var currentPatient = patients.getCurrentPatient();
+        switch (propertyName) {
+            case 'SEX': {
+                currentPatient.SEX = propertyValue;
+                $scope.SEX = propertyValue;
+                patients.editDemographic(propertyName, propertyValue);
+                break;
+            };
+            case 'ETHNIC': {
+                currentPatient.ETHNIC = propertyValue;
+                $scope.ETHNIC = propertyValue;
+                patients.editDemographic(propertyName, propertyValue);
+                break;
+            };
+            case 'DOMINANT': {
+                currentPatient.DOMINANT = propertyValue;
+                $scope.DOMINANT = propertyValue;
+                patients.editDemographic(propertyName, propertyValue);
+                break;
+            };
+            case 'COUNTRY': {
+                currentPatient.COUNTRY = propertyValue;
+                $scope.COUNTRY = propertyValue;
+                patients.editDemographic(propertyName, propertyValue);
+                break;
+            };
+            case 'BRTHDTC': {
+                currentPatient.BRTHDTC = new Date(propertyValue.substr(3), parseInt(propertyValue.substr(0,2))-1, 1);
+                $scope.BRTHDTC = currentPatient.BRTHDTC.toDateString();
+                $scope.DM_displayDate = patients.getCurrentPatientAge();
+                patients.editDemographic(propertyName, currentPatient.BRTHDTC);
+                break;
+            };
+        }
+    }
 
-        $scope.newDiagnosis.MHTERM ='';
-        $scope.newDiagnosis.MHSTDTC ='';
+    $rootScope.displayPatientDM = function() {
+        var aPatient=patients.getCurrentPatient();
+        $scope.USUBJID = aPatient.USUBJID;
+        $scope.NHS_USUBJID = aPatient.NHS_USUBJID;
+        $scope.SEX = aPatient.SEX;
+        $scope.BRTHDTC = aPatient.BRTHDTC;
+        if ($scope.BRTHDTC=='')
+            $scope.BRTHDTC_display='';
+        else
+            $scope.BRTHDTC_display = parseInt(aPatient.BRTHDTC.getMonth())+1+"/"+aPatient.BRTHDTC.getFullYear();
+        $scope.DM_displayDate = patients.getCurrentPatientAge();//getAge(aPatient.BRTHDTC.getFullYear());
+        $scope.DOMINANT = aPatient.DOMINANT;
+        $scope.ETHNIC = aPatient.ETHNIC;
+        $scope.COUNTRY = aPatient.COUNTRY;
 
-        $scope.ImmunisationTERM = "";
-        $scope.ImmunisationSTDTC ='';
+        var aUse = substanceUse.getThisSubstanceUse('ALCOHOL');
+        if ((aUse != null) &&(aUse.length > 0))
+            $scope.ALCOHOL = aUse[0].SUDOSFRQ;
+        else
+            $scope.ALCOHOL = '';
 
-        clearFindingsInLocation();
+
+        var aChar = subjectCharacteristic.getThisSubjectCharacteristic('SMOKING HISTORY');
+        if (aChar != null)
+            $scope.SMOKING = aChar.SCORRES;
+        else
+            $scope.SMOKING = '';
 
     }
 
@@ -485,159 +575,48 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
         $scope.APMHTERM = "";
         $scope.APMHIncludesMS = "";
         $scope.SREL = "";
-        $scope.overallDiagnosis = "";
     }
 
-    $scope.editSubstanceUse = function(propertyName, propertyValue) {
-
-        switch (propertyName) {
-            case 'ALCOHOL': {
-                $scope.ALCOHOL = propertyValue;
-                break;
-            };
-        }
-        var aUse = substanceUse.getThisSubstanceUse(propertyName);
-        if ((aUse == null)||(aUse.length == 0)){
-            var newSubstance = new SubstanceUse(patients.getCurrentPatient().USUBJID, propertyName);
-            newSubstance.SUDOSFRQ = propertyValue;
-            substanceUse.addSubstanceUse(newSubstance);
-        }
-        else {
-            aUse.SUDOSFRQ = propertyValue;
-            substanceUse.editSubstanceUse(aUse[0], propertyName, propertyValue);
-        }
+    var clearPregnancyFields = function () {
+        $scope.PregnancyTERM = "";
+        $scope.PregnancySTDTC = "";
+        $scope.PregnancyENRTPT = "";
     }
 
-
-
-    $scope.editDemographic = function(propertyName, propertyValue) {
-
-        var currentPatient = patients.getCurrentPatient();
-        switch (propertyName) {
-            case 'SEX': {
-                currentPatient.SEX = propertyValue;
-                $scope.SEX = propertyValue;
-                patients.editDemographic(propertyName, propertyValue);
-                break;
-            };
-            case 'ETHNIC': {
-                currentPatient.ETHNIC = propertyValue;
-                $scope.ETHNIC = propertyValue;
-                patients.editDemographic(propertyName, propertyValue);
-                break;
-            };
-            case 'DOMINANT': {
-                currentPatient.DOMINANT = propertyValue;
-                $scope.DOMINANT = propertyValue;
-                patients.editDemographic(propertyName, propertyValue);
-                break;
-            };
-            case 'COUNTRY': {
-                currentPatient.COUNTRY = propertyValue;
-                $scope.COUNTRY = propertyValue;
-                patients.editDemographic(propertyName, propertyValue);
-                break;
-            };
-            case 'BRTHDTC': {
-//                var dd = parseInt(propertyValue.substr(0,2));
-//                var mm = parseInt(propertyValue.substr(3,2))-1;
-//                var yyyy = parseInt(propertyValue.substr(6,4));
-
-                //currentPatient.BRTHDTC = new Date(yyyy,mm,dd);
-                currentPatient.BRTHDTC = new Date(propertyValue.substr(3), parseInt(propertyValue.substr(0,2))-1, 1);
-                $scope.BRTHDTC = currentPatient.BRTHDTC.toDateString();
-                $scope.DM_displayDate = patients.getCurrentPatientAge();
-                patients.editDemographic(propertyName, currentPatient.BRTHDTC);
-                break;
-            };
-        }
-
-
+    var clearDemographicFields = function () {
+        $scope.USUBJID = '';
+        $scope.NHS_USUBJID = '';
+        $scope.DM_displayDate = '';
+        $scope.BRTHDTC = '';
+        $scope.BRTHDTC_display = '';
+        $scope.SEX = '';
+        $scope.DOMINANT= '';
+        $scope.ALCOHOL= '';
+        $scope.SMOKING= '';
+        $scope.ETHNIC= '';
+        $scope.COUNTRY= '';
     }
 
-    $rootScope.displayPatientDM = function() {
-        var aPatient=patients.getCurrentPatient();
-        $scope.USUBJID = aPatient.USUBJID;
-        $scope.NHS_USUBJID = aPatient.NHS_USUBJID;
-        $scope.SEX = aPatient.SEX;
-        $scope.BRTHDTC = aPatient.BRTHDTC;
-        if ($scope.BRTHDTC=='')
-            $scope.BRTHDTC_display='';
-        else
-            $scope.BRTHDTC_display = parseInt(aPatient.BRTHDTC.getMonth())+1+"/"+aPatient.BRTHDTC.getFullYear();
-        $scope.DM_displayDate = patients.getCurrentPatientAge();//getAge(aPatient.BRTHDTC.getFullYear());
-        $scope.DOMINANT = aPatient.DOMINANT;
-        $scope.ETHNIC = aPatient.ETHNIC;
-        $scope.COUNTRY = aPatient.COUNTRY;
-
-        var aUse = substanceUse.getThisSubstanceUse('ALCOHOL');
-        if ((aUse != null) &&(aUse.length > 0))
-            $scope.ALCOHOL = aUse[0].SUDOSFRQ;
-        else
-            $scope.ALCOHOL = '';
-
-
-        var aChar = subjectCharacteristic.getThisSubjectCharacteristic('SMOKING HISTORY');
-        if (aChar != null)
-            $scope.SMOKING = aChar.SCORRES;
-        else
-            $scope.SMOKING = '';
-
-    }
-
-
-    $rootScope.setNewPatientFields = function () {
-         $scope.GenMHTERM= '';      //Visit Name
-         $scope.GenMHDTC= '';     //Date/Time of History Collection
-         $scope.GenMHSTDTC= '';    //End Date/Time of Visit
-         $scope.GenMHENDTC= '';    //End Date/Time of Visit
-         $scope.GenMHENRTPT='Unknown';
-
-         $scope.symptomMHTERM= '';      //Visit Name
-         $scope.symptomMHLAT= '';     //Date/Time of History Collection
-         $scope.symptomMHLOC= '';    //End Date/Time of Visit
-         $scope.symptomMHSTDTC='';
-
-         $scope.USUBJID = '';
-         $scope.NHS_USUBJID = '';
-         $scope.DM_displayDate = '';
-         $scope.BRTHDTC = '';
-         $scope.BRTHDTC_display = '';
-         $scope.SEX = '';
-         $scope.DOMINANT= '';
-         $scope.ALCOHOL= '';
-         $scope.SMOKING= '';
-         $scope.academicConcerns= '';
-         $scope.behaviourConcerns= '';
-         $scope.attendanceAtSchool= '';
-
-         $scope.ETHNIC= '';
-         $scope.COUNTRY= '';
-         $scope.findToDelete = true;
-
-         $scope.APMHTERM = "";
-         $scope.APMHIncludesMS = "";
-         $scope.SREL = "";
-
-        $scope.APMHTERM = "";
-        $scope.SREL = "";
-
+    var clearMedicalHistoryFields = function() {
         $scope.newDiagnosis.MHTERM = "";
         $scope.newDiagnosis.MHSTDTC = "";
         $scope.newDiagnosis.displayNote = "";
+    }
 
-        $scope.immunised = "";
-
+    $rootScope.setNewPatientFields = function () {
+        clearDemographicFields();
+        clearPregnancyFields();
+        clearGHFields();
+        clearSymptomFields();
+        clearAPMHFields()
+        clearImmunisationFields();
         clearFindingsInLocation();
-
-        //substanceUse.deleteSubstanceUse();
-        //subjectCharacteristic.deleteSubjectCharacteristics();
+        clearMedicalHistoryFields();
      }
 
     $rootScope.setNewPatientFields();
 
     $scope.editSubjectCharacteristic = function(propertyName, propertyValue) {
-
         switch (propertyName) {
             case 'SMOKING HISTORY': {
                 $scope.SMOKING = propertyValue;
@@ -795,6 +774,12 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
         return false;
     }
 
+    $scope.isFemale= function() {
+        if (patients.getCurrentPatientGender() == "Female")
+            return true;
+        return false;
+    }
+
     $scope.editProgressiveCourse = function() {
         var progressive = medicalHistory.occurenceExists("Progressive Course");
         if (($scope.progressiveMHSTDTC_display==null) || ($scope.progressiveMHSTDTC_display=='')){ // if user removed date
@@ -834,16 +819,6 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
                 }
             }
         }
-
-//        if (patients.getCurrentPatientAge() <= 18) {
-//            var immunised = medicalHistory.getOccurencesInCategory('Immunisation');
-//            if (immunised.length != 0) {
-//                $scope.immunised = "YES";
-//            }
-//            else {
-//                $scope.immunised = "NO";
-//            }
-//        }
     }
 
     $rootScope.displayPatientFA = function() {
@@ -926,7 +901,7 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
     }
 
     $scope.doesApmhIncludeMS = function (SREL) {
-        if (SREL != null) {
+        if ($scope.SREL != null) {
             var withMS = associatedPersonMedicalHistories.getAPMHWithMS($scope.SREL);
             if (withMS!= null)
                 return true;
@@ -935,16 +910,15 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
     }
 
     $scope.addAssociatedPersonMedicalHistory = function() {
-
         if ($scope.SREL != null){
-            if (($scope.APMHTERM != null)&&($scope.APMHTERM != ""))
+            if ($scope.APMHTERM != "")
             {
                 if ($scope.APMHTERM.toLowerCase() == "ms")
                     $scope.APMHTERM = "Multiple Sclerosis";
                 associatedPersonMedicalHistories.addAPMH(patients.getCurrentPatient().USUBJID, $scope.APMHTERM, $scope.SREL);
+                console.log(associatedPersonMedicalHistories.getAPMHList());
             }
         }
-        //console.log(associatedPersonMedicalHistories.getAPMHList());
         clearAPMHFields();
     };
 

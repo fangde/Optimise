@@ -5,7 +5,7 @@
  * Time: 16:22
  * To change this template use File | Settings | File Templates.
  */
-var relationshipModule = angular.module('Optimise.relationship',['Optimise.record']);
+var relationshipModule = angular.module('Optimise.relationship',[]);
 
 relationshipModule.factory('relationship', function () {
     return function() {
@@ -21,7 +21,7 @@ relationshipModule.factory('relationship', function () {
     }
 })
 
-relationshipModule.service('relationships', function (relationship, records) {
+relationshipModule.service('relationships', function (relationship, records, viewService) {
     var relationships = [];
     var groupsIndex = 0;
 
@@ -90,8 +90,10 @@ relationshipModule.service('relationships', function (relationship, records) {
         relationships.push(newRel1);
         relationships.push(newRel2);
 
-        records.saveRecord(newRel1);
-        records.saveRecord(newRel2)
+        if (!viewService.workOffline()) {
+            records.saveRecord(newRel1);
+            records.saveRecord(newRel2);
+        }
     }
 
     var getRelationshipByIDVARVAL = function(IDVARVAL) {
@@ -110,11 +112,17 @@ relationshipModule.service('relationships', function (relationship, records) {
         if (index > -1) {
             relationships.splice(index, 1);
         }
-        records.deleteRecord(relationship);
+        if (!viewService.workOffline()) {
+            records.deleteRecord(relationship);
+        }
     }
 
     var getRelationships = function () {
         return relationships;
+    }
+
+    var deleteRelationships = function() {
+        relationships = [];
     }
 
     return {
@@ -122,6 +130,7 @@ relationshipModule.service('relationships', function (relationship, records) {
         getRelationshipByIDVARVAL:getRelationshipByIDVARVAL,
         populateRelationships: populateRelationships,
         deleteRelationship: deleteRelationship,
-        getRelationships: getRelationships
+        getRelationships: getRelationships,
+        deleteRelationships: deleteRelationships
     };
 })

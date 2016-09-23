@@ -71,12 +71,8 @@ laboratoryTestResultModule.factory('serologicalTestsVocab', function() {
         'hiv':"",
         'varicella':"",
         'jc':"",
-//        'urineJC':"",
         'ifn':"",
         'nmo':"",
-//        'pregnancy':"",
-//        'goldTest':"",
-//        'mantouxTest':"",
         'ana':"",
         'antiMitochondrial':"",
         'antiParietalCellAntibodies':"",
@@ -109,10 +105,7 @@ laboratoryTestResultModule.factory('serologicalTestsVocab', function() {
         'varicella':"",
         'varicellaPositive':"",
         'jcPositive':"",
-        //'urineJCPositive':"",
         'ifnPositive':"",
-//        'goldTestPositive':"",
-//        'mantouxTestPositive':"",
         'anaPositive':"",
         'antiMitochondrialPositive':"",
         'antiParietalCellAntibodiesPositive':"",
@@ -746,18 +739,8 @@ laboratoryTestResultModule.controller('laboratoryInfoCtrl', function($scope, $ro
         $scope.USUBJID = USUBJID;
     }
 
-    //var currentDate = new Date();
     $scope.testIndex = "";
 
-//    var dayMonthYear = angular.element(document.querySelector('.LBDTC_DayMonthYear'));
-//    dayMonthYear.datepicker({
-//        format: "dd/mm/yyyy",
-//        endDate: currentDate.getFullYear().toString(),
-//        startView: 1,
-//        orientation: "top left",
-//        autoclose: true,
-//        todayHighlight: true
-//    });
 
     $scope.showThisContent = function() {
         if (viewService.getView().Section=='Test') {
@@ -768,7 +751,6 @@ laboratoryTestResultModule.controller('laboratoryInfoCtrl', function($scope, $ro
     };
 
     $scope.getDisabledFields = function() {
-        console.log(viewService.getView().DisableInputFields);
         return viewService.getView().DisableInputFields;
     }
 
@@ -790,12 +772,8 @@ laboratoryTestResultModule.controller('laboratoryInfoCtrl', function($scope, $ro
     $scope.assessmentIndicator = {indicators: serologicalTestsVocab.indicators};
 
     $scope.haematologyScopeVariables = haematologyVocab.scopeVariables;
-    //var data = haematologyVocab.scopeVariables;
-
     $scope.haematology = {tests: haematologyVocab.tests};
     $scope.haematologyIndicator = {indicators: haematologyVocab.indicators};
-//    $scope.data = $scope.haematologyScopeVariables;
-//    $scope.tableParams = new NgTableParams({}, { dataset: data});
 
     $scope.bloodChemScopeVariables = bloodChemVocab.scopeVariables;
     $scope.bloodChem = {tests: bloodChemVocab.tests};
@@ -1228,7 +1206,7 @@ laboratoryTestResultModule.directive('haematologyEntry', function() {
 
 laboratoryTestResultModule.controller('haematologyCtrl', function($scope, haematologyVocab, NgTableParams) {
     var data = haematologyVocab.scopeVariables;
-    $scope.tableParams = new NgTableParams({}, { dataset: data});
+    $scope.tableParams = new NgTableParams({count: 50}, { dataset: data});
 });
 
 
@@ -1242,7 +1220,7 @@ laboratoryTestResultModule.directive('bloodEntry', function() {
 
 laboratoryTestResultModule.controller('bloodChemistryCtrl', function($scope, bloodChemVocab, NgTableParams) {
     var data = bloodChemVocab.scopeVariables;
-    $scope.tableParams = new NgTableParams({}, { dataset: data});
+    $scope.tableParams = new NgTableParams({count: 50}, { dataset: data});
 });
 
 laboratoryTestResultModule.directive('serologicalEntry', function() {
@@ -1255,7 +1233,7 @@ laboratoryTestResultModule.directive('serologicalEntry', function() {
 
 laboratoryTestResultModule.controller('serologicalCtrl', function($scope, serologicalTestsVocab, NgTableParams) {
     var data = serologicalTestsVocab.scopeVariables;
-    $scope.tableParams = new NgTableParams({}, { dataset: data});
+    $scope.tableParams = new NgTableParams({ count: 50 }, { dataset: data});
 });
 
 

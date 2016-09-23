@@ -98,12 +98,21 @@ timelineModule.directive('timeline', function() {
             .attr('width',10)
             .attr('height',10)
             .attr('fill', function(d) {
+
                 switch (d.label){
                     case 'Treatments':
                         return d3.rgb(31,128,50);
+                    case 'Visits':
+                        return d3.rgb(31,76,76);
                     case 'Relapses':
                         return d3.rgb(140,0,0);
-                    case 'Tests':
+                    case ('EP'):
+                        return d3.rgb(79,132,190);
+                    case ('Lab'):
+                        return d3.rgb(79,132,190);
+                    case ('MRI'):
+                        return d3.rgb(79,132,190);
+                    case ('CSF'):
                         return d3.rgb(79,132,190);
                     case 'EDSS':
                         return d3.rgb(10,29,98);
@@ -123,9 +132,17 @@ timelineModule.directive('timeline', function() {
                 switch (d.label){
                     case 'Treatments':
                         return d3.rgb(31,128,50);
+                    case 'Visits':
+                        return d3.rgb(31,76,76);
                     case 'Relapses':
                         return d3.rgb(140,0,0);
-                    case 'Tests':
+                    case ('EP'):
+                        return d3.rgb(79,132,190);
+                    case ('Lab'):
+                        return d3.rgb(79,132,190);
+                    case ('MRI'):
+                        return d3.rgb(79,132,190);
+                    case ('CSF'):
                         return d3.rgb(79,132,190);
                     case 'EDSS':
                         return d3.rgb(10,29,98);
@@ -156,7 +173,6 @@ timelineModule.directive('timeline', function() {
             .attr('y1', function(d) { return d3.round(y2(d.id)) + 0.5; })
             .attr('x2', width)
             .attr('y2', function(d) { return d3.round(y2(d.id)) + 0.5; })
-
             .attr('stroke', function(d) { return d.label === '' ? 'white' : 'lightgray' });
 
         mini.append('g').selectAll('.laneLegends')
@@ -170,9 +186,17 @@ timelineModule.directive('timeline', function() {
                 switch (d.label){
                     case 'Treatments':
                         return d3.rgb(31,128,50);
+                    case 'Visits':
+                        return d3.rgb(31,76,76);
                     case 'Relapses':
                         return d3.rgb(140,0,0);
-                    case 'Tests':
+                    case ('EP'):
+                        return d3.rgb(79,132,190);
+                    case ('Lab'):
+                        return d3.rgb(79,132,190);
+                    case ('MRI'):
+                        return d3.rgb(79,132,190);
+                    case ('CSF'):
                         return d3.rgb(79,132,190);
                     case 'EDSS':
                         return d3.rgb(10,29,98);
@@ -510,7 +534,6 @@ timelineModule.directive('timeline', function() {
                     return result;
             })
             .y(function (d) {
-                //console.log(d.y)
                 return msqolYRange(d.y);
             });
 
@@ -558,9 +581,6 @@ timelineModule.directive('timeline', function() {
             }
         }
 
-        //console.log(promis_Phc_Items);
-        //console.log(promis_Mhc_Items);
-
         var promisYRange = d3.scale.linear().range([9/10*getLaneHeight(),0]).domain([4,20]);
 
         var promisYAxis = d3.svg.axis()
@@ -589,7 +609,6 @@ timelineModule.directive('timeline', function() {
                     return result;
             })
             .y(function (d) {
-                //console.log(d.y)
                 return promisYRange(d.y);
             });
 
@@ -636,7 +655,9 @@ timelineModule.directive('timeline', function() {
         // draw the selection area
         var brush = d3.svg.brush()
             .x(x)
-            .extent([d3.time.monday(now),d3.time.saturday.ceil(now)])
+            //.extent([d3.time.monday(now),d3.time.saturday.ceil(now)])
+            .extent([d3.time.week(d3.min(items, function(d) { return d.start; })),
+                d3.max(items, function(d) { return d.end; })])
             .on("brush", redraw);
 
         mini.append('g')
@@ -703,7 +724,7 @@ timelineModule.directive('timeline', function() {
             // upate the item rects
             rects = itemRects.selectAll('rect')
                 .data(visItems.filter(function (d) {
-                return ((d.domain == "EX")||(d.domain == "LB2"));}), function (d) {
+                return (d.domain == "EX");}), function (d) {
                                                 return d.id;})
                 .attr('x', function(d) { return x1(d.start); })
                 .attr('width', function(d) { return (x1(d.end) - x1(d.start)); });
@@ -715,6 +736,27 @@ timelineModule.directive('timeline', function() {
                 .attr('height', function(d) { return .4 * y1(1); })
                 .attr('class', function(d) {
                     return 'mainItem ' + d.domain; });
+
+
+
+            var squares = itemRects.selectAll('squares')
+                .data(visItems.filter(function (d) {
+                    return (d.domain == "SV");}), function (d) {
+                        return d.id;})
+                .attr('x', function(d) { return x1(d.start); });
+                //.attr('width', function(d) { return (150); });
+
+            squares.enter().append('rect')
+                .attr('x', function(d) { return x1(d.start); })
+                .attr('y', function(d) { return y1(d.lane) + .5 * y1(1) + 0.0; })
+                .attr('width', function(d) { return .2 * y1(1); })
+                .attr('height', function(d) { return .2 * y1(1);})
+                .style("fill", function(d) { return d3.rgb(31,76,76);})
+                .attr('class', function(d) {
+                    return 'mainItem ' + d.domain; });
+
+            squares.exit().remove();
+            rects.exit().remove();
 
             var triangle = itemRects.selectAll('path')
                 .data(visItems.filter(function (d) {return d.domain == "LB";}), function (d) {
@@ -728,14 +770,7 @@ timelineModule.directive('timeline', function() {
             triangle.enter().append('path')
                 .attr("d", d3.svg.symbol()
                     .type( function(d) {
-                        if (d.desc == "MRI")
-                            return "triangle-up";
-                        else if (d.desc == "Lumbar Puncture")
-                            return "diamond";
-                        else if (d.desc == "Evoked Potential")
-                            return "square";
-                        else
-                            return "cross";}))
+                        return "cross";}))
                 .style("fill", "steelblue")
                 .attr("transform", function(d) {
                     var y = y1(d.lane) + 0.4 * y1(1) + 0.5;
@@ -765,18 +800,17 @@ timelineModule.directive('timeline', function() {
                     else if (d.desc =='Moderate')
                         return .1 * y1(1);
                     else
-                        return .15 * y1(1); })
+                        return .2 * y1(1); })
                 .attr('class', function(d) {
                     return 'mainItem ' + d.class; });
 
             circs.exit().remove();
 
-            rects.exit().remove();
-
             // update the item labels
-
             labels = itemRects.selectAll('text')
-                .data(visItems.filter(function (d) {return (d.domain != "CE")&&(d.domain != "LB");}), function (d) {return d.id;})
+                .data(visItems.filter(function (d) {
+                    return ((d.domain == "EX")||(d.domain == "QS")||(d.domain == "LB"));
+                    }), function (d) {return d.id;})
                 .attr('x', function(d) { return x1(Math.max(d.start, minExtent)) + 2 ; });
 
             labels.enter().append('text')
@@ -936,10 +970,9 @@ timelineModule.factory('patientEvents', function(exposures,
                                                immunogenicitySpecimenAssessments,
                                                nervousSystemFindings,
                                                procedures,
-                                               questionnaires, morphologyServices){
+                                               questionnaires, morphologyServices, subjectVisits){
 
     var getPatientEvents = function(dataToView) {
-        //console.log(dataToView);
         var addToLane = function (chart, item) {
             var name = item.lane;
 
@@ -1030,12 +1063,14 @@ timelineModule.factory('patientEvents', function(exposures,
             if (dataToView.indexOf('Treatments') > -1)
                 getTreatments(data);
 
-            //getMedicalEvents(data);
-            if (dataToView.indexOf('Relapses') > -1)
-                getRelapses(data);
+            if (dataToView.indexOf('Visits') > -1)
+                getVisits(data);
 
             if (dataToView.indexOf('Tests') > -1)
                 getTests(data);
+
+            if (dataToView.indexOf('Relapses') > -1)
+                getRelapses(data);
 
             if (dataToView.indexOf('EDSS') > -1)
                 getEDSS(data);
@@ -1056,8 +1091,6 @@ timelineModule.factory('patientEvents', function(exposures,
                 getLesionVolume(data);
 
             consolidateItemID(data);
-
-            //console.log('generated work items:'+data);
             return data;
         };
 
@@ -1125,14 +1158,13 @@ timelineModule.factory('patientEvents', function(exposures,
                     workItem = {
                         id: '',
                         name: 'work item ' + '',
-                        lane: "Tests",
+                        lane: "Serology",
                         start: stdtc,
                         end: endtc,
-                        desc: events[t].displayLabel,
+                        desc: "",
                         domain: 'LB',
                         value: ''
                     };
-                    //console.log(workItem);
                     break;
                 case 'LB':
                     var stdtc = events[t].LBDTC;
@@ -1141,14 +1173,14 @@ timelineModule.factory('patientEvents', function(exposures,
                     workItem = {
                         id: '',
                         name: 'work item ' + '',
-                        lane: "Tests",
+                        lane: "Lab",
                         start: stdtc,
                         end: endtc,
-                        desc: events[t].displayLabel,
+                        //desc: events[t].displayLabel,
+                        desc: '',
                         domain: 'LB',
                         value: ''
                     };
-                    //console.log(workItem);
                     break;
                 case 'NV':
                     var stdtc = events[t].NVDTC;
@@ -1157,34 +1189,43 @@ timelineModule.factory('patientEvents', function(exposures,
                     workItem = {
                         id: '',
                         name: 'work item ' + '',
-                        lane: "Tests",
+                        lane: "EP",
                         start: stdtc,
                         end: endtc,
-                        desc: events[t].displayLabel,
+                        desc: "",
                         domain: 'LB',
                         value: ''
                     };
-                    //console.log(workItem);
                     break;
                 case 'PR':
                     var stdtc = events[t].PRSTDTC;
                     var endtc = new Date(stdtc);
                     endtc.setDate(stdtc.getDate()+1);
+                    var result='';
+                    var laneName = '';
+                    if (events[t].PRTRT=='MRI') {
+                        laneName = "MRI";
+                        var MO = morphologyServices.getFindingByDateTest(events[t].PRSTDTC, 'Lesion volume');
+                        if (MO != null) {
+                            result = MO.MOORRES;
+                        }
+                    }
+                    else if (events[t].PRTRT=='Lumbar Puncture') {
+                        laneName = "CSF";
+                    }
                     workItem = {
                         id: '',
                         name: 'work item ' + '',
-                        lane: "Tests",
+                        lane: laneName,
                         start: stdtc,
                         end: endtc,
-                        desc: events[t].displayLabel,
+                        desc: result,
                         domain: 'LB',
                         value: ''
                     };
-                    //console.log(workItem);
                     break;
             }
 
-            //console.log(workItem);
             if (workItem!=null)
                 data.push(workItem);
         }
@@ -1265,7 +1306,6 @@ timelineModule.factory('patientEvents', function(exposures,
             };
 
             data.push(workItem);
-            //console.log(workItem);
         }
     }
 
@@ -1289,13 +1329,11 @@ timelineModule.factory('patientEvents', function(exposures,
             };
 
             data.push(workItem);
-            console.log(workItem);
         }
     }
 
     var getMSQOL54 = function(data) {
         var healthComposites = questionnaires.getMSQOL54();
-        //console.log(healthComposites);
         for (var t = 0; t < healthComposites.phc.length; t++) {
             var stdtc = healthComposites.phc[t].QSDTC;
             var endtc = new Date(stdtc);
@@ -1311,14 +1349,12 @@ timelineModule.factory('patientEvents', function(exposures,
                 domain: 'QS',
                 value: {phc: healthComposites.phc[t].QSSTRESC, mhc: healthComposites.mhc[t].QSSTRESC}
             };
-            //console.log(workItem);
             data.push(workItem);
         }
     }
 
     var getPROMIS = function(data) {
         var healthComposites = questionnaires.getPROMIS();
-        //console.log(healthComposites);
         for (var t = 0; t < healthComposites.phc.length; t++) {
             var stdtc = healthComposites.phc[t].QSDTC;
             var endtc = new Date(stdtc);
@@ -1333,11 +1369,30 @@ timelineModule.factory('patientEvents', function(exposures,
                 domain: 'QS',
                 value: {phc: healthComposites.phc[t].QSSTRESC, mhc: healthComposites.mhc[t].QSSTRESC}
             };
-            //console.log(workItem);
             data.push(workItem);
         }
     }
 
+    var getVisits = function (data) {
+        var visits = subjectVisits.getSubjectVisits();
+        for (var t = 0; t < visits.length; t++) {
+            var stdtc = visits[t].SVSTDTC;
+            var endtc = new Date(stdtc);
+            endtc.setDate(stdtc.getDate()+1);
+            var workItem = {
+                id: '',
+                name: 'work item ' + '',
+                lane: "Visits",
+                start: stdtc,
+                end: endtc,
+                desc: visits[t].displayLabel,
+                domain: 'SV',
+                value: '',
+                url: visits[t].DOMAIN+"-"+t
+            };
+            data.push(workItem);
+        }
+    }
 
     /* redundant
     var getPROMS = function (data) {
@@ -1410,7 +1465,6 @@ timelineModule.factory('patientEvents', function(exposures,
     */
     var getRelapses = function (data) {
         var events = clinicalEvents.getUniqueDatesFromCategory('MS Relapse');
-        //console.log("getting treatment");
         for (var t = 0; t < events.length; t++) {
 
             var stdtc = events[t].CESTDTC;
@@ -1464,30 +1518,27 @@ timelineModule.controller('timelineCtrl', function ($rootScope, $scope, patientE
     $scope.showThisContent = function() {
         if (viewService.getView().Section=='Timeline'){
             $scope.randomData = patientEvents.getPatientEvents($scope.dataToView);
-            //console.log("randomData: "+$scope.randomData);
-            //console.log($scope.randomData);
             return true;
         }
         else
             return false;
     }
 
-    $scope.dataToView = ['Treatments', 'Relapses', 'EDSS', 'MSQOL', 'LesionVolume'];
-    //$scope.dataToView = ['MSQOL', 'PDDS', 'VAS', 'PROMIS'];
+    $scope.dataToView = ['Treatments', 'Visits', 'Relapses', 'EDSS'];
+    //$scope.dataToView = ['MSQOL', 'PDDS', 'VAS', 'PROMIS', 'LesionVolume'];
 
     $rootScope.toggleTimelineData = function(dataToViewName) {
-
+        // check if is in line
         var indexOfData = $scope.dataToView.indexOf(dataToViewName);
+
+        // if data is already shown
         if (indexOfData == -1) {
             $scope.dataToView.push(dataToViewName);
         }
         else {
             $scope.dataToView.splice(indexOfData, 1);
         }
-        //console.log($scope.dataToView);
         $scope.randomData = patientEvents.getPatientEvents($scope.dataToView);
-        //console.log("randomData from toggleTimeline: "+$scope.randomData);
-        //console.log($scope.randomData);
     }
 
     $scope.includeInTimeline = function(dataType) {

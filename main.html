@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!--<html manifest="optimise.appcache?v=V0.0.52">-->
+<!--<html manifest="optimise.appcache?v=V0.0.53">-->
 <html>
 <head>
     <title>OPTIMISE</title>
@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="scripts/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="scripts/css/bootstrap.min.css">
     <link rel="stylesheet" href="scripts/css/testLayout.css">
-    <link rel="stylesheet" href="scripts/css/tree.css">
+    <!--<link rel="stylesheet" href="scripts/css/tree.css">-->
     <link rel="stylesheet" href="scripts/css/angular.rangeSlider.css">
     <link rel="stylesheet" href="scripts/css/ng-table.min.css">
     <link rel="stylesheet" href="scripts/css/textAngular.css">
@@ -372,18 +372,18 @@
                 </button>
             </div>
             <div>
-                <button type="button" class="btn relapse-btn" ng-click="toggleTimeline('Relapses')">
-                    <div class="checkbox checkbox-primary">
-                        <input type="checkbox" ng-model="showRelapses">
-                        <label class="control-label">Relapses</label>
+                <button type="button" class="btn test-btn" ng-click="toggleTimeline('Tests')">
+                    <div class="checkbox checkbox-danger">
+                        <input type="checkbox" ng-model="showTests">
+                        <label class="control-label">Monitoring</label>
                     </div>
                 </button>
             </div>
             <div>
-                <button type="button" class="btn test-btn" ng-click="toggleTimeline('Tests')">
-                    <div class="checkbox checkbox-danger">
-                        <input type="checkbox" ng-model="showTests">
-                        <label class="control-label">Lab Monitor</label>
+                <button type="button" class="btn relapse-btn" ng-click="toggleTimeline('Relapses')">
+                    <div class="checkbox checkbox-primary">
+                        <input type="checkbox" ng-model="showRelapses">
+                        <label class="control-label">Relapses</label>
                     </div>
                 </button>
             </div>
@@ -403,6 +403,14 @@
                     </div>
                 </button>
             </div>
+            <!--<div>-->
+                <!--<button type="button" class="btn proms-btn" ng-click="toggleTimeline('LesionVolume')">-->
+                    <!--<div class="checkbox checkbox-warning">-->
+                        <!--<input type="checkbox" ng-model="showLesionVolume">-->
+                        <!--<label class="control-label">Lesion Volume</label>-->
+                    <!--</div>-->
+                <!--</button>-->
+            <!--</div>-->
 
             <!--<div>-->
                 <!--<button type="button" class="btn proms-btn" ng-click="toggleTimeline('PDDS')">-->

@@ -1,6 +1,6 @@
 <div>
     <table ng-table="tableParams" class="table" show-filter="true">
-        <tr ng-repeat="test in $data">
+        <tr ng-repeat="test in $data | orderBy:'-ISTEST':true">
             <td title="'Count'" filter="{ ISTEST: 'text'}" sortable="'ISTEST'" class="col-sm-5">
                 <div class="input-group">
                     <span class="input-group-addon">{{test.ISTEST}}</span>

@@ -301,20 +301,6 @@ headerModule.controller('newInterestCtrl', function($scope, $uibModalInstance) {
     };
 });
 
-//
-//headerModule.controller('appointmentsCtrl', function ($scope, $uibModalInstance, remindersForAppointmentsDue) {
-//
-//    remindersForAppointmentsDue.getSubjectList();
-//
-//    $scope.ok = function () {
-//        $uibModalInstance.close();
-//    };
-//
-//    $scope.cancel = function () {
-//        $uibModalInstance.dismiss('cancel');
-//    };
-//});
-
 
 headerModule.controller('newPatientInstanceCtrl', function ($scope, $uibModalInstance, sourceMode, viewService, records, siteID) {
 
@@ -329,8 +315,6 @@ headerModule.controller('newPatientInstanceCtrl', function ($scope, $uibModalIns
         sourceMode: sourceMode,
         actionMode: $scope.actionMode
     };
-
-    //console.log(siteID);
 
     var currentDate = new Date();
     $scope.yearsOption = [];
@@ -774,7 +758,6 @@ headerModule.controller('depositoryCtrl', function ($scope, $uibModalInstance, s
             var dmData = [];
             var demographicAPICall = records.getAllDemographics();
             demographicAPICall.then(function(demographics) {
-                console.log(demographics);
                 var dmRecords = demographics.RecordSet;
                 for (var dm = 0; dm < dmRecords.length; dm++) {
                     var aRecord = dmRecords[dm];
@@ -1078,10 +1061,11 @@ headerModule.controller('headerCtrl', function ($rootScope,
     pullViewConfiguration();
 
     $scope.authenticate = function() {
+        var authenticationDetails = {"username":$scope.UserName,"password":$scope.Password,"expire_in_seconds":120};
         if (navigator.onLine) {
             if (($scope.UserName.length > 0)&&($scope.Password.length>0)) {
-            //USERID.save({"username":"may","password":"yong","expire_in_seconds":120}, function (data) {
-                USERID.save({"username":$scope.UserName,"password":$scope.Password,"expire_in_seconds":120}, function (data) {
+
+                USERID.save(authenticationDetails, function (data) {
                     data.$promise.then(function () {
                         if (data.result =='succeed') {
                             records.setToken(data.token);
@@ -1091,7 +1075,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
 
                             if ((data.siteID != null)&&(data.siteID != ''))
                                 $scope.siteID = data.siteID;
-                            console.log($scope.siteID);
+
                             //pullViewConfiguration();
                             setupConfig(data.config);
                             $scope.sourceMode = 'internet';
@@ -1100,10 +1084,13 @@ headerModule.controller('headerCtrl', function ($rootScope,
                             clearCurrentPatientSession();
                             $scope.contentOnDisplay = 'Patient';
                             $scope.setContent();
-                        }else {
-                            alert ("You have no access into OPTIMISE")
                         }
-                    })
+                    });
+                }, function(err){
+                    var errorMsg = "Login Failed: "+err.data.desp;
+                    $scope.UserName = "";
+                    $scope.Password = "";
+                    alert(errorMsg);
                 });
             }
             else {
@@ -1171,7 +1158,6 @@ headerModule.controller('headerCtrl', function ($rootScope,
             var prefix = "OPT-"+$scope.siteID+"-02-";
             if ($scope.actionMode=='New') {
                 patients.newPatient(newData.USUBJID,
-                    //viewService.getConfigurationRoot(),
                     $scope.siteID,
                     newData.NHS_USUBJID,
                     newData.RFICDTC
@@ -1180,15 +1166,8 @@ headerModule.controller('headerCtrl', function ($rootScope,
                 if ($scope.sourceMode=='internet') {
                     var newSubject = records.createNewSubject(patients.getCurrentPatient(), prefix);
                     newSubject.then(function(data) {
-
                         if (data.result == 'succeed'){
-
                             $scope.USUBJID = data.w_id;
-                            patients.newPatient($scope.USUBJID,
-                                $scope.siteID,
-                                newData.NHS_USUBJID,
-                                newData.RFICDTC
-                            );
                             patients.getCurrentPatient().USUBJID = $scope.USUBJID;
                             $scope.setEventUSUBJID($scope.USUBJID);
                             $scope.setExposureUSUBJID($scope.USUBJID);
@@ -1206,14 +1185,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
                     })
                 }
                 else if ($scope.sourceMode == 'computer') {
-//                    patients.newPatient(newData.USUBJID,
-//                        //viewService.getConfigurationRoot(),
-//                        $scope.siteID,
-//                        newData.NHS_USUBJID,
-//                        newData.RFICDTC
-//                    );
                     $scope.USUBJID = newData.USUBJID;
-
                     $scope.setEventUSUBJID($scope.USUBJID);
                     $scope.setExposureUSUBJID($scope.USUBJID);
                     $scope.setLabUSUBJID($scope.USUBJID);
@@ -1227,12 +1199,9 @@ headerModule.controller('headerCtrl', function ($rootScope,
             else if ($scope.actionMode=='Load') {
                 $scope.USUBJID = newData.USUBJID;
                 if ($scope.sourceMode=='internet') {
-                    //viewService.setOffline(false);
-                    //$scope.USUBJID = newData.USUBJID;
                     populateFromDB(newData.recordSet);
                 }
                 else if ($scope.sourceMode=='computer') {
-                    //$scope.USUBJID = newData.USUBJID;
                     populateFromScriptedFile(newData.recordSet);
                 };
             }
@@ -1259,7 +1228,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
                 }
             }
 
-            $scope.findToDelete = false;
+            //$scope.findToDelete = false;
         }, function () {
             console.log("New Patient Entry Cancelled");
         });
@@ -1420,7 +1389,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
             $scope.recordExistsStatus = $scope.USUBJID+" not found";
             alert ($scope.recordExistsStatus);
             $scope.USUBJID = '';
-            $scope.findToDelete=true;
+            //$scope.findToDelete=true;
             return false;
         }
         else {
@@ -1441,10 +1410,8 @@ headerModule.controller('headerCtrl', function ($rootScope,
 
     $scope.overwriteDatabase = function() {
         //deleteThisSubject();
-
         var USUBJID = patients.getCurrentPatient().USUBJID;
         var jsonBody = angular.toJson(getRecordSet());
-        console.log(jsonBody);
         records.overwriteSubject(USUBJID, jsonBody);
     };
 
@@ -1485,8 +1452,6 @@ headerModule.controller('headerCtrl', function ($rootScope,
                     'USUBJID': patients.getCurrentPatient().USUBJID};
                 subjects.push(newPair);
                 localStorage.setItem("NHS_OPT_Map",JSON.stringify(subjects));
-                //console.log(localStorage.getItem("NHS_OPT_Map"));
-                //console.log(newPair);
             }
 
         saveJSON(data, patients.getCurrentPatient().USUBJID);
@@ -1498,7 +1463,6 @@ headerModule.controller('headerCtrl', function ($rootScope,
         var root = {"RecordSet":RecordItems};
 
         var DM = patients.getCurrentPatient();
-        //console.log(DM);
         var dmRecordItem = getRecordItem(DM);
         RecordItems.push(dmRecordItem);
 
@@ -1554,14 +1518,12 @@ headerModule.controller('headerCtrl', function ($rootScope,
         var NV = nervousSystemFindings.getNervousSystemFindings();
         for (var nv = 0; nv < NV.length; nv++) {
             var nvRecordItem = getRecordItem(NV[nv]);
-            
             RecordItems.push(nvRecordItem);
         }
 
         var AE = adverseEventService.getAdverseEvents();
         for (var ae = 0; ae < AE.length; ae++) {
             var aeRecordItem = getRecordItem(AE[ae]);
-            
             RecordItems.push(aeRecordItem);
         }
 
@@ -1575,7 +1537,6 @@ headerModule.controller('headerCtrl', function ($rootScope,
         var MO = morphologyServices.getMorphologicalFindings();
         for (var mo = 0; mo < MO.length; mo++) {
             var moRecordItem = getRecordItem(MO[mo]);
-            
             RecordItems.push(moRecordItem);
         }
 
@@ -1589,21 +1550,18 @@ headerModule.controller('headerCtrl', function ($rootScope,
         var SU = substanceUse.getSubstanceUse();
         for (var su = 0; su < SU.length; su++) {
             var suRecordItem = getRecordItem(SU[su]);
-
             RecordItems.push(suRecordItem);
         }
 
         var SC = subjectCharacteristic.getSubjectCharacteristics();
         for (var sc = 0; sc < SC.length; sc++) {
             var scRecordItem = getRecordItem(SC[sc]);
-
             RecordItems.push(scRecordItem);
         }
 
         var REL = relationships.getRelationships();
         for (var re = 0; re < REL.length; re++) {
             var reRecordItem = getRecordItem(REL[re]);
-
             RecordItems.push(reRecordItem);
         }
 
@@ -1618,6 +1576,12 @@ headerModule.controller('headerCtrl', function ($rootScope,
         for (var rm = 0; rm < REMINDERS.length; rm++) {
             var rmRecordItem = getRecordItem(REMINDERS[rm]);
             RecordItems.push(rmRecordItem);
+        }
+
+        var APMH = associatedPersonMedicalHistories.getAPMHList();
+        for (var rm = 0; rm < APMH.length; rm++) {
+            var apmhRecordItem = getRecordItem(APMH[rm]);
+            RecordItems.push(apmhRecordItem);
         }
 
         return(root);
@@ -1854,7 +1818,30 @@ headerModule.controller('headerCtrl', function ($rootScope,
     }
 
     var clearCurrentPatientSession = function() {
+
         patients.deleteCurrentPatient();
+        subjectCharacteristic.deleteSubjectCharacteristics();
+        associatedPersonMedicalHistories.deleteAssociatedPersonMedicalHistories();
+        substanceUse.deleteSubstanceUse();
+        medicalHistory.deleteMedicalHistory();
+        clinicalEvents.deleteClinicalEvents();
+
+        subjectVisits.deleteSubjectVisits();
+        vitalSigns.deleteVitalSigns();
+        findingsAbout.deleteFindings();
+        questionnaires.deleteQuestionnaires();
+        relationships.deleteRelationships();
+
+        immunogenicitySpecimenAssessments.deleteISAs();
+        laboratoryTestResults.deleteLabTestResults();
+        morphologyServices.deleteMorphologicalFindings();
+        nervousSystemFindings.deleteNervousSystemFindings();
+        procedures.deleteProcedures();
+
+        deviceInUseServices.deleteDevicesInUse();
+        exposures.deleteExposures();
+        reminders.deleteReminders();
+
         $scope.setNewPatientFields();
         $scope.setNewEventFields();
         $scope.setNewRelapseFields();
@@ -1863,24 +1850,6 @@ headerModule.controller('headerCtrl', function ($rootScope,
         $scope.setNewResultFields();
         $scope.setNewQuestionnaireFields();
         $scope.setNewReminderFields();
-
-        associatedPersonMedicalHistories.deleteAssociatedPersonMedicalHistories();
-        clinicalEvents.deleteClinicalEvents();
-        exposures.deleteExposures();
-        findingsAbout.deleteFindings();
-        immunogenicitySpecimenAssessments.deleteISAs();
-        laboratoryTestResults.deleteLabTestResults();
-        medicalHistory.deleteMedicalHistory();
-        morphologyServices.deleteMorphologicalFindings();
-        nervousSystemFindings.deleteNervousSystemFindings();
-        procedures.deleteProcedures();
-        questionnaires.deleteQuestionnaires();
-        subjectVisits.deleteSubjectVisits();
-        subjectCharacteristic.deleteSubjectCharacteristics();
-        substanceUse.deleteSubstanceUse();
-        deviceInUseServices.deleteDevicesInUse();
-        reminders.deleteReminders();
-        vitalSigns.deleteVitalSigns();
     }
 
     $scope.deletePatient = function () {
@@ -1891,7 +1860,6 @@ headerModule.controller('headerCtrl', function ($rootScope,
     var deleteThisSubject = function () {
         if (($scope.USUBJID !=null)&&($scope.USUBJID !=""))
         {
-            //var url = records.getURL('USUBJID');
             var deletionProcess = records.deleteSubject($scope.USUBJID);
             deletionProcess.then(function(result) {
                 if (result.result=='succeed') {
@@ -1976,12 +1944,6 @@ headerModule.controller('headerCtrl', function ($rootScope,
                 $scope.clearRelapseSymptomFields();
                 viewService.setView("Relapse", true);// relapse view, disable input fields = true
 
-                break;
-            }
-            case "Medical Event":
-            {
-                $scope.setNewEventFields();  // set relapse fields to empty
-                viewService.setView("Medical Event", true);// relapse view, disable input fields = true
                 break;
             }
             case "Exposure":
@@ -2073,7 +2035,6 @@ headerModule.controller('headerCtrl', function ($rootScope,
             case "Visit":
             {
                 var SVSTDTC = new Date($scope.newEventDate.substr(6), parseInt($scope.newEventDate.substr(3,2))-1, $scope.newEventDate.substr(0,2));
-                console.log(SVSTDTC);
                 if (isThisADate(SVSTDTC)) {
                     $scope.setNewVisitDate($scope.newEventDate, SVSTDTC);
                     viewService.setView("Visit", false);
@@ -2534,12 +2495,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
             }
             case "Medical Event":
             {
-                //return clinicalEvents.getUniqueDatesFromCategory('General Medical History');
-                //var events = [];
                 return (clinicalEvents.getUniqueDatesFromCategory('Other').concat(adverseEventService.getAdverseEvents()));
-                //events.push(adverseEventService.getAdverseEvents());
-                //return events;
-                //break;
             }
             case 'Test':
             {
@@ -2547,7 +2503,6 @@ headerModule.controller('headerCtrl', function ($rootScope,
                 switch ($scope.testIndex) {
                     case 'Laboratory Tests': {
                         var labResults = laboratoryTestResults.getUniqueDates();
-                        //console.log(labResults);
                         var assessmentResults = immunogenicitySpecimenAssessments.getUniqueDates();
                         var labCollectionDates = findUniqueCollectionDates(labResults, assessmentResults);
                         return  labCollectionDates;
@@ -2556,27 +2511,12 @@ headerModule.controller('headerCtrl', function ($rootScope,
                         return nervousSystemFindings.getUniqueDates();
                     }
                     case 'Magnetic Resonance Imaging': {
-                        //console.log(procedures.getExperimentDates())
                         return procedures.getProcedureDates('MRI');
                     }
                     case 'Cerebrospinal Fluid': {
-                        //return laboratoryTestResults.getUniqueDates();
                         return procedures.getProcedureDates('Lumbar Puncture');
                     }
                 }
-                /*
-                var labResults = laboratoryTestResults.getUniqueDates();
-                //console.log(labResults);
-                var assessmentResults = immunogenicitySpecimenAssessments.getUniqueDates();
-                //console.log(assessmentResults);
-                var vepFindings = nervousSystemFindings.getUniqueDates();
-                //console.log("VEP");
-                //console.log(vepFindings);
-                var mriExperiments = procedures.getExperimentDates();
-                //console.log(mriExperiments);
-                var labCollectionDates = findUniqueCollectionDates(labResults, assessmentResults);
-                return vepFindings.concat(labCollectionDates).concat(mriExperiments);
-                */
             }
             case 'Questionnaire':
             {
@@ -2806,6 +2746,10 @@ headerModule.controller('headerCtrl', function ($rootScope,
                 $scope.showRelapses = !$scope.showRelapses;
                 break;
             }
+            case 'Visits': {
+                $scope.showVisits = !$scope.showVisits;
+                break;
+            }
             case 'Tests': {
                 $scope.showTests = !$scope.showTests;
                 break;
@@ -2839,10 +2783,11 @@ headerModule.controller('headerCtrl', function ($rootScope,
     }
 
     $scope.showTreatments = true;
+    $scope.showVisits = true;
     $scope.showRelapses = true;
     $scope.showTests = false;
     $scope.showEDSS = true;
-    $scope.showMSQOL = true;
+    $scope.showMSQOL = false;
     $scope.showVAS = false;
     //$scope.showPROMIS = false;
     $scope.showLesionVolume = true;
