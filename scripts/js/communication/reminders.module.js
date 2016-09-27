@@ -18,10 +18,10 @@ reminderModule.factory('Reminder', function () {
             REMINDERSEQ:'',
             REMINDERFREQUENCY: '',
             REMINDERCATEGORY: '',
-            REMINDERSTDTC: new Date(),
-            REMINDERENDTC: new Date(),
+//            REMINDERSTDTC: new Date(),
+//            REMINDERENDTC: new Date(),
             REMINDERNOTES:'',
-            REMINDERACTIVE:''
+            REMINDERACTIVE:'On'
         }
         return Reminder;
     }
@@ -91,15 +91,14 @@ reminderModule.service('reminders', function (viewService, records, Reminder) {
     };
 
     var deleteLabReminder = function (rm){
+        console.log(rm);
         var index = reminders.indexOf(rm);
         if (index > -1) {
             reminders.splice(index, 1);
         }
         if (!viewService.workOffline())
-            records.deleteRecord(rm);
+            records.deleteReminder(rm);
     }
-
-
 
     var populateReminder = function (RecordItems) {
         var labReminder = new Reminder();
@@ -119,26 +118,28 @@ reminderModule.service('reminders', function (viewService, records, Reminder) {
                 }
                 case 'SUBJID': {
                     labReminder.SUBJID = RecordItems[i].value;
+                    break;
                 }
                 case 'REMINDERFREQUENCY': {
                     labReminder.REMINDERFREQUENCY = RecordItems[i].value;
+                    break;
                 }
                 case 'REMINDERCATEGORY': {
                     labReminder.REMINDERCATEGORY = RecordItems[i].value;
-                }
-
-                case 'REMINDERSTDTC': {
-                    labReminder.REMINDERSTDTC = records.formatStringToDate(RecordItems[i].value);
-                }
-                case 'REMINDERENDTC': {
-                    labReminder.REMINDERENDTC = records.formatStringToDate(RecordItems[i].value);
+                    break;
                 }
 
                 case 'REMINDERNOTES': {
                     labReminder.REMINDERNOTES = RecordItems[i].value;
+                    break;
                 }
                 case 'REMINDERACTIVE': {
                     labReminder.REMINDERACTIVE = RecordItems[i].value;
+                    break;
+                }
+                case 'REMINDERSEQ': {
+                    labReminder.REMINDERSEQ = parseInt(RecordItems[i].value);
+                    break;
                 }
             }
         }
@@ -192,8 +193,6 @@ reminderModule.controller('reminderInfoCtrl', function($scope,
             "frequency":'',
             "notes": ""};
     }
-
-
 
     $rootScope.displayReminder = function() {
         clearFields();
@@ -328,7 +327,7 @@ reminderModule.controller('reminderInfoCtrl', function($scope,
                 newReminder.REMINDERNOTES = $scope.reminder.notes;
                 newReminder.REMINDERACTIVE = "On";
                 reminders.saveLabReminder(newReminder);
-                console.log(newReminder);
+                //console.log(newReminder);
                 clearFields();
             }
         }
@@ -415,46 +414,8 @@ reminderModule.controller('reminderInfoCtrl', function($scope,
     }
 
     $scope.editReminder = function (fieldName) {
-        var fieldValue = '';
-        if (fieldName == 'REMINDERFREQUENCY') {
-            var secondsInADay = 86400;
-            switch ($scope.reminder.frequency) {
-                case ('Once/ Week'): {
-                    fieldValue = secondsInADay * 7;
-                    break;
-                }
-
-                case ('Once/ Month'): {
-                    fieldValue = secondsInADay * 30.5;
-                    break;
-                }
-
-                case ('Twice/ Month'): {
-                    fieldValue = secondsInADay * (30.5/2);
-                    break;
-                }
-
-                case ('Once/ Year'): {
-                    fieldValue = secondsInADay * 365;
-                    break;
-                }
-
-                case ('Twice/ Year'): {
-                    fieldValue = secondsInADay * (365/2);
-                    break;
-                }
-
-            }
-            reminders.getLabReminder().REMINDERFREQUENCY = fieldValue;
-        }
-        else if (fieldName == 'REMINDERNOTES') {
-            fieldValue = $scope.reminder.notes;
-            reminders.getLabReminder().REMINDERNOTES = fieldValue;
-
-        }
-        else if (fieldName == 'REMINDERDOMAIN') {
-            fieldValue = $scope.reminder.category;
-            reminders.getLabReminder().REMINDERCATEGORY = fieldValue;
+        if (fieldName == 'REMINDERCATEGORY') {
+            $scope.reminder.notes = $scope.reminder.category+": "+$scope.reminder.notes;
         }
     }
 

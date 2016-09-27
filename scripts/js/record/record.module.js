@@ -219,9 +219,9 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
 
         if (functionName == 'Appointments') {
             if (onlineOrLocal == 'local')
-                api = 'http://www.optimise-ms.org/api-optimise/getListAppointmentsDue.php';
+                api = 'http://www.optimise-ms.org/api-optimise/getListAppointmentsDue2.php';
             else
-                api = '/api-optimise/getListAppointmentsDue.php';
+                api = '/api-optimise/getListAppointmentsDue2.php';
         }
 
         if (functionName == 'Delete') {
@@ -760,33 +760,31 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
 
     };
 
-    var deleteReminder = function(USUBJID) {
+    var deleteReminder = function(rm) {
+        if (((rm.USUBJID != undefined)&&
+            (rm.USUBJID != "")&&
+            (parseInt(rm.REMINDERSEQ) != NaN))) {
+                var jsonBody = {"USUBJID":rm.USUBJID, "DOMAIN":rm.DOMAIN, "REMINDERSEQ": rm.REMINDERSEQ};
+                var api = '';
+                if (onlineOrLocal == 'local')
+                //api = 'http://146.169.35.160/api/Optimise/';
+                    api = 'http://www.optimise-ms.org/api-optimise/reminders.php';
+                else
+                //api = '/api/Optimise/';
+                    api = '/api-optimise/reminders.php';
 
-        //console.log(recordToDelete);
-
-        if ((USUBJID!=null)&&(USUBJID != "")) {
-            var jsonBody = {"USUBJID":USUBJID};
-            var api = '';
-            if (onlineOrLocal == 'local')
-            //api = 'http://146.169.35.160/api/Optimise/';
-                api = 'http://www.optimise-ms.org/api-optimise/reminders.php';
-            else
-            //api = '/api/Optimise/';
-                api = '/api-optimise/reminders.php';
-
-            $http({url: api,
-                method: 'DELETE',
-                data: jsonBody,
-                headers: {"Content-Type": "application/json;charset=utf-8"}}).then(function(res) {
-                    console.log(res.data);
-                }, function(error) {
-                    console.log(error);
-                });
+                $http({url: api,
+                    method: 'DELETE',
+                    data: jsonBody,
+                    headers: {"Content-Type": "application/json;charset=utf-8"}}).then(function(res) {
+                        console.log(res.data);
+                    }, function(error) {
+                        console.log(error);
+                    });
         }
         else
         {
-            //console.log(recordToDelete);
-            alert ("Invalid reminder to delete");
+            alert ("Invalid reminder to delete: "+rm.USUBJID+", "+rm.REMINDERSEQ);
         }
     }
 
@@ -836,6 +834,7 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
     var deleteRecord = function(recordToDelete) {
 
         if ((recordToDelete!=null)
+            &&(recordToDelete.USUBJID != undefined)
             &&(recordToDelete.USUBJID != null)
             &&(recordToDelete.USUBJID != '')
             &&(recordToDelete.DOMAIN != null)

@@ -11,20 +11,6 @@
                     <tr ng-repeat="thisReminder in getReminders()">
                         <td class="form-group">
                             <div class="row marginTop">
-                                <!--<div class="col-sm-5">-->
-                                    <!--<div class="input-daterange input-group">-->
-                                        <!--<span class="input-group-addon">Start Date</span>-->
-                                        <!--<input type="text" class="input-sm form-control"-->
-                                               <!--ng-disabled = "true"-->
-                                               <!--ng-model="thisReminder.REMINDERSTDTC"-->
-                                               <!--ng-change="editReminder(thisReminder, 'REMINDERSTDTC')"/>-->
-                                        <!--<span class="input-group-addon">to</span>-->
-                                        <!--<input type="text" class="input-sm form-control"-->
-                                               <!--ng-disabled = "true"-->
-                                               <!--ng-model="thisReminder.REMINDERENDTC"-->
-                                               <!--ng-change="editReminder(thisReminder, 'REMINDERENDTC')"/>-->
-                                    <!--</div>-->
-                                <!--</div>-->
                                 <div class="col-sm-4">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-primary"
@@ -128,16 +114,6 @@
                     <tr>
                         <td class="form-group doubleMarginTop">
                             <div class="row marginTop">
-                                <!--<div class="col-sm-5">-->
-                                    <!--<div class="input-daterange input-group">-->
-                                        <!--<span class="input-group-addon">Start Date</span>-->
-                                        <!--<input type="text" class="input-sm form-control" ng-model="reminder.start"-->
-                                               <!--ng-change="editReminder('REMINDERSTDTC')"/>-->
-                                        <!--<span class="input-group-addon">to</span>-->
-                                        <!--<input type="text" class="input-sm form-control" ng-model="reminder.end"-->
-                                               <!--ng-change="editReminder('REMINDERENDTC')"/>-->
-                                    <!--</div>-->
-                                <!--</div>-->
                                 <div class="col-sm-4">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-primary"
@@ -169,39 +145,34 @@
                                         <button type="button" class="btn btn-primary"
                                                 ng-class='{inactive: !(reminder.frequency=="Once/ Week")}'
                                                 ng-model="reminder.frequency"
-                                                uib-btn-radio="'Once/ Week'"
-                                                ng-change="editReminder('REMINDERFREQUENCY')">
+                                                uib-btn-radio="'Once/ Week'">
                                             1/ Wk
                                         </button>
                                         <button type="button" class="btn btn-primary"
                                                 ng-class='{inactive: !(reminder.frequency=="Once/ Month")}'
                                                 ng-model="reminder.frequency"
-                                                uib-btn-radio="'Once/ Month'"
-                                                ng-change="editReminder('REMINDERFREQUENCY')">
+                                                uib-btn-radio="'Once/ Month'">
                                             1/ Mnth
                                         </button>
 
                                         <button type="button" class="btn btn-primary"
                                                 ng-class='{inactive: !(reminder.frequency=="Twice/ Month")}'
                                                 ng-model="reminder.frequency"
-                                                uib-btn-radio="'Twice/ Month'"
-                                                ng-change="editReminder('REMINDERFREQUENCY')">
+                                                uib-btn-radio="'Twice/ Month'">
                                             2/ Mnth
                                         </button>
 
                                         <button type="button" class="btn btn-primary"
                                                 ng-class='{inactive: !(reminder.frequency=="Once/ Year")}'
                                                 ng-model="reminder.frequency"
-                                                uib-btn-radio="'Once/ Year'"
-                                                ng-change="editReminder('REMINDERFREQUENCY')">
+                                                uib-btn-radio="'Once/ Year'">
                                             1/ Yr
                                         </button>
 
                                         <button type="button" class="btn btn-primary"
                                                 ng-class='{inactive: !(reminder.frequency=="Twice/ Year")}'
                                                 ng-model="reminder.frequency"
-                                                uib-btn-radio="'Twice/ Year'"
-                                                ng-change="editReminder('REMINDERFREQUENCY')">
+                                                uib-btn-radio="'Twice/ Year'">
                                             2/ Yr
                                         </button>
                                     </div>
@@ -223,8 +194,7 @@
                                 <div class="col-sm-12">
                                     <textarea rows='1' class="form-control"
                                               ng-model="reminder.notes"
-                                              placeholder="Notes"
-                                              ng-blur="editReminder('REMINDERNOTES')"></textarea>
+                                              placeholder="Notes"></textarea>
                                 </div>
                             </div>
                         </td>

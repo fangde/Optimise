@@ -643,11 +643,10 @@ headerModule.controller('appointmentsCtrl', function ($scope, $uibModalInstance,
     var makeAppointmentsAPICall = function() {
         var appointments = [];
 
-        console.log(sourceMode);
-
         if (sourceMode == 'internet') {
             var appointmentsAPICall = records.getDueAppointments();
             appointmentsAPICall.then(function(data) {
+                //console.log(data);
                 var reminders = data.Reminders;
                 var subjectIDs = Object.keys(reminders);
 
@@ -658,10 +657,13 @@ headerModule.controller('appointmentsCtrl', function ($scope, $uibModalInstance,
                     var notes = reminders[id]['Notes'];
 
                     var aReminder = {'id':id, 'last':lastAppointment, 'due':due, 'notes':notes};
+                    console.log(aReminder);
                     appointments.push(aReminder);
                 }
-
-
+                $scope.tableParams.settings({
+                    dataset: appointments
+                });
+                $scope.data = appointments.slice(0);
             });
         }
         else {
@@ -670,12 +672,11 @@ headerModule.controller('appointmentsCtrl', function ($scope, $uibModalInstance,
                     appointments.push(reminders[r]);
                 }
             });
+            $scope.tableParams.settings({
+                dataset: appointments
+            });
+            $scope.data = appointments.slice(0);
         }
-
-        $scope.tableParams.settings({
-            dataset: appointments
-        });
-        $scope.data = appointments.slice(0);
     }
     $scope.tableParams = new NgTableParams({}, { dataset: []});
 
@@ -2844,7 +2845,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
                 if ((reminderData.RecordSet != null)&&(reminderData.RecordSet.length >0)) {
                     //console.log(reminderData.RecordSet[0]);
                     for (var rm = 0; rm < reminderData.RecordSet.length; rm ++) {
-                        reminders.populateReminder(reminderData.RecordSet);
+                        reminders.populateReminder(reminderData.RecordSet[rm]);
                     }
                     $scope.displayReminder();
                 }
