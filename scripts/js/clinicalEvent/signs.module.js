@@ -38,7 +38,7 @@ signsModule.factory('signVocab', function() {
 
     signTerms['cranial.redDesaturation']={CETERM: 'Red desaturation', CEBODSYS:'Eye'};
     signTerms['cranial.fieldDefect']={CETERM: 'Field defect', CEBODSYS:'Eye'};
-    signTerms['cranial.ptosis']={CETERM: 'Ptosis', CEBODSYS:''};
+    //signTerms['cranial.ptosis']={CETERM: 'Ptosis', CEBODSYS:''};
     signTerms['cranial.oscillopia']={CETERM: 'Oscillopia', CEBODSYS:''};
     signTerms['cranial.sixthNervePalsy']={CETERM: 'Sixth nerve palsy', CEBODSYS:''};
     signTerms['cranial.fourthNervePalsy']={CETERM: 'Fourth nerve palsy', CEBODSYS:''};

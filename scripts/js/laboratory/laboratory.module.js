@@ -30,33 +30,29 @@ laboratoryTestResultModule.factory('serologicalTestsVocab', function() {
 
     var assessmentScopeVariables = [
         {ISORRES: "hbvSurfaceAntigen", ISIND:"hbvPositive", ISTEST:"HBV Surface Antigen"},
-        {ISORRES: 'hcv', ISIND: 'hcvPositive', ISTEST: "Anti HCV Antibody"},
-        {ISORRES: 'hiv', ISIND: 'hivPositive', ISTEST: "Anti HIV Antibody"},
-        {ISORRES: 'varicella', ISIND: 'varicellaPositive', ISTEST: "Anti-varicella Antibody"},
-        {ISORRES: 'jc', ISIND: 'jcPositive', ISTEST: "Anti JC Virus in Plasma"},
-//        {ISORRES: 'urineJC', ISIND: 'urineJCPositive', ISTEST: "Urine JC Virus DNA"},
+        {ISORRES: 'hcv', ISIND: 'hcvPositive', ISTEST: "Anti-HCV Antibody"},
+        {ISORRES: 'hiv', ISIND: 'hivPositive', ISTEST: "Anti-HIV Antibody"},
+        {ISORRES: 'varicella', ISIND: 'varicellaPositive', ISTEST: "Anti-Varicella Antibody"},
+        {ISORRES: 'jc', ISIND: 'jcPositive', ISTEST: "Plasma Anti-JC Virus"},
         {ISORRES: 'ifn', ISIND: 'ifnPositive', ISTEST: "Neutralising Anti-IFN Antibody"},
         {ISORRES: 'natalizumab', ISIND: 'natalizumabPositive', ISTEST: "Neutralising Anti-Natalizumab Antibody"},
         {ISORRES: 'nmo', ISIND: 'nmoPositive', ISTEST: "NMO IgG"},
-//        {ISORRES: 'pregnancy', ISIND: 'pregnancyPositive', ISTEST: "Pregnancy"},
-//        {ISORRES: 'goldTest', ISIND: 'goldTestPositive', ISTEST: "Quantiferon Gold Test"},
-//        {ISORRES: 'mantouxTest', ISIND: 'mantouxPositive', ISTEST: "Mantoux Test"},
         {ISORRES: 'ana', ISIND: 'anaPositive', ISTEST: "ANA"},
         {ISORRES: 'antiMitochondrial', ISIND: 'antiMitochondrialPositive', ISTEST: "Anti-Mitochondrial"},
-        {ISORRES: 'antiParietalCellAntibodies', ISIND: 'antiParietalCellAntibodiesPositive', ISTEST: "Anti-parietal Cell Antibodies"},
+        {ISORRES: 'antiParietalCellAntibodies', ISIND: 'antiParietalCellAntibodiesPositive', ISTEST: "Anti-Parietal Cell Antibodies"},
         {ISORRES: 'asma', ISIND: 'asmaPositive', ISTEST: "Anti-Smooth Muscle"},
         {ISORRES: 'antiRo', ISIND: 'antiRoPositive', ISTEST: "Anti-Ro"},
         {ISORRES: 'la', ISIND: 'laPositive', ISTEST: "LA"},
-        {ISORRES: 'sm', ISIND: 'smPositive', ISTEST: "Sm"},
+        {ISORRES: 'sm', ISIND: 'smPositive', ISTEST: "SM"},
         {ISORRES: 'rnp', ISIND: 'rnpPositive', ISTEST: "RNP"},
         {ISORRES: 'scl70', ISIND: 'scl70Positive', ISTEST: "Scl 70"},
         {ISORRES: 'jo1', ISIND: 'jo1Positive', ISTEST: "Jo1"},
         {ISORRES: 'anca', ISIND: 'ancaPositive', ISTEST: "ANCA"},
-        {ISORRES: 'antiDNA', ISIND: 'antiDNAPositive', ISTEST: "Anti-dna"},
-        {ISORRES: 'antiLKM', ISIND: 'antiLKMPositive', ISTEST: "Anti-lkm"},
-        {ISORRES: 'antiCardiolpin', ISIND: 'antiCardiolpinPositive', ISTEST: "Anti-cardiolpin"},
+        {ISORRES: 'antiDNA', ISIND: 'antiDNAPositive', ISTEST: "Anti-DNA"},
+        {ISORRES: 'antiLKM', ISIND: 'antiLKMPositive', ISTEST: "Anti-LKM"},
+        {ISORRES: 'antiCardiolpin', ISIND: 'antiCardiolpinPositive', ISTEST: "Anti-Cardiolpin"},
         {ISORRES: 'lac', ISIND: 'lacPositive', ISTEST: "LUTUS Anti-coagulant"},
-        {ISORRES: 'antiTransglutaminase', ISIND: 'antiTransglutaminasePositive', ISTEST: "Anti-transglutaminase"},
+        {ISORRES: 'antiTransglutaminase', ISIND: 'antiTransglutaminasePositive', ISTEST: "Anti-Transglutaminase"},
         {ISORRES: 'mog', ISIND: 'mogPositive', ISTEST: "MOG"},
         {ISORRES: 'aqp4', ISIND: 'aqp4Positive', ISTEST: "AQP4"},
         {ISORRES: 'glyr', ISIND: 'glyrPositive', ISTEST: "Gly R"},
@@ -144,136 +140,27 @@ laboratoryTestResultModule.factory('serologicalTestsVocab', function() {
     return tests;
 });
 
-laboratoryTestResultModule.factory('labTestsVocab', function() {
-
-    var test = {tests: {
-        'whiteCellCount':"",
-        'redCellCount':"",
-        'lymphocyteCount':"",
-        'tCellCount':"",
-        'cd4tCellCount':"",
-        'cd8tCellCount':"",
-        'cd19bCellCount':"",
-        'nkCellCount':"",
-        'neutrophilCount':"",
-        'monocyteCount':"",
-        'eosinophilCount':"",
-        'basophilCount':"",
-        'platletCount':"",
-        'haemoglobinCount':"",
-        'totalProtein':"",
-        'albumin':"",
-        'calcium':"",
-        'urea':"",
-        'uricAcid':"",
-        'creatinine':"",
-        'basophilCount':"",
-        'sgotAst':"",
-        'sgptAlt':"",
-        'gammaGT':"",
-        'bilirubin':"",
-        'alkalinePhosphatase':"",
-        'amylase':"",
-        'lipase':"",
-        't3':"",
-        't4':"",
-        'tsh':""}}
-
-    var testsScopeVariables = [
-        {LBORRES: 'whiteCellCount', LBNRIND: 'whiteCellCountAbnormal', LBTEST: "White Cell Count"},
-        {LBORRES: 'redCellCount', LBNRIND: 'redCellCountAbnormal', LBTEST: "Red Cell Count"},
-        {LBORRES: 'lymphocyteCount', LBNRIND: 'lymphocyteCountAbnormal', LBTEST: "Lymphocyte Count"},
-        {LBORRES: 'tCellCount', LBNRIND: 'tCellCountAbnormal', LBTEST: "T Cell Count"},
-        {LBORRES: 'cd4tCellCount', LBNRIND: 'cd4tCellCountAbnormal', LBTEST: "CD4 T Cell Count"},
-        {LBORRES: 'cd8tCellCount', LBNRIND: 'cd8tCellCountAbnormal', LBTEST: "CD8 T Cell Count"},
-        {LBORRES: 'cd19bCellCount', LBNRIND: 'cd19bCellCountAbnormal', LBTEST: "CD19 B Cell Count"},
-        {LBORRES: 'nkCellCount', LBNRIND: 'nkCellCountAbnormal', LBTEST: "NK Cell Count"},
-        {LBORRES: 'neutrophilCount', LBNRIND: 'neutrophilCountAbnormal', LBTEST: "Neutrophil Count"},
-        {LBORRES: 'monocyteCount', LBNRIND: 'monocyteCountAbnormal', LBTEST: "Monocyte Count"},
-        {LBORRES: 'eosinophilCount', LBNRIND: 'eosinophilCountAbnormal', LBTEST: "Eosinophil Count"},
-        {LBORRES: 'basophilCount', LBNRIND: 'basophilCountAbnormal', LBTEST: "Basophil Count"},
-        {LBORRES: 'platletCount', LBNRIND: 'platletCountAbnormal', LBTEST: "Platlet Count"},
-        {LBORRES: 'haemoglobinCount', LBNRIND: 'haemoglobinCountAbnormal', LBTEST: "Haemoglobin Count"},
-        {LBORRES: 'totalProtein', LBNRIND: 'totalProteinAbnormal', LBTEST: "Total Protein"},
-        {LBORRES: 'albumin', LBNRIND: 'albuminAbnormal', LBTEST: "Albumin"},
-        {LBORRES: 'calcium', LBNRIND: 'calciumAbnormal', LBTEST: "Calcium"},
-        {LBORRES: 'urea', LBNRIND: 'ureaAbnormal', LBTEST: "Urea"},
-        {LBORRES: 'uricAcid', LBNRIND: 'uricAcidAbnormal', LBTEST: "Uric Acid"},
-        {LBORRES: 'creatinine', LBNRIND: 'creatinineAbnormal', LBTEST: "Creatinine Count"},
-        {LBORRES: 'basophilCount', LBNRIND: 'basophilCountAbnormal', LBTEST: "Basophil Count"},
-        {LBORRES: 'sgotAst', LBNRIND: 'sgotAstAbnormal', LBTEST: "SGOT/ AST"},
-        {LBORRES: 'sgptAlt', LBNRIND: 'sgptAltAbnormal', LBTEST: "SGPT/ ALT"},
-        {LBORRES: 'gammaGT', LBNRIND: 'gammaGTAbnormal', LBTEST: "Gamma-GT"},
-        {LBORRES: 'bilirubin', LBNRIND: 'bilirubinAbnormal', LBTEST: "Bilirubin"},
-        {LBORRES: 'alkalinePhosphatase', LBNRIND: 'alkalinePhosphataseAbnormal', LBTEST: "Alkaline Phosphatase"},
-        {LBORRES: 'amylase', LBNRIND: 'amylaseAbnormal', LBTEST: "Amylase"},
-        {LBORRES: 'lipase', LBNRIND: 'lipaseAbnormal', LBTEST: "Lipase"},
-        {LBORRES: 't3', LBNRIND: 't3Abnormal', LBTEST: "T3"},
-        {LBORRES: 't4', LBNRIND: 't4Abnormal', LBTEST: "T4"},
-        {LBORRES: 'tsh', LBNRIND: 'tshAbnormal', LBTEST: "TSH"}];
-
-    var testIndicator = {indicators:{
-    'whiteCellCountAbnormal':"",
-    'redCellCountAbnormal':'',
-    'lymphocyteCountAbnormal':"",
-    'tCellCountAbnormal':"", 
-    'cd4tCellCountAbnormal':"",
-    'cd8tCellCountAbnormal':"",
-    'cd19bCellCountAbnormal':"",
-    'nkCellCountAbnormal':"",
-    'neutrophilCountAbnormal':"",
-    'monocyteCountAbnormal':"",
-    'eosinophilCountAbnormal':"",
-    'basophilCountAbnormal':"",
-    'platletCountAbnormal':"",
-    'haemoglobinCountAbnormal':"",
-    'totalProteinAbnormal':"",
-    'albuminAbnormal':"", 
-    'calciumAbnormal':"",
-    'ureaAbnormal':"",
-    'uricAcidAbnormal':"",
-    'creatinineAbnormal':"",
-    'basophilCountAbnormal':"",
-    'sgotAstAbnormal':"",
-    'sgptAltAbnormal':"",
-    'gammaGTAbnormal':"",
-    'bilirubinAbnormal':"",
-    'alkalinePhosphataseAbnormal':"",
-    'amylaseAbnormal':"",
-    'lipaseAbnormal':"",
-    't3Abnormal':"",
-    't4Abnormal':"",
-    'tshAbnormal':""}};
-
-    var vocab = {scopeVariables: testsScopeVariables, tests: test, indicators: testIndicator};
-
-    vocab.getLabTestScopeName = function (LBTEST) {
-        for (var n = 0; n < testsScopeVariables.length; n++) {
-            if (LBTEST==testsScopeVariables[n].LBTEST) {
-                return testsScopeVariables[n];
-            }
-        }
-        return null;
-    }
-    return vocab;
-});
-
 laboratoryTestResultModule.factory('thyroidVocab', function() {
 
     var test = {tests: {
         't3':"",
         't4':"",
-        'tsh':""}}
+        'antiThyroidPeroxidase':"",
+        'antiThyroglobulinAbnormal':""}}
 
     var testsScopeVariables = [
         {LBORRES: 't3', LBNRIND: 't3Abnormal', LBTEST: "T3"},
-        {LBORRES: 't4', LBNRIND: 't4Abnormal', LBTEST: "T4"},
-        {LBORRES: 'tsh', LBNRIND: 'tshAbnormal', LBTEST: "TSH"}];
+        {LBORRES: 't4', LBNRIND: 't4Abnormal', LBTEST: "Free T4"},
+        {LBORRES: 'tsh', LBNRIND: 'tshAbnormal', LBTEST: "TSH"},
+        {LBORRES: 'antiTyroidPeroxidase', LBNRIND: 'antiThyroidPeroxidaseAbnormal', LBTEST: "Anti-Thyroid Peroxidase"},
+        {LBORRES: 'antiThyroglobulin', LBNRIND: 'antiThyroglobulinAbnormal', LBTEST: "Anti-Thyroglobulin"}];
 
     var testIndicator = {indicators:{
         't3Abnormal':"",
         't4Abnormal':"",
-        'tshAbnormal':""}};
+        'tshAbnormal':"",
+        'antiThyroidPeroxidaseAbnormal':'',
+        'antiThyroglobulinAbnormal':''}};
 
     var vocab = {scopeVariables: testsScopeVariables, tests: test, indicators: testIndicator};
 
@@ -297,7 +184,6 @@ laboratoryTestResultModule.factory('bloodChemVocab', function() {
         'urea':"",
         'uricAcid':"",
         'creatinine':"",
-        'basophilCount':"",
         'sgotAst':"",
         'sgptAlt':"",
         'gammaGT':"",
@@ -314,8 +200,7 @@ laboratoryTestResultModule.factory('bloodChemVocab', function() {
         {LBORRES: 'calcium', LBNRIND: 'calciumAbnormal', LBTEST: "Calcium"},
         {LBORRES: 'urea', LBNRIND: 'ureaAbnormal', LBTEST: "Urea"},
         {LBORRES: 'uricAcid', LBNRIND: 'uricAcidAbnormal', LBTEST: "Uric Acid"},
-        {LBORRES: 'creatinine', LBNRIND: 'creatinineAbnormal', LBTEST: "Creatinine Count"},
-        {LBORRES: 'basophilCount', LBNRIND: 'basophilCountAbnormal', LBTEST: "Basophil Count"},
+        {LBORRES: 'creatinine', LBNRIND: 'creatinineAbnormal', LBTEST: "Creatinine"},
         {LBORRES: 'sgotAst', LBNRIND: 'sgotAstAbnormal', LBTEST: "SGOT/ AST"},
         {LBORRES: 'sgptAlt', LBNRIND: 'sgptAltAbnormal', LBTEST: "SGPT/ ALT"},
         {LBORRES: 'gammaGT', LBNRIND: 'gammaGTAbnormal', LBTEST: "Gamma-GT"},
@@ -324,7 +209,7 @@ laboratoryTestResultModule.factory('bloodChemVocab', function() {
         {LBORRES: 'amylase', LBNRIND: 'amylaseAbnormal', LBTEST: "Amylase"},
         {LBORRES: 'lipase', LBNRIND: 'lipaseAbnormal', LBTEST: "Lipase"},
         {LBORRES: 'vitD', LBNRIND: 'vitDAbnormal', LBTEST: "Vit D"},
-        {LBORRES: 'tpmt', LBNRIND: 'tpmtAbnormal', LBTEST: "TPMT"}];
+        {LBORRES: 'tpmt', LBNRIND: 'tpmtAbnormal', LBTEST: "Thiopurine methyltransferase"}];
 
     var testIndicator = {indicators:{
         'totalProteinAbnormal':"",
@@ -333,7 +218,6 @@ laboratoryTestResultModule.factory('bloodChemVocab', function() {
         'ureaAbnormal':"",
         'uricAcidAbnormal':"",
         'creatinineAbnormal':"",
-        'basophilCountAbnormal':"",
         'sgotAstAbnormal':"",
         'sgptAltAbnormal':"",
         'gammaGTAbnormal':"",
@@ -389,7 +273,7 @@ laboratoryTestResultModule.factory('haematologyVocab', function() {
         {LBORRES: 'eosinophilCount', LBNRIND: 'eosinophilCountAbnormal', LBTEST: "Eosinophil Count"},
         {LBORRES: 'basophilCount', LBNRIND: 'basophilCountAbnormal', LBTEST: "Basophil Count"},
         {LBORRES: 'platletCount', LBNRIND: 'platletCountAbnormal', LBTEST: "Platlet Count"},
-        {LBORRES: 'haemoglobinCount', LBNRIND: 'haemoglobinCountAbnormal', LBTEST: "Haemoglobin Count"}];
+        {LBORRES: 'haemoglobinCount', LBNRIND: 'haemoglobinCountAbnormal', LBTEST: "Haemoglobin"}];
 
     var testIndicator = {indicators:{
         'whiteCellCountAbnormal':"",
@@ -732,7 +616,7 @@ laboratoryTestResultModule.controller('laboratoryInfoCtrl', function($scope, $ro
                                                                     nervousSystemFindings, NervousSystemFinding,
                                                                     morphologyServices, Morphology, procedures, procedure,
                                                                     serologicalTestsVocab, thyroidVocab,
-                                                                    labTestsVocab, bloodChemVocab, haematologyVocab) {
+                                                                    bloodChemVocab, haematologyVocab) {
 
     $scope.USUBJID = '';
     $rootScope.setLabUSUBJID = function(USUBJID) {

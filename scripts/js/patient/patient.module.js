@@ -293,6 +293,7 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
                                                       findingAbout,
                                                       findingsAbout,
                                                       MedicalEvent, medicalHistory,
+                                                      clinicalEvents, clinicalEvent,
                                                       viewService,
                                                       associatedPersonMedicalHistories,
                                                       substanceUse, SubstanceUse,
@@ -349,7 +350,9 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
         var pregnancy = new MedicalEvent(patients.getCurrentPatient().USUBJID, 'Pregnancy');
         pregnancy.MHTERM = 'Pregnancy';
         pregnancy.MHSTDTC = new Date($scope.PregnancySTDTC, 0, 1);
+        pregnancy.MHENDTC = new Date($scope.PregnancyENDTC, 0, 1);
         pregnancy.displaySTDTC = $scope.PregnancySTDTC;
+        pregnancy.displayENDTC = $scope.PregnancyENDTC;
         pregnancy.MHENRTPT = $scope.PregnancyENRTPT;
         medicalHistory.addOccurence(pregnancy);
         medicalHistory.printMedicalHistory();
@@ -377,6 +380,11 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
         }
         return false;
     }
+
+    $scope.getPregnancies = function() {
+        return clinicalEvents.getEvents('Pregnancy');
+    }
+
 
     $scope.getMedicalHistory = function(MHCAT) {
         if (MHCAT=="General Medical History") {
@@ -580,6 +588,7 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
     var clearPregnancyFields = function () {
         $scope.PregnancyTERM = "";
         $scope.PregnancySTDTC = "";
+        $scope.PregnancyENDTC = "";
         $scope.PregnancyENRTPT = "";
     }
 
@@ -742,7 +751,7 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
         todayHighlight: true
     });
 
-    var monthYear = angular.element(document.querySelector('input.form-control.DTC_MonthYear'));
+    var monthYear = angular.element(document.querySelectorAll('input.form-control.DTC_MonthYear'));
     monthYear.datepicker({
         format: "mm/yyyy",
         endDate: currentDate.getFullYear().toString(),

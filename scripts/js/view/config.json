@@ -104,8 +104,7 @@
                         {"name": "Haematology", "include": true, "minimalInfo":false, "id": "haematology"},
                         {"name": "Blood Chemistry", "include": true, "minimalInfo":false, "id": "blood"},
                         {"name": "Thyroid Functions", "include": true, "minimalInfo":false, "id": "thyroid"},
-                        {"name": "Serological Tests", "include": true, "minimalInfo":true, "id": "serology"},
-                        {"name": "Auto Antibody Tests", "include": true, "minimalInfo":true, "id": "antibody"}
+                        {"name": "Serological Tests", "include": true, "minimalInfo":true, "id": "serology"}
                     ]
                 },
                 {

@@ -158,33 +158,38 @@
                             </tbody>
                         </table>
 
-                    <table class="table" ng-show="showPregnancyTable()">
+                    <table class="table doubleMarginTop" ng-show="showPregnancyTable()">
                         <thead><tr>
                             <th>Pregnancy</th>
-                            <th>Year</th>
+                            <th>Onset</th>
+                            <th>Delivery</th>
                             <th>Outcome</th>
+                            <th>Action</th>
                             <th></th>
                         </tr></thead>
                         <tbody>
                         <tr ng-repeat="newOccurence in getMedicalHistory('Pregnancy')">
                             <td>{{newOccurence.MHTERM}}</td>
                             <td>{{newOccurence.displaySTDTC}}</td>
+                            <td>{{newOccurence.displayENDTC}}</td>
                             <td><select class="form-control"
                                         ng-model="newOccurence.MHENRTPT"
                                         ng-change="editGeneralOccurence(newOccurence, 'MHENRTPT')">
-                                <option>Ongoing</option>
-                                <option>Resolved</option>
-                                <option>Unknown</option></select></td>
+                                <option>Term</option>
+                                <option>Premature</option>
+                                <option>Other</option></select></td>
                             <td><a href="#" role="button" ng-click="deleteOccurence(newOccurence)">Delete</a></td>
                         </tr>
                         <tr>
                             <td>Pregnancy</td>
-                            <td><input type="text" class="form-control DTC_Year"
+                            <td><input type="text" class="form-control DTC_MonthYear"
                                        ng-model="PregnancySTDTC"></td>
+                            <td><input type="text" class="form-control DTC_MonthYear"
+                                       ng-model="PregnancyENDTC"></td>
                             <td><select class="form-control" ng-model="PregnancyENRTPT">
-                                <option>Ongoing</option>
-                                <option>Resolved</option>
-                                <option>Unknown</option>
+                                <option>Term</option>
+                                <option>Premature</option>
+                                <option>Other</option>
                             </select>
                             </td>
                             <td><a href="#" ng-click="addPregnancy()">Add</a></td>
@@ -192,13 +197,13 @@
                         </tbody>
                     </table>
 
-                    <table class="table">
+                    <table class="table doubleMarginTop">
                         <thead><tr>
                             <th class="col-sm-4">Medical Conditions</th>
                             <th class="col-sm-2">Onset (Year)</th>
                             <th class="col-sm-2">Outcome</th>
                             <th class="col-sm-2">Resolved (Year)</th>
-                            <th class="col-sm-2"></th>
+                            <th class="col-sm-2">Action</th>
                         </tr></thead>
                         <tbody>
                         <tr ng-repeat="newOccurence in getMedicalHistory('General Medical History')">
@@ -264,7 +269,7 @@
                             <thead><tr>
                                 <th class="col-sm-3">Relationship</th>
                                 <th colspan="3" class="col-sm-6">MS and Other Medical Conditions</th>
-                                <th class="col-sm-1"></th>
+                                <th class="col-sm-1">Action</th>
                             </tr></thead>
                             <tbody>
                             <tr ng-repeat="apmh in getAssociatedPersonMedicalHistories()">
@@ -419,16 +424,19 @@
                                         </div>
                                         <div class="btn-group btn-group-vertical" ng-show="isNMOCategory()">
                                             <button type="button" class="btn btn-info"
+                                                    ng-class='{inactive: !(newDiagnosis.MHTERM=="NMOSD")}'
                                                     ng-model="newDiagnosis.MHTERM"
                                                     uib-btn-radio="'NMOSD Optic Neuritis'">
                                                 Optic Neuritis
                                             </button>
                                             <button type="button" class="btn btn-info"
+                                                    ng-class='{inactive: !(newDiagnosis.MHTERM=="NMOSD")}'
                                                     ng-model="newDiagnosis.MHTERM"
                                                     uib-btn-radio="'NMOSD Transverse Myelitis'">
                                                 Transverse Myelitis
                                             </button>
                                             <button type="button" class="btn btn-info"
+                                                    ng-class='{inactive: !(newDiagnosis.MHTERM=="NMOSD")}'
                                                     ng-model="newDiagnosis.MHTERM"
                                                     uib-btn-radio="'NMOSD Brain Stem'">
                                                 Brain Stem
@@ -454,7 +462,7 @@
                         <div class="col-sm-8">
                             <table class="table marginTop" >
                                 <thead>
-                                <th class="col-sm-3">Initial Presentation</th>
+                                <th class="col-sm-3">Basis of MS Diagnosis</th>
                                 <th class="col-sm-3">Physical Examination</th>
                                 <th class="col-sm-3">MRI</th>
                                 <th class="col-sm-3">Symptoms</th>
