@@ -718,8 +718,8 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
             $scope.editProgressiveCourse();
         }
         medicalHistory.deleteOccurence(diagnosis);
-        var faList = findingsAbout.FASCATExists('Onset Course');
-        console.log(faList);
+        //var faList = findingsAbout.FASCATExists('Onset Course');
+        //console.log(faList);
     }
 
     $scope.addInitialSymptom = function() {
@@ -794,7 +794,7 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
         if (($scope.progressiveMHSTDTC_display==null) || ($scope.progressiveMHSTDTC_display=='')){ // if user removed date
             if (progressive != null){
                 medicalHistory.deleteOccurence(progressive);
-                medicalHistory.printMedicalHistory();
+                //medicalHistory.printMedicalHistory();
             }
         }
         else
