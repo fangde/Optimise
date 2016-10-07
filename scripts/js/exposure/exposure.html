@@ -9,16 +9,19 @@
                     <div class="row">
                         <div class='col-sm-6'>
                             <div class="form-group">
-                                <div class="btn-group" role="group" ng-init="EXCAT='Disease Modifying'">
-                                    <button type="button" class="btn btn-primary"
-                                            ng-class="{active: EXCAT=='Disease Modifying'}"
+                                <div class="btn-group" role="group">
+                                     <!--ng-init="EXCAT='Disease Modifying'">-->
+                                    <button type="button"
+                                            class="btn btn-info"
+                                            ng-disabled="getDisabledFields()"
+                                            ng-class="{inactive: EXCAT!='Disease Modifying'}"
                                             ng-click="EXCAT='Disease Modifying'; addDoseProperty('EXCAT')">Disease Modifying</button>
-                                    <button type="button" class="btn btn-primary"
-                                            ng-class="{active: EXCAT=='Symptomatic'}"
+                                    <button type="button" class="btn btn-info" ng-disabled="getDisabledFields()"
+                                            ng-class="{inactive: EXCAT!='Symptomatic'}"
                                             ng-click="EXCAT='Symptomatic'; addDoseProperty('EXCAT')">Symptomatic</button>
-                                    <button type="button" class="btn btn-primary"
-                                            ng-class="{active: EXCAT=='Comorbidity'}"
-                                            ng-click="EXCAT='Comorbidity'; addDoseProperty('EXCAT')">Comorbidity</button>
+                                    <button type="button" class="btn btn-info" ng-disabled="getDisabledFields()"
+                                            ng-class="{inactive: EXCAT!='Comorbidity'}"
+                                            ng-click="EXCAT='Other'; addDoseProperty('EXCAT')">Other</button>
                                 </div>
                             </div>
                         </div>
@@ -30,7 +33,7 @@
                                 <input type="text" ng-model="EXTRT"
                                        uib-typeahead="treatment for treatment in drugsFactory | filter:$viewValue | limitTo:8"
                                        class="form-control"
-                                       ng-disabled="getDisabledFields()"
+                                       ng-disabled="disableTreatmentProperty()"
                                        ng-blur="addExposure()">
                             </div>
                         </div>
@@ -40,7 +43,7 @@
                                 <input type="text" ng-model="EXDOSE"
                                        placeholder = "eg. 30" class="form-control"
                                        ng-blur="addDoseProperty('EXDOSE')"
-                                       ng-disabled="disableDatabaseTreatmentDoseOptions()">
+                                       ng-disabled="disableTreatmentProperty()">
                             </div>
                         </div>
                         <div class='col-sm-2'>
@@ -48,7 +51,7 @@
                                 <label class="control-label">Unit</label>
                                 <input type="text" ng-model="EXDOSU"
                                        placeholder = "eg. mg" class="form-control"
-                                       ng-blur="addDoseProperty('EXDOSU')" ng-disabled="disableDatabaseTreatmentDoseOptions()">
+                                       ng-blur="addDoseProperty('EXDOSU')" ng-disabled="disableTreatmentProperty()">
                             </div>
                         </div>
                         <div class='col-sm-2'>
@@ -56,7 +59,7 @@
                                 <label class="control-label">Form</label>
                                 <input type="text" ng-model="EXDOSFRM"
                                        placeholder = "eg. IV, SC, Oral" class="form-control"
-                                       ng-blur="addDoseProperty('EXDOSFRM')" ng-disabled="disableDatabaseTreatmentDoseOptions()">
+                                       ng-blur="addDoseProperty('EXDOSFRM')" ng-disabled="disableTreatmentProperty()">
                             </div>
                         </div>
                         <div class='col-sm-2'>
@@ -64,7 +67,7 @@
                                 <label class="control-label">Frequency</label>
                                 <input type="text" ng-model="EXDOSFRQ"
                                        placeholder = "eg. 3 / Day" class="form-control"
-                                       ng-blur="addDoseProperty('EXDOSFRQ')" ng-disabled="disableDatabaseTreatmentDoseOptions()">
+                                       ng-blur="addDoseProperty('EXDOSFRQ')" ng-disabled="disableTreatmentProperty()">
                             </div>
                         </div>
                     </div>

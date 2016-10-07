@@ -170,7 +170,7 @@ mriModule.controller('mriInfoCtrl', function ($scope, $rootScope, $parse, $uibMo
         */
         $scope.scansTakenDuringExperiment = [];
         //console.log($scope.LBDTC);
-        var scans = deviceInUseServices.getScansByDate($scope.LBDTC.toDateString());
+        var scans = deviceInUseServices.getScansByDate($scope.LBDTC);
         for (var s = 0; s < scans.length; s++) {
             var newScan = {"type": scans[s].DUORRES};
             $scope.scansTakenDuringExperiment.push(newScan);
@@ -200,20 +200,16 @@ mriModule.controller('mriInfoCtrl', function ($scope, $rootScope, $parse, $uibMo
         setScansTakenDuringExperiment();
         $scope.sessionLabel = procedures.getCurrentProcedure().displayLabel;
         $scope.scanWeight = "";
-//        var morphologicalFindings = morphologyServices.getFindingsByDate(LBDTC.toDateString());
-//        for (var f = 0; f < morphologicalFindings.length; f++) {
-//            var moVariables = getImagingMorphologyScopeName(morphologicalFindings[f].MOTEST);
-//            if (moVariables != null) {
-//                var modelTestValue = $parse(moVariables.scopeVariable);
-//                modelTestValue.assign($scope, morphologicalFindings[f].MOORRES);
-//            }
-//
-//            var loVariables = getImagingLocalityScopeName(morphologicalFindings[f].MOLOC);
-//            if (loVariables != null){
-//                var modelTestValue = $parse(loVariables.scopeVariable);
-//                modelTestValue.assign($scope, morphologicalFindings[f].MOLOC);
-//            }
-//        }
+        var morphologicalFindings = morphologyServices.getFindingsByDate($scope.LBDTC);
+        console.log(morphologicalFindings);
+        for (var f = 0; f < morphologicalFindings.length; f++) {
+            var moVariables = getImagingMorphologyScopeName(morphologicalFindings[f].MOTEST, morphologicalFindings[f].MOLOC);
+            console.log(moVariables);
+            if (moVariables != null) {
+                var modelTestValue = $parse(moVariables.scopeVariable);
+                modelTestValue.assign($scope, morphologicalFindings[f].MOORRES);
+            }
+        }
     }
 
     var addProcedure = function() {
@@ -244,22 +240,24 @@ mriModule.controller('mriInfoCtrl', function ($scope, $rootScope, $parse, $uibMo
         $scope.scanWeight = "";
         $scope.LBDTC = "";
         $scope.scansTakenDuringExperiment = [];
-        /*
-        var loKeys = [{scopeVariable: 'lesionsInPeriventricular'},
-            {scopeVariable: 'lesionsInJuxtacortical'},
-            {scopeVariable: 'lesionsInInfratentorial'},
-            {scopeVariable: 'lesionsInOpticalNerve'},
-            {scopeVariable: 'Thoracic'},
-            {scopeVariable: 'Cervical'}];
+        $scope.MOLOC = 'Brain';
 
-        for (var k = 0; k < loKeys.length; k++){
-            // Get the model
-            var modelValue = $parse(loKeys[k].scopeVariable);
-            modelValue.assign($scope,false);
-        }
+//        var loKeys = [{scopeVariable: 'lesionsInPeriventricular'},
+//            {scopeVariable: 'lesionsInJuxtacortical'},
+//            {scopeVariable: 'lesionsInInfratentorial'},
+//            {scopeVariable: 'lesionsInOpticalNerve'},
+//            {scopeVariable: 'Thoracic'},
+//            {scopeVariable: 'Cervical'}];
+//
+//        for (var k = 0; k < loKeys.length; k++){
+//            // Get the model
+//            var modelValue = $parse(loKeys[k].scopeVariable);
+//            modelValue.assign($scope,false);
+//        }
 
         var gdKeys = [{scopeVariable: 'GDLesions'},
-            {scopeVariable: 'GDSpineLesions'}];
+            {scopeVariable: 'GDSpineLesions'},
+            {scopeVariable: 'GdLesionVolume'}];
 
         for (var k = 0; k < gdKeys.length; k++){
             // Get the model
@@ -269,13 +267,15 @@ mriModule.controller('mriInfoCtrl', function ($scope, $rootScope, $parse, $uibMo
 
         var TKeys = [{scopeVariable: 'T1Lesions'},
             {scopeVariable: 'T2Lesions'},
-            {scopeVariable: 'T2SpineLesions'}];
+            {scopeVariable: 'T2SpineLesions'},
+            {scopeVariable: 'T2LesionCount'},
+            {scopeVariable: 'T2LesionVolume'}];
 
         for (var k = 0; k < TKeys.length; k++){
             // Get the model
             var modelValue = $parse(TKeys[k].scopeVariable);
             modelValue.assign($scope,'');
-        } */
+        }
     }
 
     $rootScope.setNewMRIDTC = function (display, LBDTC) {
@@ -286,80 +286,101 @@ mriModule.controller('mriInfoCtrl', function ($scope, $rootScope, $parse, $uibMo
         $scope.displayDate = display;
     }
 
-
-
-    var getImagingMorphologyScopeName = function(MOTEST) {
-        var moNames = [{scopeVariable: 'GDLesions', testName: "Gd Enhancing Lesions"},
-            {scopeVariable: 'T1Lesions', testName: "T1 Hypo Intense Lesions"},
-            {scopeVariable: 'T2Lesions', testName: "T2 Hypo Intense Lesions"},
-            {scopeVariable: 'GDSpineLesions', testName: "Gd Enhancing Lesions"},
-            {scopeVariable: 'T2SpineLesions', testName: "T2 Hypo Intense Lesions"}];
+    var getImagingMorphologyScopeName = function(MOTEST, MOLOC) {
+        var moNames = [{scopeVariable: 'T1Lesions', testName: "T1 Lesion Count Summary", location:"Brain"},
+            {scopeVariable: 'T2Lesions', testName: "Lesion Count Summary", location:"Brain"},
+            {scopeVariable: 'T2LesionCount', testName: "Lesion Count", location:"Brain"},
+            {scopeVariable: 'T2LesionVolume', testName: "Lesion volume", location:"Brain"},
+            {scopeVariable: 'GdLesions', testName: "Gd Enhancing Lesion Count Summary", location:"Brain"},
+            {scopeVariable: 'GdLesionVolume', testName: "Gd Enhancing Lesion Volume", location:"Brain"},
+            {scopeVariable: 'GDSpineLesions', testName: "Gd Lesion", location:"Spine"},
+            {scopeVariable: 'T2SpineLesions', testName: "T2 Lesion", location:"Spine"}];
 
         for (var t = 0; t < moNames.length; t++)
         {
-            if (MOTEST == moNames[t].testName){
+            if ((MOTEST == moNames[t].testName)&&(MOLOC == moNames[t].location)){
                 return moNames[t];
             }
         }
         return null;
     }
 
-    var getImagingLocalityScopeName = function(MOLOC) {
-        var moNames = [{scopeVariable: 'lesionsInPeriventricular', locName: "Periventricular"},
-            {scopeVariable: 'lesionsInJuxtacortical', locName: "Juxtacortical"},
-            {scopeVariable: 'lesionsInInfratentorial', locName: "Infratentorial"},
-            {scopeVariable: 'lesionsInOpticNerve', locName: "Optic Nerve"}];
+//    var getImagingLocalityScopeName = function(MOLOC) {
+//        var moNames = [{scopeVariable: 'lesionsInPeriventricular', locName: "Periventricular"},
+//            {scopeVariable: 'lesionsInJuxtacortical', locName: "Juxtacortical"},
+//            {scopeVariable: 'lesionsInInfratentorial', locName: "Infratentorial"},
+//            {scopeVariable: 'lesionsInOpticNerve', locName: "Optic Nerve"}];
+//
+//        for (var t = 0; t < moNames.length; t++)
+//        {
+//            if (MOLOC == moNames[t].locName){
+//                return moNames[t];
+//            }
+//        }
+//        return null;
+//    }
 
-        for (var t = 0; t < moNames.length; t++)
-        {
-            if (MOLOC == moNames[t].locName){
-                return moNames[t];
-            }
-        }
-        return null;
-    }
+//    $scope.hideLocalityOfLesions = function() {
+//        if ($scope.MOLOC =='Brain')
+//            return ((($scope.T1Lesions=='Negative')||($scope.T1Lesions==null))
+//                &&(($scope.T2Lesions=='None')||($scope.T2Lesions==null))
+//                &&(($scope.GDLesions=='None')||($scope.GDLesions==null)));
+//
+//        if ($scope.MOLOC =='Spine')
+//            return ((($scope.T2SpineLesions=='None')||($scope.T2SpineLesions==null))
+//                &&(($scope.GDSpineLesions=='None')||($scope.GDSpineLesions==null)));
+//    }
 
-    $scope.hideLocalityOfLesions = function() {
-        if ($scope.MOLOC =='Brain')
-            return ((($scope.T1Lesions=='Negative')||($scope.T1Lesions==null))
-                &&(($scope.T2Lesions=='None')||($scope.T2Lesions==null))
-                &&(($scope.GDLesions=='None')||($scope.GDLesions==null)));
+//    $scope.editGdLesionsProperty = function() {
+//        addProcedure();
+//        var aFinding = morphologyServices.getFindingByTestAndLocation($scope.LBDTC.toDateString(), "Gd Enhancing Lesions", $scope.MOLOC);
+//        //console.log(aFinding);
+//        if (aFinding!=null) {
+//            aFinding.MOSTRESC = $scope.T1Lesions;
+//            morphologyServices.editMorphologicalFinding(aFinding);
+//        } else {
+//            var newGdFinding = new Morphology($scope.USUBJID, "Gd Enhancing Lesions");
+//            newGdFinding.MOSTRESC = $scope.GDLesions;
+//            newGdFinding.MODTC = $scope.LBDTC;
+//            newGdFinding.MOLOC = $scope.MOLOC;
+//            newGdFinding.displayLabel = "Gd Enhancing Lesions";
+//            newGdFinding.displayDate = $scope.LBDTC.toDateString();
+//            morphologyServices.addMorphologicalFinding(newGdFinding);
+//        }
+//        console.log(morphologyServices.print());
+//    }
 
-        if ($scope.MOLOC =='Spine')
-            return ((($scope.T2SpineLesions=='None')||($scope.T2SpineLesions==null))
-                &&(($scope.GDSpineLesions=='None')||($scope.GDSpineLesions==null)));
-    }
-
-    $scope.editGdLesionsProperty = function() {
-        addProcedure();
-        var aFinding = morphologyServices.getFindingByTestAndLocation($scope.LBDTC.toDateString(), "Gd Enhancing Lesions", $scope.MOLOC);
-        //console.log(aFinding);
+    $scope.editLesionProperty = function(MOTEST, MOORRES) {
+        var aFinding = morphologyServices.getFindingByTestAndLocation($scope.LBDTC.toDateString(), MOTEST, $scope.MOLOC);
         if (aFinding!=null) {
-            morphologyServices.deleteMorphologicalFinding(aFinding);
+            aFinding.MOORRES = MOORRES;
+            morphologyServices.editMorphologicalFinding(aFinding);
         } else {
-            var newGdFinding = new Morphology($scope.USUBJID, "Gd Enhancing Lesions");
-            newGdFinding.MOORRES = $scope.GDLesions;
+            var newGdFinding = new Morphology($scope.USUBJID, MOTEST);
+            newGdFinding.MOORRES = MOORRES;
             newGdFinding.MODTC = $scope.LBDTC;
             newGdFinding.MOLOC = $scope.MOLOC;
-            newGdFinding.displayLabel = "Gd Enhancing Lesions";
+            newGdFinding.displayLabel = MOTEST;
             newGdFinding.displayDate = $scope.LBDTC.toDateString();
             morphologyServices.addMorphologicalFinding(newGdFinding);
         }
-        console.log(morphologyServices.print());
+        morphologyServices.print();
     }
 
+    /*
     $scope.editT1LesionsProperty = function() {
-        addProcedure();
-        var aFinding = morphologyServices.getFindingByTestAndLocation($scope.LBDTC.toDateString(), "T1 Hypo Intense Lesions", $scope.MOLOC);
+        //addProcedure();
+        var aFinding = morphologyServices.getFindingByTestAndLocation($scope.LBDTC.toDateString(), "T1 Hypo Intense Lesions Count", $scope.MOLOC);
         //console.log(aFinding);
         if (aFinding!=null) {
-            morphologyServices.deleteMorphologicalFinding(aFinding);
+            aFinding.MOSTRESC = $scope.T1Lesions;
+            morphologyServices.editMorphologicalFinding(aFinding);
         } else {
             var newGdFinding = new Morphology($scope.USUBJID, "T1 Hypo Intense Lesions");
-            newGdFinding.MOORRES = $scope.T1Lesions;
+            newGdFinding.MOSTRESC = $scope.T1Lesions;
             newGdFinding.MODTC = $scope.LBDTC;
             newGdFinding.MOLOC = $scope.MOLOC;
-            newGdFinding.displayLabel = "Gd Enhancing Lesions";
+            newGdFinding.displayLabel = "T1 Hypo Intense Lesions";
             newGdFinding.displayDate = $scope.LBDTC.toDateString();
             morphologyServices.addMorphologicalFinding(newGdFinding);
         }
@@ -367,14 +388,34 @@ mriModule.controller('mriInfoCtrl', function ($scope, $rootScope, $parse, $uibMo
     }
 
     $scope.editT2LesionsProperty = function() {
-        addProcedure();
-        var aFinding = morphologyServices.getFindingByTestAndLocation($scope.LBDTC.toDateString(), "T2 Hypo Intense Lesions", $scope.MOLOC);
+        //addProcedure();
+        var aFinding = morphologyServices.getFindingByTestAndLocation($scope.LBDTC.toDateString(), "T2 Hypo Intense Lesions Volume", $scope.MOLOC);
         //console.log(aFinding);
         if (aFinding!=null) {
-            morphologyServices.deleteMorphologicalFinding(aFinding);
+            aFinding.MOSTRESC = $scope.T2Lesions;
+            morphologyServices.editMorphologicalFinding(aFinding);
         } else {
             var newGdFinding = new Morphology($scope.USUBJID, "T2 Hypo Intense Lesions");
-            newGdFinding.MOORRES = $scope.T2Lesions;
+            newGdFinding.MOSTRESC = $scope.T2Lesions;
+            newGdFinding.MODTC = $scope.LBDTC;
+            newGdFinding.MOLOC = $scope.MOLOC;
+            newGdFinding.displayLabel = "T2 Hypo Intense Lesions";
+            newGdFinding.displayDate = $scope.LBDTC.toDateString();
+            morphologyServices.addMorphologicalFinding(newGdFinding);
+        }
+        console.log(morphologyServices.print());
+    }
+
+    $scope.editT2LesionCount = function() {
+        //addProcedure();
+        var aFinding = morphologyServices.getFindingByTestAndLocation($scope.LBDTC.toDateString(), "T2 Hypo Intense Lesions Volume", $scope.MOLOC);
+        //console.log(aFinding);
+        if (aFinding!=null) {
+            aFinding.MOSTRES = $scope.T2LesionCount;
+            morphologyServices.editMorphologicalResult(aFinding);
+        } else {
+            var newGdFinding = new Morphology($scope.USUBJID, "T2 Hypo Intense Lesions");
+            newGdFinding.MOSTRESU = $scope.T2LesionsCount;
             newGdFinding.MODTC = $scope.LBDTC;
             newGdFinding.MOLOC = $scope.MOLOC;
             newGdFinding.displayLabel = "T2 Hypo Intense Lesions";
@@ -416,60 +457,60 @@ mriModule.controller('mriInfoCtrl', function ($scope, $rootScope, $parse, $uibMo
             newGdFinding.displayDate = $scope.LBDTC.toDateString();
             morphologyServices.addMorphologicalFinding(newGdFinding);
         }
-    }
+    }  */
 
 
-    $scope.addLesionSecondaryLocation = function(MOSLOC) {
-        if ($scope.MOLOC == 'Brain'){
-            if (($scope.GDLesions!=null) &&($scope.GDLesions !='')) {
-                var GdFinding = morphologyServices.getFindingByTestAndLocation($scope.LBDTC.toDateString(), "Gd Enhancing Lesions", 'Brain');
-                //console.log(GdFinding);
-                if (GdFinding!=null) {
-                    GdFinding.MOSLOC = MOSLOC;
-                    morphologyServices.editMorphologicalLocation(GdFinding);
-                }
-            }
-
-            if (($scope.T1Lesions!=null) &&($scope.T1Lesions !='')) {
-                var T1Finding = morphologyServices.getFindingByTestAndLocation($scope.LBDTC.toDateString(), "T1 Hypo Intense Lesions", 'Brain');
-                //console.log(aFinding);
-                if (T1Finding!=null) {
-                    T1Finding.MOSLOC = MOSLOC;
-                    morphologyServices.editMorphologicalLocation(T1Finding);
-                }
-            }
-
-            if (($scope.T2Lesions!=null) &&($scope.T2Lesions !='')) {
-                var T2Finding = morphologyServices.getFindingByTestAndLocation($scope.LBDTC.toDateString(), "T2 Hypo Intense Lesions", 'Brain');
-                //console.log(aFinding);
-                if (T2Finding!=null) {
-                    T2Finding.MOLOC = MOSLOC;
-                    morphologyServices.editMorphologicalLocation(T2Finding);
-                }
-            }
-        }
-
-        if ($scope.MOLOC == 'Spine'){
-            if (($scope.GD.SpineLesions!=null) &&($scope.GD.SpineLesions !='')) {
-                var GdFinding = morphologyServices.getFindingByTestAndLocation($scope.LBDTC.toDateString(), "Gd Enhancing Lesions", 'Spine');
-                //console.log(GdFinding);
-                if (GdFinding!=null) {
-                    GdFinding.MOSLOC = MOSLOC;
-                    morphologyServices.editMorphologicalLocation(GdFinding);
-                }
-            }
-
-            if (($scope.T2SpineLesions!=null) &&($scope.T2SpineLesions !='')) {
-                var T2Finding = morphologyServices.getFindingByTestAndLocation($scope.LBDTC.toDateString(), "T2 Hypo Intense Lesions", 'Spine');
-                //console.log(aFinding);
-                if (T2Finding!=null) {
-                    T2Finding.MOSLOC = MOSLOC;
-                    morphologyServices.editMorphologicalLocation(T2Finding);
-                }
-            }
-        }
-        morphologyServices.print();
-    }
+//    $scope.addLesionSecondaryLocation = function(MOSLOC) {
+//        if ($scope.MOLOC == 'Brain'){
+//            if (($scope.GDLesions!=null) &&($scope.GDLesions !='')) {
+//                var GdFinding = morphologyServices.getFindingByTestAndLocation($scope.LBDTC.toDateString(), "Gd Enhancing Lesions", 'Brain');
+//                //console.log(GdFinding);
+//                if (GdFinding!=null) {
+//                    GdFinding.MOSLOC = MOSLOC;
+//                    morphologyServices.editMorphologicalLocation(GdFinding);
+//                }
+//            }
+//
+//            if (($scope.T1Lesions!=null) &&($scope.T1Lesions !='')) {
+//                var T1Finding = morphologyServices.getFindingByTestAndLocation($scope.LBDTC.toDateString(), "T1 Hypo Intense Lesions", 'Brain');
+//                //console.log(aFinding);
+//                if (T1Finding!=null) {
+//                    T1Finding.MOSLOC = MOSLOC;
+//                    morphologyServices.editMorphologicalLocation(T1Finding);
+//                }
+//            }
+//
+//            if (($scope.T2Lesions!=null) &&($scope.T2Lesions !='')) {
+//                var T2Finding = morphologyServices.getFindingByTestAndLocation($scope.LBDTC.toDateString(), "T2 Hypo Intense Lesions", 'Brain');
+//                //console.log(aFinding);
+//                if (T2Finding!=null) {
+//                    T2Finding.MOLOC = MOSLOC;
+//                    morphologyServices.editMorphologicalLocation(T2Finding);
+//                }
+//            }
+//        }
+//
+//        if ($scope.MOLOC == 'Spine'){
+//            if (($scope.GD.SpineLesions!=null) &&($scope.GD.SpineLesions !='')) {
+//                var GdFinding = morphologyServices.getFindingByTestAndLocation($scope.LBDTC.toDateString(), "Gd Enhancing Lesions", 'Spine');
+//                //console.log(GdFinding);
+//                if (GdFinding!=null) {
+//                    GdFinding.MOSLOC = MOSLOC;
+//                    morphologyServices.editMorphologicalLocation(GdFinding);
+//                }
+//            }
+//
+//            if (($scope.T2SpineLesions!=null) &&($scope.T2SpineLesions !='')) {
+//                var T2Finding = morphologyServices.getFindingByTestAndLocation($scope.LBDTC.toDateString(), "T2 Hypo Intense Lesions", 'Spine');
+//                //console.log(aFinding);
+//                if (T2Finding!=null) {
+//                    T2Finding.MOSLOC = MOSLOC;
+//                    morphologyServices.editMorphologicalLocation(T2Finding);
+//                }
+//            }
+//        }
+//        morphologyServices.print();
+//    }
 
 
 

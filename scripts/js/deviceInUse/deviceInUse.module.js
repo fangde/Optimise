@@ -134,8 +134,8 @@ deviceInUseModule.service('deviceInUseServices', function(DeviceInUse, records, 
 
     var deleteDeviceInUse = function(du) {
         var index = scansFromDevice.indexOf(du);
+        scansFromDevice.splice(index, 1);
         if (index > -1) {
-            scansFromDevice.splice(index, 1);
             if (!viewService.workOffline())
                 records.deleteRecord(du);
         }
@@ -144,7 +144,7 @@ deviceInUseModule.service('deviceInUseServices', function(DeviceInUse, records, 
     var getDeviceInUseByDate = function(DUDTC) {
         var properties = [];
         for (var e = 0; e < scansFromDevice.length; e++) {
-            if (scansFromDevice[e].DUDTC.toDateString() == DUDTC)
+            if (scansFromDevice[e].DUDTC.toDateString() == DUDTC.toDateString())
             {
                 properties.push(scansFromDevice[e]);
             }
@@ -153,13 +153,14 @@ deviceInUseModule.service('deviceInUseServices', function(DeviceInUse, records, 
     }
 
     var getDeviceInUseByTest = function(DUDTC, DUTEST) {
+        var devices = [];
         for (var e = 0; e < scansFromDevice.length; e++) {
-            if ((scansFromDevice[e].DUDTC.toDateString() == DUDTC)&&
+            if ((scansFromDevice[e].DUDTC.toDateString() == DUDTC.toDateString())&&
                 (scansFromDevice[e].DUTEST == DUTEST)) {
-                return scansFromDevice[e];
+                devices.push(scansFromDevice[e]);
             }
         }
-        return null;
+        return devices;
     };
 
 
@@ -167,7 +168,7 @@ deviceInUseModule.service('deviceInUseServices', function(DeviceInUse, records, 
         var scans = [];
         for (var e = 0; e < scansFromDevice.length; e++) {
             //console.log(scansFromDevice[e]);
-            if ((scansFromDevice[e].DUDTC.toDateString() == DUDTC)&&
+            if ((scansFromDevice[e].DUDTC.toDateString() == DUDTC.toDateString())&&
                 (scansFromDevice[e].DUTEST == 'Weighting')) {
                 scans.push(scansFromDevice[e]);
             }

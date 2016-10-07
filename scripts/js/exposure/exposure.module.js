@@ -53,18 +53,19 @@ interventionModule.factory('DrugFactory', function () {
                 posology:[{dose:'00.00', unit:'00.00', form:'00.00', frequency:'00.00'}]},
             {name: 'Mitoxantrone', cat: 'Disease Modifying',
                 posology:[{dose:'12.00', unit:'mcg', form:'IV', frequency:'3 / Month'}]},
-            {name: 'Rebif', cat: 'Disease Modifying',
-                posology:[{dose:'22.00', unit:'mcg', form:'SC', frequency:'3 / Week'},
-                    {dose:'44.00', unit:'mcg', form:'SC', frequency:'3 /Week'}]},
             {name: 'Natalizumab', cat: 'Disease Modifying',
                 posology:[{dose:'300.00', unit:'mg', form:'IV', frequency:'/ Month'}]},
             {name: 'Dimethyl fumarate', cat: 'Disease Modifying',
                 posology:[{dose:'120.00', unit:'mg', form:'Oral', frequency:'2 / Day'}]},
-            {name: 'Other', cat: 'Disease Modifying',
-                posology:[{dose:'', unit:'', form:'', frequency:''}]},
+            //{name: 'Other', cat: 'Disease Modifying',
+            //    posology:[{dose:'', unit:'', form:'', frequency:''}]},
 
             {name: '4-aminopyridine', cat: 'Symptomatic',
                 posology:[{dose:'10.00', unit:'mg', form:'IV', frequency:'2/ Day'}]},
+            {name: 'Corticosteroids', cat: 'Symptomatic',
+                posology:[{dose:'', unit:'', form:'', frequency:''}]},
+            {name: 'Prednisone', cat: 'Symptomatic',
+                posology:[{dose:'', unit:'', form:'', frequency:''}]},
             {name: 'Amantadine', cat: 'Symptomatic',
                 posology:[{dose:'200.00', unit:'mg', form:'IV', frequency:'/ Day'}]},
             {name: 'Baclofen', cat: 'Symptomatic',
@@ -83,7 +84,7 @@ interventionModule.factory('DrugFactory', function () {
                 posology:[{dose:'', unit:'', form:'', frequency:''}]},
             {name: 'Physiotherapy', cat: 'Others',
                 posology:[{dose:'', unit:'', form:'', frequency:''}]},
-            {name: 'Psychotherapy', cat: 'Others',
+            {name: 'Cognitive Therapy', cat: 'Others',
                 posology:[{dose:'', unit:'', form:'', frequency:''}]}
 
 
@@ -98,10 +99,11 @@ interventionModule.factory('DrugFactory', function () {
         return false;
     }
 
-    drugs.names = function () {
+    drugs.names = function (EXCAT) {
         var names = [];
         for (var n = 0; n < drugs.length; n++) {
-            names.push(drugs[n].name);
+            if (drugs[n].cat == EXCAT)
+                names.push(drugs[n].name);
         }
         return names;
     }
@@ -110,6 +112,15 @@ interventionModule.factory('DrugFactory', function () {
         for (var n = 0; n < drugs.length; n++) {
             if (EXTRT==drugs[n].name) {
                 return drugs[n].cat;
+            }
+        }
+        return "";
+    }
+
+    drugs.posology = function (EXTRT) {
+        for (var n = 0; n < drugs.length; n++) {
+            if (EXTRT==drugs[n].name) {
+                return drugs[n].posology;
             }
         }
         return "";
@@ -567,12 +578,25 @@ interventionModule.controller('exposureInfoCtrl', function($scope,
             return false;
     }
 
+    $scope.disableTreatmentProperty = function() {
+        if ($scope.getDisabledFields())
+            return true;
+
+        if ($scope.dateValidated == false)
+            return true;
+
+        if ($scope.EXCAT == "")
+            return true;
+
+        return false;
+    }
+
     $scope.disableDatabaseTreatmentDoseOptions = function() {
         return (($scope.dateValidated==false)||(extrtRecorded == false));
     }
 
     $scope.getDisabledFields = function() {
-        return viewService.getView().DisableInputFields;
+        return (viewService.getView().DisableInputFields);
     }
 
     $scope.USUBJID = '';
@@ -674,6 +698,12 @@ interventionModule.controller('exposureInfoCtrl', function($scope,
             }
             console.log(exposuresToTrt);
         }
+        else {
+            if (propertyName=="EXCAT") {
+                $scope.data = {drugs: DrugFactory};
+                $scope.drugsFactory = DrugFactory.names($scope.EXCAT);
+            }
+        }
     }
 
     $scope.addExposure = function () {
@@ -687,8 +717,7 @@ interventionModule.controller('exposureInfoCtrl', function($scope,
                     $scope.EXDOSU = "";
                     $scope.EXDOSFRM = "";
                     $scope.EXDOSFRQ = "";
-                    $scope.EXCAT = "";
-                    $scope.EXCAT = DrugFactory.category($scope.EXTRT);
+                    //$scope.EXCAT = DrugFactory.category($scope.EXTRT);
 
                     var newExposure = new Exposure ($scope.USUBJID, $scope.EXTRT);
                     newExposure.EXSTDTC = $scope.EXSTDTC;
@@ -698,7 +727,7 @@ interventionModule.controller('exposureInfoCtrl', function($scope,
                     exposures.addExposure(newExposure);
                     exposures.setCurrentExposure(newExposure);
                     extrtRecorded = true;
-                    console.log(exposures.getExposures());
+                    console.log(newExposure);
                 }
             }
             else {
@@ -706,11 +735,18 @@ interventionModule.controller('exposureInfoCtrl', function($scope,
                 newExposure.EXSTDTC = $scope.EXSTDTC;
                 newExposure.displayDate = newExposure.EXSTDTC.toDateString();
                 newExposure.displayLabel = newExposure.EXTRT;
-                newExposure.EXCAT = $scope.EXCAT;
+
+                if (DrugFactory.isKnown($scope.EXTRT)) {
+                    var EXCAT = DrugFactory.category($scope.EXTRT);
+                    newExposure.EXCAT = EXCAT;
+                    $scope.EXCAT = EXCAT;
+                }
+                else
+                    newExposure = $scope.EXCAT;
+
                 exposures.addExposure(newExposure);
                 exposures.setCurrentExposure(newExposure);
                 extrtRecorded = true;
-                console.log(exposures.getExposures());
             }
         }
         else {
@@ -876,114 +912,10 @@ interventionModule.controller('exposureInfoCtrl', function($scope,
         }
     }
 
-    $scope.EXCAT = "Disease Modifying";
-
+    //$scope.EXCAT = "Disease Modifying";
     $scope.data = {drugs: DrugFactory};
-    //console.log($scope.data);
+    $scope.drugsFactory = DrugFactory.names($scope.EXCAT);
 
-//    $scope.getDrugs = function() {
-//        var drugsInCategory = [];
-//        for (var d = 0; d < $scope.data.drugs.length; d++) {
-//            drugsInCategory.push($scope.data.drugs[d]);
-//        }
-//        return drugsInCategory;
-//    }
-//
-//    $scope.getDosages = function() {
-//        var dosages = [];
-//        if ($scope.EXTRT != ''){
-//            for (var d = 0; d < $scope.data.drugs.length; d++) {
-//                if ($scope.data.drugs[d].name == $scope.EXTRT) {
-//                    for (var p = 0; p< $scope.data.drugs[d].posology.length; p++) {
-//                        dosages.push($scope.data.drugs[d].posology[p].dose);
-//                    }
-//                }
-//            }
-//        }
-//        if (dosages.length == 1) {
-//            $scope.EXDOSE = dosages[0];
-//        }
-//        else {
-//            $scope.drugDosages = dosages;
-//        }
-//        return dosages;
-//    }
-//
-//    $scope.getUnits = function() {
-//        var dosages = [];
-//        if (($scope.EXTRT != null)&&($scope.EXTRT != '') && ($scope.EXTRT != 'Other')){
-//            for (var d = 0; d < $scope.data.drugs.length; d++) {
-//                if ($scope.data.drugs[d].name == $scope.EXTRT) {
-//                    for (var p = 0; p< $scope.data.drugs[d].posology.length; p++) {
-//                        if (dosages.indexOf($scope.data.drugs[d].posology[p].unit) < 0)
-//                            dosages.push($scope.data.drugs[d].posology[p].unit);
-//
-//                    }
-//                }
-//            }
-//            if (($scope.EXDOSU==null)||($scope.EXDOSU==''))
-//                if (dosages.length > 0) {
-//                    $scope.EXDOSU = dosages[0];
-//                    $scope.addDoseProperty('EXDOSU');
-//                }
-//
-//
-//        }
-//        return dosages;
-//    }
-//
-//    $scope.getForms = function() {
-//        var dosages = [];
-//        if (($scope.EXTRT != '')&&($scope.EXTRT != 'Other')) {
-//            for (var d = 0; d < $scope.data.drugs.length; d++) {
-//                if ($scope.data.drugs[d].name == $scope.EXTRT) {
-//                    for (var p = 0; p< $scope.data.drugs[d].posology.length; p++) {
-//                        if (dosages.indexOf($scope.data.drugs[d].posology[p].form) < 0)
-//                            dosages.push($scope.data.drugs[d].posology[p].form);
-//                    }
-//                }
-//            }
-//            if (($scope.EXDOSFRM==null)||($scope.EXDOSFRM==''))
-//                if (dosages.length > 0) {
-//                    $scope.EXDOSFRM = dosages[0];
-//                    $scope.addDoseProperty('EXDOSFRM');
-//                }
-//
-//
-//
-//        }
-//        return dosages;
-//    }
-//
-//    $scope.getFrequencies = function() {
-//        var dosages = [];
-//        if (($scope.EXTRT != '')&&($scope.EXTRT != 'Other')){
-//            for (var d = 0; d < $scope.data.drugs.length; d++) {
-//                if ($scope.data.drugs[d].name == $scope.EXTRT) {
-//                    for (var p = 0; p< $scope.data.drugs[d].posology.length; p++) {
-//                        if (dosages.indexOf($scope.data.drugs[d].posology[p].frequency) < 0)
-//                            dosages.push($scope.data.drugs[d].posology[p].frequency);
-//                    }
-//                }
-//            }
-//        }
-//
-//        if (($scope.EXDOSFRQ==null)||($scope.EXDOSFRQ==''))
-//            if (dosages.length > 0) {
-//                $scope.EXDOSFRQ = dosages[0];
-//                $scope.addDoseProperty('EXDOSFRQ');
-//            }
-//
-//        return dosages;
-//    }
-//
-
-//    $scope.haveEXTRT = function() {
-//        return extrtRecorded;
-//    }
-
-    $scope.drugsFactory = DrugFactory.names();
-    //$scope.drugDosages = [];
 })
 
 interventionModule.directive('exposureEntry', function() {

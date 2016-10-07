@@ -598,8 +598,8 @@ visitModule.controller('visitInfoCtrl', function ($rootScope, $scope, $parse, $u
         return aProcedure;
     }
 
-    var addFindingSection = function(PRTRT, FAORES) {
-        var aFinding = new findingAbout($scope.USUBJID, 'Mobility', 'Functional Test', ''); // Is it mobility??
+    var addFindingSection = function(FAOBJ, FAORES) {
+        var aFinding = new findingAbout($scope.USUBJID, FAOBJ, 'Functional Test', ''); // Is it mobility??
         aFinding.FAORES = FAORES;
         aFinding.FASTRESU = 'seconds';
         aFinding.FADTC = $scope.SVSTDTC;
@@ -622,7 +622,7 @@ visitModule.controller('visitInfoCtrl', function ($rootScope, $scope, $parse, $u
             }
             else {
                 var sdmt = addProcedureSection(PRTRT);
-                var sdmtFinding = addFindingSection(PRTRT, $scope.symbolDigitModality);
+                var sdmtFinding = addFindingSection("Cognitive Impairment", $scope.symbolDigitModality);
                 relationships.addRelationship(sdmt,sdmtFinding, 'PRLNKID', 'FALNKID', 'One', 'One', sdmtFinding.FALNKID);
             }
         }
@@ -682,9 +682,9 @@ visitModule.controller('visitInfoCtrl', function ($rootScope, $scope, $parse, $u
             }
             else { // if procedure not on record
                 var eightMTest = addProcedureSection(PRTRT);
-                var eightMTestFinding1 = addFindingSection(PRTRT,$scope.eightMFirst);
+                var eightMTestFinding1 = addFindingSection("Mobility",$scope.eightMFirst);
                 relationships.addRelationship(eightMTest,eightMTestFinding1, 'PRLNKID', 'FALNKID', 'One', 'Many', eightMTestFinding1.FALNKID);
-                var eightMTestFinding2 = addFindingSection(PRTRT,$scope.eightMSecond);
+                var eightMTestFinding2 = addFindingSection("Mobility",$scope.eightMSecond);
                 relationships.addRelationship(eightMTest,eightMTestFinding2, 'PRLNKID', 'FALNKID', 'One', 'Many', eightMTestFinding2.FALNKID);
             }
         }

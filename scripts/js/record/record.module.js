@@ -180,7 +180,7 @@ recordModule.factory('CONFIG', function ($resource) {
 
 recordModule.factory('USERID', function ($resource) {
 
-    var onlineOrLocal = 'online';
+    var onlineOrLocal = 'local';
 
     if (onlineOrLocal=='local')
         return $resource('http://www.optimise-ms.org/api-optimise/wh/gettoken4c.php',{},{
@@ -205,7 +205,7 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
     }
 
     //var onlineOrLocal = 'local';
-    var onlineOrLocal = 'online';
+    var onlineOrLocal = 'local';
 
     var getURL = function(functionName) {
 
@@ -793,8 +793,9 @@ recordModule.service('records', function (Record, Edit, USUBJID, $http, $q, USUB
         if (onlineOrLocal == 'local')
             api = 'http://www.optimise-ms.org/api-optimise/icometrix/setIcometrixJobs.php';
         else
-            api = '/icometrix/setIcometrixJobs.php';
+            api = '/api-optimise/icometrix/setIcometrixJobs.php';
         //console.log(angular.toJson(newJob));
+        console.log(api);
         ICOMETRIX.saveData(api).save(angular.toJson(newJob));
     };
 

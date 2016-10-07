@@ -113,7 +113,7 @@ morphologyModule.service('morphologyServices', function(Morphology, records, vie
                     break;
                 }
                 case 'MOSLOC':{
-                    aFinding.MOLOC = RecordItems[i].value;
+                    aFinding.MOSLOC = RecordItems[i].value;
                     break;
                 }
                 case 'MOLAT':{
@@ -182,6 +182,18 @@ morphologyModule.service('morphologyServices', function(Morphology, records, vie
     var editMorphologicalFinding = function(mo) {
         var USUBJID = {fieldName: "USUBJID", value: mo.USUBJID};
         var MOTEST = {fieldName:"MOTEST", value: mo.MOTEST};
+        var MOSTRESC = {fieldName:"MOSTRESC", value: mo.MOSTRESC};
+        var MOSEQ = {fieldName:"MOSEQ", value: mo.MOSEQ};
+
+        var idRecord = [USUBJID, MOTEST, MOSEQ];
+        var valueRecord = [MOSTRESC];
+        if (!viewService.workOffline())
+            records.editRecord(idRecord, valueRecord);
+    }
+
+    var editMorphologicalResult = function(mo) {
+        var USUBJID = {fieldName: "USUBJID", value: mo.USUBJID};
+        var MOTEST = {fieldName:"MOTEST", value: mo.MOTEST};
         var MOORRES = {fieldName:"MOORRES", value: mo.MOORRES};
         var MOSEQ = {fieldName:"MOSEQ", value: mo.MOSEQ};
 
@@ -215,7 +227,7 @@ morphologyModule.service('morphologyServices', function(Morphology, records, vie
     var getFindingsByDate = function(MODTC) {
         var findings = [];
         for (var e = 0; e < morphologicalFindings.length; e++) {
-            if (morphologicalFindings[e].MODTC.toDateString() == MODTC)
+            if (morphologicalFindings[e].MODTC.toDateString() == MODTC.toDateString())
             {
                 findings.push(morphologicalFindings[e]);
             }
@@ -271,6 +283,7 @@ morphologyModule.service('morphologyServices', function(Morphology, records, vie
         getFindingByTest:getFindingByTest,
         print:print,
         editMorphologicalFinding:editMorphologicalFinding,
+        editMorphologicalResult: editMorphologicalResult,
         populateMorphologicalFindings: populateMorphologicalFindings,
         getFindingByTestAndLocation:getFindingByTestAndLocation,
         getMorphologicalFindings:getMorphologicalFindings,

@@ -112,9 +112,9 @@ configurationsModule.factory('OptimiseDefaultConfig', function () {
                     {
                         "name": "Laboratory Tests", "include": true, "minimalInfo":true, "id": "labTests",
                         "children": [
-                            {"name": "Haematology", "include": true, "minimalInfo":false, "id": "haematology"},
-                            {"name": "Blood Chemistry", "include": true, "minimalInfo":false, "id": "blood"},
-                            {"name": "Thyroid Functions", "include": true, "minimalInfo":false, "id": "thyroid"},
+                            {"name": "Haematology", "include": true, "minimalInfo":true, "id": "haematology"},
+                            {"name": "Blood Chemistry", "include": true, "minimalInfo":true, "id": "blood"},
+                            {"name": "Thyroid Functions", "include": true, "minimalInfo":true, "id": "thyroid"},
                             {"name": "Serological Tests", "include": true, "minimalInfo":true, "id": "serology"},
                             {"name": "Auto Antibody Tests", "include": true, "minimalInfo":true, "id": "antibody"}
                         ]

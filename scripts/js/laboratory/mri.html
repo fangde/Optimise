@@ -7,7 +7,7 @@
                     Scans
                 </h4>
             </div>
-            <div class="panel-collapse collapse in" id='collapseScans'>
+            <div class="panel-collapse collapse" id='collapseScans'>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-4">
@@ -70,260 +70,246 @@
                                 ng-disabled="scanWeight==''">
                             </div>
                         </div>
-
-                        <!--<div class="col-sm-4">-->
-                            <!--<button type="button" class="btn btn-primary"-->
-                                    <!--ng-click="setIcometrixJob();"-->
-                                    <!--ng-show="provideICOMETRIXSupport();">Upload</button>-->
-                        <!--</div>-->
                     </div>
                 </div>
             </div>
         </div>
 
-        <!--<div class="panel panel-default">-->
-            <!--<div class="panel-heading myPanel" role="tab" id="headingMorphology">-->
-                <!--<h4 class="panel-title" role="button" data-toggle="collapse" data-parent="#imageAccordion" href="#collapseMorphology" aria-expanded="true" aria-controls="collapseOne">-->
-                    <!--Morphology-->
-                <!--</h4>-->
-            <!--</div>-->
-            <!--<div class="panel-collapse collapse" id='collapseMorphology'>-->
-                <!--<div class="panel-body"> &lt;!&ndash;Number of Lesions &ndash;&gt;-->
-                     <!--<div class="row">-->
-                        <!--<div class='col-sm-4'>-->
-                            <!--<div class="form-group">-->
-                                <!--<label>Region</label>-->
-                                <!--<select class="form-control" ng-init="MOLOC = 'Brain';" ng-model="MOLOC" ng-change='displayNumLesionBasedOnLocation()'>-->
-                                    <!--<option>Brain</option>-->
-                                    <!--<option>Spine</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div ng-show='MOLOC=="Brain"'> &lt;!&ndash;Number of Lesions &ndash;&gt;-->
-                        <!--<div class="row">-->
-                            <!--<div class="col-sm-4">  &lt;!&ndash; Gd &ndash;&gt;-->
-                                <!--<div class="form-group" ng-init="imageContrast='Non-Contrast';">-->
-                                    <!--<div class="btn-group" role="group">-->
-                                        <!--<button type="button" class="btn btn-primary" ng-class="{active: imageContrast=='Contrast'}" ng-click="imageContrast='Contrast'; ">Contrast</button>-->
-                                        <!--<button type="button" class="btn btn-primary" ng-class="{active:  imageContrast=='Non-Contrast'}" ng-click="imageContrast='Non-Contrast';">Non-Contrast</button>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<div class="panel panel-default" ng-show="imageContrast == 'Contrast'">-->
-                                    <!--<div class="panel-heading myPanel">-->
-                                        <!--<h3 class="panel-title">Gd</h3>-->
-                                    <!--</div>-->
-                                    <!--<div class="panel-body">-->
-                                        <!--<div class="form-group">-->
-                                            <!--<div class="radio">-->
-                                                <!--<label class="control-label">-->
-                                                    <!--<input type="radio"  ng-model="GDLesions" value="None" name="GdLesions" ng-change="editGdLesionsProperty()" ng-disabled="getDisabledFields()">-->
-                                                    <!--None-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div class="radio">-->
-                                                <!--<label class="control-label">-->
-                                                    <!--<input type="radio" ng-model="GDLesions" value="Single" name="GdLesions" ng-change="editGdLesionsProperty()" ng-disabled="getDisabledFields()">-->
-                                                    <!--Single-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div class="radio">-->
-                                                <!--<label class="control-label">-->
-                                                    <!--<input type="radio" ng-model="GDLesions" value="Multiple" name="GdLesions" ng-change="editGdLesionsProperty()" ng-disabled="getDisabledFields()">-->
-                                                    <!--Multiple-->
-                                                <!--</label>-->
-                                            <!--</div>-->
+        <div class="panel panel-default">
+            <div class="panel-heading myPanel" role="tab" id="headingMorphology">
+                <h4 class="panel-title" role="button" data-toggle="collapse" data-parent="#imageAccordion" href="#collapseMorphology" aria-expanded="true" aria-controls="collapseOne">
+                    Morphology
+                </h4>
+            </div>
+            <div class="panel-collapse collapse in" id='collapseMorphology'>
+                <div class="panel-body"> <!--Number of Lesions -->
+                     <div class="row">
+                        <div class='col-sm-4'>
+                            <div class="form-group">
+                                <label>Region</label>
+                                <select class="form-control" ng-init="MOLOC = 'Brain';" ng-model="MOLOC" ng-change='displayNumLesionBasedOnLocation()'>
+                                    <option>Brain</option>
+                                    <option>Spine</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show='MOLOC=="Brain"'> <!--Number of Lesions -->
+                        <div class="row">
+                            <div class="col-sm-4">  <!-- Gd -->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading myPanel">
+                                        <h3 class="panel-title">T1 Hypo Intense Lesions</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class='form-group'>
+                                            <div class="radio">
+                                                <label class=""><input type="radio" ng-model="T1Lesions"
+                                                                       ng-change="editLesionProperty('T1 Lesion Count Summary', T1Lesions)"
+                                                                       value="Negative" ng-disabled="getDisabledFields()">
+                                                    Negative
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label><input type="radio" ng-model="T1Lesions"
+                                                              ng-change="editLesionProperty('T1 Lesion Count Summary', T1Lesions)"
+                                                              value="Positive" ng-disabled="getDisabledFields()">
+                                                    Positive
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label><input type="radio" ng-model="T1Lesions"
+                                                              ng-change="editLesionProperty('T1 Lesion Count Summary', T1Lesions)"
+                                                              value="Not Reported" ng-disabled="getDisabledFields()">
+                                                    Not Reported
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">  <!-- T2 -->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading myPanel">
+                                        <h3 class="panel-title">T2 Hypo Intense Lesions</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class='form-group'>
+                                            <div class="radio">
+                                                <label class=""><input type="radio" ng-model="T2Lesions"
+                                                                       ng-change="editLesionProperty('Lesion Count Summary', T2Lesions)"
+                                                                       value="None" ng-disabled="getDisabledFields()">
+                                                    None
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label><input type="radio" ng-model="T2Lesions"
+                                                              ng-change="editLesionProperty('Lesion Count Summary', T2Lesions)"
+                                                              value="Single" ng-disabled="getDisabledFields()">
+                                                    Single
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label><input type="radio" ng-model="T2Lesions"
+                                                              ng-change="editLesionProperty('Lesion Count Summary', T2Lesions)"
+                                                              value="More than 9" ng-disabled="getDisabledFields()">
+                                                     = 9
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label><input type="radio" ng-model="T2Lesions"
+                                                              ng-change="editLesionProperty('Lesion Count Summary', T2Lesions)"
+                                                              value="Less than 9" ng-disabled="getDisabledFields()">
+                                                    < 9
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label><input type="radio" ng-model="T2Lesions"
+                                                              ng-change="editLesionProperty('Lesion Count Summary', T2Lesions)"
+                                                              value="Multiple Not Specified" ng-disabled="getDisabledFields()">
+                                                    Multiple Not Specified
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Count</span>
+                                            <input type="text" class="form-control"
+                                                   ng-model="T2LesionCount"
+                                                   ng-disabled="getDisabledFields();"
+                                                   ng-blur="editLesionProperty('Lesion Count', T2LesionCount)" />
+                                        </div>
+                                        <div class="input-group marginTop">
+                                            <span class="input-group-addon">Volume</span>
+                                            <input type="text" class="form-control"
+                                                   ng-model="T2LesionVolume"
+                                                   ng-disabled="getDisabledFields();"
+                                                   ng-blur="editLesionProperty('Lesion volume', T2LesionVolume)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">  <!-- T1 -->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading myPanel">
+                                        <h3 class="panel-title">Gd Enhancing Lesion</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <div class="radio">
+                                                <label class="control-label">
+                                                    <input type="radio"  ng-model="GDLesions" value="None"
+                                                           name="GdLesions" ng-change="editLesionProperty('Gd Enhancing Lesion Count Summary', GDLesions)"
+                                                           ng-disabled="getDisabledFields()">
+                                                    None
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label class="control-label">
+                                                    <input type="radio" ng-model="GDLesions" value="Single"
+                                                           name="GdLesions" ng-change="editLesionProperty('Gd Enhancing Lesion Count Summary', GDLesions)"
+                                                           ng-disabled="getDisabledFields()">
+                                                    Single
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label class="control-label">
+                                                    <input type="radio" ng-model="GDLesions" value="Multiple" name="GdLesions"
+                                                           ng-change="editLesionProperty('Gd Enhancing Lesion Count Summary', GDLesions)"
+                                                           ng-disabled="getDisabledFields()">
+                                                    Multiple
+                                                </label>
+                                            </div>
 
-                                            <!--<div class="radio">-->
-                                                <!--<label class="control-label">-->
-                                                    <!--<input type="radio" ng-model="GDLesions" value="Unknown" name="GdLesions" ng-change="editGdLesionsProperty()" ng-disabled="getDisabledFields()">-->
-                                                    <!--Unknown-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="col-sm-4">  &lt;!&ndash; T2 &ndash;&gt;-->
-                                <!--<div class="panel panel-default">-->
-                                    <!--<div class="panel-heading myPanel">-->
-                                        <!--<h3 class="panel-title">T2</h3>-->
-                                    <!--</div>-->
-                                    <!--<div class="panel-body">-->
-                                        <!--<div class='form-group'>-->
-                                            <!--<div class="radio">-->
-                                                <!--<label class=""><input type="radio" ng-model="T2Lesions" ng-change="editT2LesionsProperty()" value="None" ng-disabled="getDisabledFields()">-->
-                                                    <!--None-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div class="radio">-->
-                                                <!--<label><input type="radio" ng-model="T2Lesions" ng-change="editT2LesionsProperty()" value="Single" ng-disabled="getDisabledFields()">-->
-                                                    <!--Single-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div class="radio">-->
-                                                <!--<label><input type="radio" ng-model="T2Lesions" ng-change="editT2LesionsProperty()" value="More than 9" ng-disabled="getDisabledFields()">-->
-                                                     <!--= 9-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div class="radio">-->
-                                                <!--<label><input type="radio" ng-model="T2Lesions" ng-change="editT2LesionsProperty()" value="Less than 9" ng-disabled="getDisabledFields()">-->
-                                                    <!--< 9-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div class="radio">-->
-                                                <!--<label><input type="radio" ng-model="T2Lesions" ng-change="editT2LesionsProperty()" value="Multiple Not Specified" ng-disabled="getDisabledFields()">-->
-                                                    <!--Multiple Not Specified-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="col-sm-4">  &lt;!&ndash; T1 &ndash;&gt;-->
-                                <!--<div class="panel panel-default">-->
-                                    <!--<div class="panel-heading myPanel">-->
-                                        <!--<h3 class="panel-title">T1</h3>-->
-                                    <!--</div>-->
-                                    <!--<div class="panel-body">-->
-                                        <!--<div class='form-group'>-->
-                                            <!--<div class="radio">-->
-                                                <!--<label class=""><input type="radio" ng-model="T1Lesions" ng-change="editT1LesionsProperty()" value="Negative" ng-disabled="getDisabledFields()">-->
-                                                    <!--Negative-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div class="radio">-->
-                                                <!--<label><input type="radio" ng-model="T1Lesions" ng-change="editT1LesionsProperty()" value="Positive" ng-disabled="getDisabledFields()">-->
-                                                    <!--Positive-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div class="radio">-->
-                                                <!--<label><input type="radio" ng-model="T1Lesions" ng-change="editT1LesionsProperty()" value="Not Reported" ng-disabled="getDisabledFields()">-->
-                                                    <!--Not Reported-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="row doubleMarginTop" ng-hide="hideLocalityOfLesions()">-->
-                            <!--<div class='col-sm-3'>-->
-                                <!--<label>Localization of Lesions</label>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="row" ng-hide="hideLocalityOfLesions()">-->
-                            <!--<div class='col-sm-3'>-->
-                                <!--<div class="checkbox">-->
-                                    <!--<label><input type="checkbox" ng-model="lesionsInPeriventricular" ng-change="addLesionSecondaryLocation('Periventricular')" ng-disabled="getDisabledFields()">Periventricular-->
-                                    <!--</label>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class='col-sm-3'>-->
-                                <!--<div class="checkbox">-->
-                                    <!--<label><input type="checkbox" ng-model="lesionsInJuxtacortical" ng-change="addLesionSecondaryLocation('Juxtacortical')" ng-disabled="getDisabledFields()">Juxtacortical-->
-                                    <!--</label>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class='col-sm-3'>-->
-                                <!--<div class="checkbox">-->
-                                    <!--<label><input type="checkbox" ng-model="lesionsInInfratentorial" ng-change="addLesionSecondaryLocation('Infratentorial')" ng-disabled="getDisabledFields()">Infratentorial-->
-                                    <!--</label>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class='col-sm-3'>-->
-                                <!--<div class="checkbox">-->
-                                    <!--<label><input type="checkbox" ng-model="lesionsInOpticNerve" ng-change="addLesionSecondaryLocation('Optic Nerve')" ng-disabled="getDisabledFields()">Optic Nerve-->
-                                    <!--</label>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="form-group" ng-show='MOLOC=="Spine"'> &lt;!&ndash;Number of Lesions &ndash;&gt;-->
-                        <!--<div class="col-sm-4">-->
-                            <!--<div class="panel panel-default">-->
-                                <!--<div class="panel-heading myPanel">-->
-                                    <!--<h3 class="panel-title">Gd</h3>-->
-                                <!--</div>-->
-                                <!--<div class="panel-body">-->
-                                    <!--<div class='form-group'>-->
-                                        <!--<div class="radio">-->
-                                            <!--<label class=""><input type="radio" ng-model="GdSpineLesions" ng-change="editGdSpineLesion()" value="None" ng-disabled="getDisabledFields()">-->
-                                                <!--None-->
-                                            <!--</label>-->
-                                        <!--</div>-->
-                                        <!--<div class="radio">-->
-                                            <!--<label class=""><input type="radio" ng-model="GdSpineLesions" ng-change="editGdSpineLesion()" value="Focal" ng-disabled="getDisabledFields()">-->
-                                                <!--Focal-->
-                                            <!--</label>-->
-                                        <!--</div>-->
-                                        <!--<div class="radio">-->
-                                            <!--<label><input type="radio" ng-model="GdSpineLesions" ng-change="editGdSpineLesion()" value="Multiple" ng-disabled="getDisabledFields()">-->
-                                                <!--Multiple-->
-                                            <!--</label>-->
-                                        <!--</div>-->
-                                        <!--<div class="radio">-->
-                                            <!--<label><input type="radio" ng-model="GdSpineLesions" ng-change="editGdSpineLesion()" value="Longitudinal Extensive" ng-disabled="getDisabledFields()">-->
-                                                <!--Longitudinal Extensive-->
-                                            <!--</label>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="col-sm-4">-->
-                            <!--<div class="panel panel-default">-->
-                                <!--<div class="panel-heading myPanel">-->
-                                    <!--<h3 class="panel-title">T2</h3>-->
-                                <!--</div>-->
-                                <!--<div class="panel-body">-->
-                                    <!--<div class='form-group'>-->
-                                        <!--<div class="radio">-->
-                                            <!--<label class=""><input type="radio" ng-model="T2SpineLesions" ng-change="editT2SpineLesion()" value="None" ng-disabled="getDisabledFields()">-->
-                                                <!--None-->
-                                            <!--</label>-->
-                                        <!--</div>-->
-                                        <!--<div class="radio">-->
-                                            <!--<label class=""><input type="radio" ng-model="T2SpineLesions" ng-change="editT2SpineLesion()" value="Focal" ng-disabled="getDisabledFields()">-->
-                                                <!--Focal-->
-                                            <!--</label>-->
-                                        <!--</div>-->
-                                        <!--<div class="radio">-->
-                                            <!--<label><input type="radio" ng-model="T2SpineLesions" ng-change="editT2SpineLesion()" value="Multiple" ng-disabled="getDisabledFields()">-->
-                                                <!--Multiple-->
-                                            <!--</label>-->
-                                        <!--</div>-->
-                                        <!--<div class="radio">-->
-                                            <!--<label><input type="radio" ng-model="T2SpineLesions" ng-change="editT2SpineLesion()" value="Longitudinal Extensive" ng-disabled="getDisabledFields()">-->
-                                                <!--Longitudinal Extensive-->
-                                            <!--</label>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="row doubleMarginTop" ng-hide="hideLocalityOfLesions()">-->
-                            <!--<div class='col-sm-3'>-->
-                                <!--<label>Localization of Lesions</label>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="row" ng-hide="hideLocalityOfLesions()">-->
-                            <!--<div class='col-sm-3'>-->
-                                <!--<div class='form-group'>-->
-                                    <!--<div class="radio-inline">-->
-                                        <!--<label><input type="radio" ng-model="lesionsInCervical" ng-change="addLesionSecondaryLocation('Cervical')" ng-disabled="getDisabledFields()">Cervical-->
-                                        <!--</label>-->
-
-                                        <!--<label><input type="radio" ng-model="lesionsInThoracic" ng-change="addLesionSecondaryLocation('Thoracic')" ng-disabled="getDisabledFields()">Thoracic-->
-                                        <!--</label>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
+                                            <div class="radio">
+                                                <label class="control-label">
+                                                    <input type="radio" ng-model="GDLesions" value="Unknown" name="GdLesions"
+                                                           ng-change="editLesionProperty('Gd Enhancing Lesion Count Summary', GDLesions)"
+                                                           ng-disabled="getDisabledFields()">
+                                                    Unknown
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class = "form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Gd Lesion Volume</span>
+                                                <input type="text" class="form-control"
+                                                       ng-model="GdLesionVolume"
+                                                       ng-disabled="getDisabledFields();"
+                                                       ng-blur="editLesionProperty('Gd Enhancing Lesion Volume', GdLesionVolume)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show='MOLOC=="Spine"'> <!--Number of Lesions -->
+                        <div class="col-sm-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading myPanel">
+                                    <h3 class="panel-title">T2</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class='form-group'>
+                                        <div class="radio">
+                                            <label class=""><input type="radio" ng-model="T2SpineLesions" ng-change="editLesionProperty('T2 Lesion', T2SpineLesions)" value="None" ng-disabled="getDisabledFields()">
+                                                None
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label class=""><input type="radio" ng-model="T2SpineLesions" ng-change="editLesionProperty('T2 Lesion', T2SpineLesions)" value="Focal" ng-disabled="getDisabledFields()">
+                                                Focal
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label><input type="radio" ng-model="T2SpineLesions" ng-change="editLesionProperty('T2 Lesion', T2SpineLesions)" value="Multiple" ng-disabled="getDisabledFields()">
+                                                Multiple
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label><input type="radio" ng-model="T2SpineLesions" ng-change="editLesionProperty('T2 Lesion', T2SpineLesions)" value="Longitudinal Extensive" ng-disabled="getDisabledFields()">
+                                                Longitudinal Extensive
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading myPanel">
+                                    <h3 class="panel-title">Gd</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class='form-group'>
+                                        <div class="radio">
+                                            <label class=""><input type="radio" ng-model="GdSpineLesions" ng-change="editLesionProperty('Gd Lesion', GdSpineLesions)" value="None" ng-disabled="getDisabledFields()">
+                                                None
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label class=""><input type="radio" ng-model="GdSpineLesions" ng-change="editLesionProperty('Gd Lesion', GdSpineLesions)" value="Focal" ng-disabled="getDisabledFields()">
+                                                Focal
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label><input type="radio" ng-model="GdSpineLesions" ng-change="editLesionProperty('Gd Lesion', GdSpineLesions)" value="Multiple" ng-disabled="getDisabledFields()">
+                                                Multiple
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label><input type="radio" ng-model="GdSpineLesions" ng-change="editLesionProperty('Gd Lesion', GdSpineLesions)" value="Longitudinal Extensive" ng-disabled="getDisabledFields()">
+                                                Longitudinal Extensive
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 

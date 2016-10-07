@@ -110,6 +110,8 @@ timelineModule.directive('timeline', function() {
                         return d3.rgb(79,132,190);
                     case ('Lab'):
                         return d3.rgb(79,132,190);
+                    case ('Serology'):
+                        return d3.rgb(79,132,190);
                     case ('MRI'):
                         return d3.rgb(79,132,190);
                     case ('CSF'):
@@ -139,6 +141,8 @@ timelineModule.directive('timeline', function() {
                     case ('EP'):
                         return d3.rgb(79,132,190);
                     case ('Lab'):
+                        return d3.rgb(79,132,190);
+                    case ('Serology'):
                         return d3.rgb(79,132,190);
                     case ('MRI'):
                         return d3.rgb(79,132,190);

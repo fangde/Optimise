@@ -135,7 +135,6 @@ medicalHistoryModule.service('medicalHistory', function(MedicalEvent, records, v
 
     var getOccurencesInSubCategory = function(mhscat){
         var occurenceInCategory = [];
-
         for (var i = 0; i < medicalHistory.length; i++){
             var anOccurence = medicalHistory[i];
             if (anOccurence.MHSCAT == mhscat) {

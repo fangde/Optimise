@@ -798,6 +798,7 @@ headerModule.controller('depositoryCtrl', function ($scope, $uibModalInstance, s
         else {
             var dmData = [];
             var subjectList = localStorage.getItem('NHS_OPT_Map');
+            console.log(subjectList);
             if (subjectList != null) {
                 subjectList = JSON.parse(subjectList);
                 for (var s = 0; s < subjectList.length; s++) {
@@ -1447,13 +1448,21 @@ headerModule.controller('headerCtrl', function ($rootScope,
         else
             subjects = JSON.parse(subjects);
 
-        if (!IDExists(patients.getCurrentPatient().USUBJID))
+        if (!IDExists(patients.getCurrentPatient().USUBJID)) {
             if (patients.getCurrentPatient().NHS_USUBJID.length > 0) {
                 var newPair = {'NHS_USUBJID': patients.getCurrentPatient().NHS_USUBJID,
                     'USUBJID': patients.getCurrentPatient().USUBJID};
                 subjects.push(newPair);
                 localStorage.setItem("NHS_OPT_Map",JSON.stringify(subjects));
             }
+            else {
+                patients.getCurrentPatient().NHS_USUBJID = patients.getCurrentPatient().USUBJID;
+                var newPair = {'NHS_USUBJID': patients.getCurrentPatient().NHS_USUBJID,
+                    'USUBJID': patients.getCurrentPatient().USUBJID};
+                subjects.push(newPair);
+                localStorage.setItem("NHS_OPT_Map",JSON.stringify(subjects));
+            }
+        }
 
         saveJSON(data, patients.getCurrentPatient().USUBJID);
         //savePDF();
@@ -1665,7 +1674,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
             printATitle(doc, position, PR[0]);
             for (var r = 0; r < PR.length; r++) {
                 printRecord(doc, position, PR[r]);
-                var morphology = morphologyServices.getFindingsByDate(PR[r].PRSTDTC.toDateString());
+                var morphology = morphologyServices.getFindingsByDate(PR[r].PRSTDTC);
                 for (var m = 0; m < morphology.length; m++) {
                     printRecord(doc, position, morphology[m]);
                 }
@@ -2341,6 +2350,15 @@ headerModule.controller('headerCtrl', function ($rootScope,
                         var proceedingsSelectedForDeletion = procedures.getImagingProceduresByDate(collectionDate);
                         for (var v = 0; v < proceedingsSelectedForDeletion.length; v++) {
                             procedures.deleteProcedure(proceedingsSelectedForDeletion[v]);
+                        }
+                        var morphologyFindingsForDeletion = morphologyServices.getFindingsByDate(collectionDate);
+                        for (var f = 0; f < morphologyFindingsForDeletion.length; f++) {
+                            morphologyServices.deleteMorphologicalFinding(morphologyFindingsForDeletion[f]);
+                        }
+
+                        var devicesForDeletion = deviceInUseServices.getDeviceInUseByTest(collectionDate, 'Weighting');
+                        for (var f = 0; f < devicesForDeletion.length; f++) {
+                            deviceInUseServices.deleteDeviceInUse(devicesForDeletion[f]);
                         }
                     }
                     else if (event.PRTRT == "Lumbar Puncture") {
