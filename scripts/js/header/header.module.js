@@ -1175,6 +1175,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
                             $scope.setExposureUSUBJID($scope.USUBJID);
                             $scope.setLabUSUBJID($scope.USUBJID);
                             $scope.setMRIUSUBJID($scope.USUBJID, ($scope.authenticatedStatus=="Logged In")&&($scope.sourceMode=="internet"));
+                            //$scope.setMRIUSUBJID($scope.USUBJID, false);
                             $scope.setVisitUSUBJID($scope.USUBJID);
                             $scope.setRelapseUSUBJID($scope.USUBJID);
                             $scope.setReminderSUBJID($scope.USUBJID, patients.getCurrentPatient().NHS_USUBJID);
@@ -1191,7 +1192,9 @@ headerModule.controller('headerCtrl', function ($rootScope,
                     $scope.setEventUSUBJID($scope.USUBJID);
                     $scope.setExposureUSUBJID($scope.USUBJID);
                     $scope.setLabUSUBJID($scope.USUBJID);
-                    $scope.setMRIUSUBJID($scope.USUBJID, $scope.sourceMode=='internet');
+                    //$scope.setMRIUSUBJID($scope.USUBJID, $scope.sourceMode=='internet');
+                    $scope.setMRIUSUBJID($scope.USUBJID, ($scope.authenticatedStatus=="Logged In")&&($scope.sourceMode=="internet"));
+                    //$scope.setMRIUSUBJID($scope.USUBJID, false);
                     $scope.setVisitUSUBJID($scope.USUBJID);
                     $scope.setRelapseUSUBJID($scope.USUBJID);
                     $scope.setQuestionnaireUSUBJID($scope.USUBJID);
@@ -1450,13 +1453,6 @@ headerModule.controller('headerCtrl', function ($rootScope,
 
         if (!IDExists(patients.getCurrentPatient().USUBJID)) {
             if (patients.getCurrentPatient().NHS_USUBJID.length > 0) {
-                var newPair = {'NHS_USUBJID': patients.getCurrentPatient().NHS_USUBJID,
-                    'USUBJID': patients.getCurrentPatient().USUBJID};
-                subjects.push(newPair);
-                localStorage.setItem("NHS_OPT_Map",JSON.stringify(subjects));
-            }
-            else {
-                patients.getCurrentPatient().NHS_USUBJID = patients.getCurrentPatient().USUBJID;
                 var newPair = {'NHS_USUBJID': patients.getCurrentPatient().NHS_USUBJID,
                     'USUBJID': patients.getCurrentPatient().USUBJID};
                 subjects.push(newPair);
@@ -2718,7 +2714,9 @@ headerModule.controller('headerCtrl', function ($rootScope,
             $scope.setEventUSUBJID($scope.USUBJID);
             $scope.setExposureUSUBJID($scope.USUBJID);
             $scope.setLabUSUBJID($scope.USUBJID);
-            $scope.setMRIUSUBJID($scope.USUBJID, $scope.sourceMode=='internet');
+            $scope.setMRIUSUBJID($scope.USUBJID, ($scope.authenticatedStatus=="Logged In")&&($scope.sourceMode=="internet"));
+            //$scope.setMRIUSUBJID($scope.USUBJID, $scope.sourceMode=='internet');
+            $scope.setMRIUSUBJID($scope.USUBJID, false);
             $scope.setVisitUSUBJID($scope.USUBJID);
             $scope.setRelapseUSUBJID($scope.USUBJID);
             $scope.setQuestionnaireUSUBJID($scope.USUBJID);
@@ -2884,7 +2882,8 @@ headerModule.controller('headerCtrl', function ($rootScope,
             }
         });
 
-        modalInstance.result.then(function (selectionData) {
+        modalInstance.result.then(function (selectionData)
+        {
             if (selectionData.actionMode == 'Load'){
                 $scope.USUBJID = selectionData.USUBJID;
                 if ($scope.sourceMode=='internet') {

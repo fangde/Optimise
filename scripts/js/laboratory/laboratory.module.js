@@ -815,34 +815,6 @@ laboratoryTestResultModule.controller('laboratoryInfoCtrl', function($scope, $ro
             $scope.thyroidIndicator.indicators[$scope.thyroidScopeVariables[k].LBNRIND] = "";
         }
 
-//        var autoAntibodyKeys = [{scopeVariable: 'ana', abnormality: 'anaAbnormal', testName: "ANA"},
-//            {scopeVariable: 'antiMitochondrial', abnormality: 'antiMitochondrialAbnormal', testName: "Anti-Mitochondrial"},
-//            {scopeVariable: 'antiParietalCellAntibodies', abnormality: 'antiParietalCellAntibodiesAbnormal', testName: "Anti-parietal Cell Antibodies"},
-//            {scopeVariable: 'asma', abnormality: 'asmaAbnormal', testName: "ASMA"},
-//            {scopeVariable: 'antiRo', abnormality: 'antiRoAbnormal', testName: "Anti-Ro"},
-//            {scopeVariable: 'la', abnormality: 'laAbnormal', testName: "La"},
-//            {scopeVariable: 'sm', abnormality: 'smAbnormal', testName: "Sm"},
-//            {scopeVariable: 'rnp', abnormality: 'rnpAbnormal', testName: "RNP"},
-//            {scopeVariable: 'scl70', abnormality: 'scl70Abnormal', testName: "Scl 70"},
-//            {scopeVariable: 'jo1', abnormality: 'jo1Abnormal', testName: "Jo1"},
-//            {scopeVariable: 'anca', abnormality: 'ancaAbnormal', testName: "ANCA"},
-//            {scopeVariable: 'antiDNA', abnormality: 'antiDNAAbnormal', testName: "Anti-DNA"},
-//            {scopeVariable: 'antiLKM', abnormality: 'antiLKMAbnormal', testName: "Anti-LKM"},
-//            {scopeVariable: 'antiCardiolpin', abnormality: 'antiCardiolpinAbnormal', testName: "Anti Cardiolpin"},
-//            {scopeVariable: 'lac', abnormality: 'lacAbnormal', testName: "LAC"},
-//            {scopeVariable: 'antiTransglutaminase', abnormality: 'antiTransglutaminaseAbnormal', testName: "Anti transglutaminase"}];
-//
-//        for (var k = 0; k < autoAntibodyKeys.length; k++){
-//            // Get the model
-//            var modelValue = $parse(autoAntibodyKeys[k].scopeVariable);
-//            // Assigns a value to it
-//            modelValue.assign($scope,'');
-//
-//            var modelAbnormal = $parse(autoAntibodyKeys[k].abnormality);
-//            // Assigns a value to it
-//            modelAbnormal.assign($scope,'');
-//        }
-
         var vepKeys = [{scopeVariable: 'vepLeftAmplitude'},
                         {scopeVariable: 'vepRightAmplitude'},
                         {scopeVariable: 'vepLeftLatency'},
@@ -861,20 +833,8 @@ laboratoryTestResultModule.controller('laboratoryInfoCtrl', function($scope, $ro
             modelValue.assign($scope, '');
         }
 
-//        var morphologyKeys = [{scopeVariable: 'GdEnhancingLesions', testName: "Gd Enhancing Lesions"},
-//            {scopeVariable: 'T1HypointenseLesions', testName: "T1 Hypo Intense Lesions"},
-//            {scopeVariable: 'T2HypointenseLesions', testName: "T2 Hypo Intense Lesions"},
-//            {scopeVariable: 'normalisedBrainVolume', testName: "Volume"},
-//            {scopeVariable: 'lesionsPeriventricular', testName: "Lesions"},
-//            {scopeVariable: 'lesionsJuxtacortical', testName: "Lesions"},
-//            {scopeVariable: 'lesionsInfracortical', testName: "Lesions"},
-//            {scopeVariable: 'lesionsSpinalCord', testName: "Lesions"}];
-//
-//        for (var k = 0; k < morphologyKeys.length; k++){
-//            // Get the model
-//            var modelValue = $parse(morphologyKeys[k].scopeVariable);
-//            modelValue.assign($scope,'');
-// }
+        $scope.setNewMRIFields();
+
     }
 
     $rootScope.setNewLabDate = function (display, LBDTC) {

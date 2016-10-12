@@ -201,10 +201,8 @@ mriModule.controller('mriInfoCtrl', function ($scope, $rootScope, $parse, $uibMo
         $scope.sessionLabel = procedures.getCurrentProcedure().displayLabel;
         $scope.scanWeight = "";
         var morphologicalFindings = morphologyServices.getFindingsByDate($scope.LBDTC);
-        console.log(morphologicalFindings);
         for (var f = 0; f < morphologicalFindings.length; f++) {
             var moVariables = getImagingMorphologyScopeName(morphologicalFindings[f].MOTEST, morphologicalFindings[f].MOLOC);
-            console.log(moVariables);
             if (moVariables != null) {
                 var modelTestValue = $parse(moVariables.scopeVariable);
                 modelTestValue.assign($scope, morphologicalFindings[f].MOORRES);
@@ -241,22 +239,13 @@ mriModule.controller('mriInfoCtrl', function ($scope, $rootScope, $parse, $uibMo
         $scope.LBDTC = "";
         $scope.scansTakenDuringExperiment = [];
         $scope.MOLOC = 'Brain';
+        $scope.T2LesionCount ='';
+        $scope.T2LesionVolume ='';
 
-//        var loKeys = [{scopeVariable: 'lesionsInPeriventricular'},
-//            {scopeVariable: 'lesionsInJuxtacortical'},
-//            {scopeVariable: 'lesionsInInfratentorial'},
-//            {scopeVariable: 'lesionsInOpticalNerve'},
-//            {scopeVariable: 'Thoracic'},
-//            {scopeVariable: 'Cervical'}];
-//
-//        for (var k = 0; k < loKeys.length; k++){
-//            // Get the model
-//            var modelValue = $parse(loKeys[k].scopeVariable);
-//            modelValue.assign($scope,false);
-//        }
+        console.log("clearing from mri");
 
         var gdKeys = [{scopeVariable: 'GDLesions'},
-            {scopeVariable: 'GDSpineLesions'},
+            {scopeVariable: 'GdSpineLesions'},
             {scopeVariable: 'GdLesionVolume'}];
 
         for (var k = 0; k < gdKeys.length; k++){
@@ -276,6 +265,10 @@ mriModule.controller('mriInfoCtrl', function ($scope, $rootScope, $parse, $uibMo
             var modelValue = $parse(TKeys[k].scopeVariable);
             modelValue.assign($scope,'');
         }
+
+        console.log($scope.T2LesionCount);
+        console.log($scope.T2Lesions);
+        console.log($scope.T2LesionVolume);
     }
 
     $rootScope.setNewMRIDTC = function (display, LBDTC) {
@@ -291,9 +284,9 @@ mriModule.controller('mriInfoCtrl', function ($scope, $rootScope, $parse, $uibMo
             {scopeVariable: 'T2Lesions', testName: "Lesion Count Summary", location:"Brain"},
             {scopeVariable: 'T2LesionCount', testName: "Lesion Count", location:"Brain"},
             {scopeVariable: 'T2LesionVolume', testName: "Lesion volume", location:"Brain"},
-            {scopeVariable: 'GdLesions', testName: "Gd Enhancing Lesion Count Summary", location:"Brain"},
+            {scopeVariable: 'GDLesions', testName: "Gd Enhancing Lesion Count Summary", location:"Brain"},
             {scopeVariable: 'GdLesionVolume', testName: "Gd Enhancing Lesion Volume", location:"Brain"},
-            {scopeVariable: 'GDSpineLesions', testName: "Gd Lesion", location:"Spine"},
+            {scopeVariable: 'GdSpineLesions', testName: "Gd Lesion", location:"Spine"},
             {scopeVariable: 'T2SpineLesions', testName: "T2 Lesion", location:"Spine"}];
 
         for (var t = 0; t < moNames.length; t++)

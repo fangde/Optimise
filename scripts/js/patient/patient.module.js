@@ -215,6 +215,10 @@ patientModule.service('patients',function(medicalHistory, MedicalEvent, Patient,
         }
         if (currentPatient.BRTHDTC!= "")
             age = getAge(currentPatient.BRTHDTC.getFullYear());
+
+        if (currentPatient.NHS_USUBJID == "") {
+            currentPatient.NHS_USUBJID = currentPatient.USUBJID;
+        }
     }
 
     var patientExists = function() {
