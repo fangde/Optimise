@@ -2142,7 +2142,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
         switch ($scope.contentOnDisplay) {
             case "Relapse":
             {
-                //console.log(event);
+                $scope.setNewRelapseDate(event.displayDate, event.CESTDTC);
                 clinicalEvents.setEvent(event);
                 viewService.setView("Relapse", false);
                 $scope.displayRelapse();    // this is in the relapse controller
@@ -2165,6 +2165,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
             case "Visit":
             {
                 subjectVisits.setCurrentVisit(event);
+                $scope.setNewVisitDate(event.displayDate, event.SVSTDTC);
                 viewService.setView("Visit", false);// disable = false;
                 $scope.displayVisit();
                 $scope.displayVisitSymptoms();
@@ -2175,6 +2176,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
             case "Exposure":
             {
                 //console.log("displaying current event");
+                $scope.setNewExposureStartDate(event.displayDate, event.EXSTDTC);
                 exposures.setCurrentExposure(event);
                 viewService.setView("Exposure", false);// disable = false;
                 $scope.displayExposure();
