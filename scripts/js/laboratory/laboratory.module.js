@@ -256,7 +256,7 @@ laboratoryTestResultModule.factory('haematologyVocab', function() {
         'monocyteCount':"",
         'eosinophilCount':"",
         'basophilCount':"",
-        'platletCount':"",
+        'plateletCount':"",
         'haemoglobinCount':""}}
 
     var testsScopeVariables = [
@@ -272,7 +272,7 @@ laboratoryTestResultModule.factory('haematologyVocab', function() {
         {LBORRES: 'monocyteCount', LBNRIND: 'monocyteCountAbnormal', LBTEST: "Monocyte Count"},
         {LBORRES: 'eosinophilCount', LBNRIND: 'eosinophilCountAbnormal', LBTEST: "Eosinophil Count"},
         {LBORRES: 'basophilCount', LBNRIND: 'basophilCountAbnormal', LBTEST: "Basophil Count"},
-        {LBORRES: 'platletCount', LBNRIND: 'platletCountAbnormal', LBTEST: "Platlet Count"},
+        {LBORRES: 'plateletCount', LBNRIND: 'plateletCountAbnormal', LBTEST: "Platelet Count"},
         {LBORRES: 'haemoglobinCount', LBNRIND: 'haemoglobinCountAbnormal', LBTEST: "Haemoglobin"}];
 
     var testIndicator = {indicators:{
@@ -288,7 +288,7 @@ laboratoryTestResultModule.factory('haematologyVocab', function() {
         'monocyteCountAbnormal':"",
         'eosinophilCountAbnormal':"",
         'basophilCountAbnormal':"",
-        'platletCountAbnormal':"",
+        'plateletCountAbnormal':"",
         'haemoglobinCountAbnormal':""}};
 
     var vocab = {scopeVariables: testsScopeVariables, tests: test, indicators: testIndicator};
