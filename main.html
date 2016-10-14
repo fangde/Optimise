@@ -287,9 +287,9 @@
                                     <table ng-table="tableParams" class="table" show-filter="true">
                                         <tr ng-repeat="subject in $data">
                                             <td title="'NHS ID'" filter="{ nhs_id: 'text'}" sortable="'nhs_id'" >
-                                                <a href="#" ng-click="findSubject(subject.opt_id)">{{subject.nhs_id}}</a></td>
+                                                <a href="#" ng-click="loadSubjectData(subject.opt_id)">{{subject.nhs_id}}</a></td>
                                             <td title="'OPT ID'" filter="{ opt_id: 'text'}" sortable="'opt_id'">
-                                                <a href="#" ng-click="findSubject(subject.opt_id)">{{subject.opt_id}}</a></td>
+                                                <a href="#" ng-click="loadSubjectData(subject.opt_id)">{{subject.opt_id}}</a></td>
                                             <td title="'Age'" class="columnValuesCentered">{{subject.age}}</td>
                                             <td title="'Sex'" class="columnValuesCentered">{{subject.sex}}</td>
                                             <td title="'Selected'" class="columnValuesCentered">
@@ -305,6 +305,7 @@
                         </div>
                         <div class="modal-footer">
                             <!--<button class="btn btn-primary" ng-click="ok()">OK</button>-->
+                            <button class="btn btn-warning" ng-click="export()">Export</button>
                             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
                         </div>
                     </div>
@@ -525,6 +526,7 @@
 
 <script type="text/javascript" src="scripts/vendor/jquery.min.js"></script>
 <script type="text/javascript" src="scripts/vendor/jquery-ui.min.js"></script>
+<script type="text/javascript" src="scripts/vendor/jquery.csv-0.71.min.js"></script>
 <script type="text/javascript" src="scripts/vendor/angular.min.js"></script>
 <script type="text/javascript" src="scripts/vendor/angular-resource.min.js"></script>
 <script type="text/javascript" src="scripts/vendor/ui-bootstrap-tpls-1.2.5.min.js"></script>
@@ -575,6 +577,7 @@
 <script type="text/javascript" src="scripts/js/deviceInUse/deviceInUse.module.js"></script>
 <script type="text/javascript" src="scripts/js/communication/communication.module.js"></script>
 <script type="text/javascript" src="scripts/js/communication/reminders.module.js"></script>
+<script type="text/javascript" src="scripts/js/exporter/iMed.js"></script>
 
 
 <script type="text/javascript" src="scripts/vendor/cornerstone.min.js"></script>
