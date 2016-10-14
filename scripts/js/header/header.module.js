@@ -657,7 +657,7 @@ headerModule.controller('appointmentsCtrl', function ($scope, $uibModalInstance,
                     var notes = reminders[id]['Notes'];
 
                     var aReminder = {'id':id, 'last':lastAppointment, 'due':due, 'notes':notes};
-                    console.log(aReminder);
+                    //console.log(aReminder);
                     appointments.push(aReminder);
                 }
                 $scope.tableParams.settings({
@@ -707,7 +707,7 @@ headerModule.controller('depositoryCtrl', function ($scope, $uibModalInstance, s
     $scope.selectionData = {
         selectedSubjects:[],
         actionMode:'',
-        recordSet:'',
+        recordSet:[],
         USUBJID:''
     };
 
@@ -798,7 +798,6 @@ headerModule.controller('depositoryCtrl', function ($scope, $uibModalInstance, s
         else {
             var dmData = [];
             var subjectList = localStorage.getItem('NHS_OPT_Map');
-            console.log(subjectList);
             if (subjectList != null) {
                 subjectList = JSON.parse(subjectList);
                 for (var s = 0; s < subjectList.length; s++) {
@@ -853,15 +852,13 @@ headerModule.controller('depositoryCtrl', function ($scope, $uibModalInstance, s
         }
     }
 
-    $scope.findSubject = function(identifier) {
+    var findSubject = function(identifier) {
         if (sourceMode == 'computer') {
             var Records = localStorage.getItem(identifier);
             if (Records != null) {
                 Records = JSON.parse(Records);
-                $scope.selectionData.recordSet = Records;
-                $scope.selectionData.actionMode = 'Load';
+                $scope.selectionData.recordSet.push(Records);
                 $scope.selectionData.USUBJID = identifier;
-                $scope.ok();
             }
         }
         else if (sourceMode == 'internet') {
@@ -872,13 +869,17 @@ headerModule.controller('depositoryCtrl', function ($scope, $uibModalInstance, s
                     alert ("Patient not found. This record will be removed");
                     $scope.deleteSubject(identifier);
                 } else {
-                    $scope.selectionData.recordSet = RecordSet;
-                    $scope.selectionData.actionMode = 'Load';
+                    $scope.selectionData.recordSet.push(RecordSet);
                     $scope.selectionData.USUBJID = identifier;
-                    $scope.ok();
                 }
             });
         }
+    }
+
+    $scope.loadSubjectData = function(identifier) {
+        $scope.selectionData.actionMode = 'Load';
+        findSubject(identifier);
+        $scope.ok();
     }
 
     $scope.tableParams = new NgTableParams({}, { dataset: []});
@@ -887,19 +888,31 @@ headerModule.controller('depositoryCtrl', function ($scope, $uibModalInstance, s
 
     $scope.ok = function () {
 
-        if ($scope.selectionData.actionMode == 'Load')  {
-            //console.log($scope.selectionData.recordSet);
-        }
-        else {
-            for (var r = 0; r < $scope.data.length; r++) {
-                if ($scope.data[r].selected == true) {
-                    $scope.selectionData.selectedSubjects.push($scope.data[r].opt_id);
-                    $scope.selectionData.actionMode = 'Download';
-                }
+//        if ($scope.selectionData.actionMode == 'Load')  {
+//            //console.log($scope.selectionData.recordSet);
+//        }
+//        else {
+//            for (var r = 0; r < $scope.data.length; r++) {
+//                if ($scope.data[r].selected == true) {
+//                    $scope.selectionData.selectedSubjects.push($scope.data[r].opt_id);
+//                    $scope.selectionData.actionMode = 'Download';
+//                }
+//            }
+//        }
+
+        console.log($scope.selectionData);
+        $uibModalInstance.close($scope.selectionData);
+    };
+
+    $scope.export = function () {
+        $scope.selectionData.actionMode = 'Export';
+        for (var s = 0; s < $scope.data.length; s++) {
+            if ($scope.data[s].selected == true) {
+                $scope.selectionData.selectedSubjects.push($scope.data[s].opt_id);
+                findSubject($scope.data[s].opt_id);
             }
         }
-
-        $uibModalInstance.close($scope.selectionData);
+        $scope.ok();
     };
 
     $scope.cancel = function () {
@@ -941,7 +954,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
                                             morphologyServices, Country,
                                             substanceUse, subjectCharacteristic,
                                             deviceInUseServices,
-                                            reminders, $http) {
+                                            reminders, exportService) {
 
 
 
@@ -2887,39 +2900,32 @@ headerModule.controller('headerCtrl', function ($rootScope,
             if (selectionData.actionMode == 'Load'){
                 $scope.USUBJID = selectionData.USUBJID;
                 if ($scope.sourceMode=='internet') {
-                    //viewService.setOffline(false);
-                    //$scope.USUBJID = newData.USUBJID;
-                    populateFromDB(selectionData.recordSet);
-                    populateReminders();
+                    if (selectionData.recordSet.length >0 ) {
+                        populateFromDB(selectionData.recordSet[0]);
+                        populateReminders();
+                    }
                 }
                 else if ($scope.sourceMode=='computer') {
-                    //$scope.USUBJID = newData.USUBJID;
-                    populateFromScriptedFile(selectionData.recordSet);
+                    if (selectionData.recordSet.length >0 ) {
+                        populateFromScriptedFile(selectionData.recordSet[0]);
+                    }
                 };
-
             }
-            else if (selectionData.actionMode == 'Download') {
-                var dataToDownload;
+
+            else if (selectionData.actionMode == 'Export') {
                 for (var i = 0; i < selectionData.selectedSubjects.length; i++) {
                     if ($scope.sourceMode=='computer') {
-                        dataToDownload = localStorage.getItem(selectionData.selectedSubjects[i]);
-                        saveJSON(dataToDownload,selectionData.selectedSubjects[i]);
+                        populateFromScriptedFile(selectionData.recordSet[i]);
                     }
 
                     if ($scope.sourceMode=='internet'){
-                        var cloudData = records.getSubject(selectionData.selectedSubjects[i]);
-                        cloudData.then(function (subjectData) {
-                            var dataToDownload = angular.toJson({"RecordSet": subjectData.RecordSet});
-                            if (subjectData.RecordSet!=null){
-                                var RecordItem = subjectData.RecordSet[0].RecordItems;
-                                for (var r = 0; r < RecordItem.length; r++) {
-                                    if (RecordItem[r].fieldName == "USUBJID") {
-                                        saveJSON(dataToDownload,RecordItem[r].value);
-                                    }
-                                }
-                            }
-                        })
+                        populateFromDB(selectionData.recordSet[i]);
                     }
+
+                    var printHeaders = false;
+                    if (i == 0)
+                        printHeaders = true;
+                    exportService.exportIDRow(printHeaders);
                 }
             }
         }, function () {
