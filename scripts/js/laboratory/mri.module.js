@@ -242,7 +242,6 @@ mriModule.controller('mriInfoCtrl', function ($scope, $rootScope, $parse, $uibMo
         $scope.T2LesionCount ='';
         $scope.T2LesionVolume ='';
 
-        console.log("clearing from mri");
 
         var gdKeys = [{scopeVariable: 'GDLesions'},
             {scopeVariable: 'GdSpineLesions'},
@@ -265,10 +264,6 @@ mriModule.controller('mriInfoCtrl', function ($scope, $rootScope, $parse, $uibMo
             var modelValue = $parse(TKeys[k].scopeVariable);
             modelValue.assign($scope,'');
         }
-
-        console.log($scope.T2LesionCount);
-        console.log($scope.T2Lesions);
-        console.log($scope.T2LesionVolume);
     }
 
     $rootScope.setNewMRIDTC = function (display, LBDTC) {
