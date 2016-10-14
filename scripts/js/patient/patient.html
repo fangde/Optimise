@@ -8,23 +8,21 @@
             </div>
             <div id="collapseDM">
                 <div class="panel-body">
-                    <div class="row">
+                    <div class="row marginTop">
                         <div class='col-sm-3'>
                             <div class="form-group">
-                                <label class="control-label">OPTIMISE ID</label>
+                                <!--<label class="control-label">OPTIMISE ID</label>-->
                                 <input type="text" class="form-control"
                                        ng-model="USUBJID" placeholder="eg. 123-456-789" ng-disabled=true>
                             </div>
                         </div>
                         <div class='col-sm-3'>
                             <div class="form-group">
-                                <label class="control-label">ID</label>
+                                <!--<label class="control-label">ID</label>-->
                                 <input type="text" class="form-control"
                                        ng-model="NHS_USUBJID" placeholder="eg. 123-456-789" ng-disabled=true>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class='col-sm-3'>
                             <div class="input-group">
                                 <input type="text" class="form-control DTC_MonthYear" ng-model="BRTHDTC_display"
@@ -41,6 +39,9 @@
                                 <span class="input-group-addon"> years old</span></span>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+
                         <div class="col-sm-3">
                             <div class="btn-group" uib-dropdown is-open=false>
                                 <button type="button" id="dmGenderButton" class="btn btn-info"
@@ -68,8 +69,6 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
-                    <div class="row marginTop">
                         <div class="col-sm-3">
                             <div class="btn-group" uib-dropdown is-open=false>
                                 <button type="button" id="dmEthnicButton" class="btn btn-info" uib-dropdown-toggle
@@ -122,6 +121,16 @@
                                     <li><a href="#" ng-click="editSubstanceUse('ALCOHOL', 'Less then 3 units a week')">Less then 3 units a week</a></li>
                                 </ul>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row doubleMarginTop">
+                        <div class="col-sm-3">
+                            <input type="file" id="piiFile" name="piiFile" />
+                            <button type="button" class="btn btn-default" ng-click="readPII()">Populate PII</button>
+                        </div>
+                        <div class="col-sm-9">
+                            <textarea rows='2' class="form-control" ng-model="piiNote"
+                                      ng-blur="addPIIProfile()"></textarea>
                         </div>
                     </div>
                 </div>

@@ -944,6 +944,35 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
         return associatedPersonMedicalHistories.getAPMHList();
     }
 
+    var getPIIData = function (sourceFile) {
+        return $q(function(resolve, reject) {
+            var textType = /csv.*/;
+            if (sourceFile.type.match(textType)) {
+                var reader = new FileReader();
+                reader.onloadend = (function (e) {
+                    resolve(e.target.result);
+                });
+                reader.readAsText(sourceFile);
+            } else {
+                reject(e.target.error());
+                console.log("File not supported!")
+            }
+        });
+    }
+
+    $scope.readPII = function() {
+        var file = document.getElementById('piiFile').files;
+        console.log(file[0]);
+
+        var urlData = getPIIData(file[0]);
+        console.log(urlData);
+
+        urlData.then(function (data) {
+            console.log($.csv.toObjects(data));
+
+        })
+    }
+
 
 });
 
