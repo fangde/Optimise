@@ -262,6 +262,7 @@ interventionModule.service('exposures', function (Exposure, records, viewService
     }
 
     var deleteExposure = function (EX){
+        console.log(EX);
         var index = exposures.indexOf(EX);
         if (index > -1) {
             exposures.splice(index, 1);
@@ -708,11 +709,12 @@ interventionModule.controller('exposureInfoCtrl', function($scope,
 
     $scope.addExposure = function () {
         if ($scope.EXTRT != '') {
-            if (exposures.getCurrentExposure() != null) { // currently a treatment already
-                if (exposures.getCurrentExposure().EXTRT != $scope.EXTRT) {    // new name different from current treatment
-                    console.log(exposures.getCurrentExposure().EXTRT);
-                    console.log($scope.EXTRT);
-                    exposures.deleteExposure(exposures.getCurrentExposure()); // delete previous treatment
+            var currentExposure = exposures.getCurrentExposure();
+            console.log($scope.EXTRT);
+            if (currentExposure != null) { // currently a treatment already
+                if (currentExposure.EXTRT != $scope.EXTRT) {    // new name different from current treatment
+                    console.log(currentExposure);
+                    exposures.deleteExposure(currentExposure); // delete previous treatment
                     $scope.EXDOSE = "";
                     $scope.EXDOSU = "";
                     $scope.EXDOSFRM = "";
@@ -727,7 +729,6 @@ interventionModule.controller('exposureInfoCtrl', function($scope,
                     exposures.addExposure(newExposure);
                     exposures.setCurrentExposure(newExposure);
                     extrtRecorded = true;
-                    console.log(newExposure);
                 }
             }
             else {
@@ -742,24 +743,26 @@ interventionModule.controller('exposureInfoCtrl', function($scope,
                     $scope.EXCAT = EXCAT;
                 }
                 else
-                    newExposure = $scope.EXCAT;
+                    newExposure.EXCAT = $scope.EXCAT;
 
                 exposures.addExposure(newExposure);
                 exposures.setCurrentExposure(newExposure);
                 extrtRecorded = true;
             }
         }
-        else {
-            if ((exposures.getCurrentExposure() != null)) { // changing treatment name
-                exposures.deleteExposure(exposures.getCurrentExposure()); // delete previous treatment
-                $scope.EXDOSE = "";
-                $scope.EXDOSU = "";
-                $scope.EXDOSFRM = "";
-                $scope.EXDOSFRQ = "";
-                $scope.EXCAT = "";
-                extrtRecorded = false;
-            }
-        }
+//        else {
+//            var currentExposure = exposures.getCurrentExposure();
+//            console.log(currentExposure);
+//            if ((exposures.getCurrentExposure() != null)) { // changing treatment name
+//                exposures.deleteExposure(exposures.getCurrentExposure()); // delete previous treatment
+//                $scope.EXDOSE = "";
+//                $scope.EXDOSU = "";
+//                $scope.EXDOSFRM = "";
+//                $scope.EXDOSFRQ = "";
+//                $scope.EXCAT = "";
+//                extrtRecorded = false;
+//            }
+//        }
     }
 
 
