@@ -245,7 +245,7 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
             };
             case ('CESTDTC'): {
                 inFunctionalSys.CESTDTC = generateCESTDTC();
-                //console.log(inFunctionalSys.CESTDTC)
+                console.log(inFunctionalSys.CESTDTC);
                 clinicalEvents.editEvent(inFunctionalSys, resName, inFunctionalSys.CESTDTC);
                 break;
             };
@@ -269,8 +269,14 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
     }
 
     var generateCESTDTC = function() {
-        //console.log(new Date($scope.CESTDTC_displayDate.substr(3), parseInt($scope.CESTDTC_displayDate.substr(0,2))-1, 1));
-        return new Date($scope.CESTDTC_displayDate.substr(3), parseInt($scope.CESTDTC_displayDate.substr(0,2))-1, 1);
+//        console.log($scope.CESTDTC);
+//        console.log($scope.CESTDTC_displayDate);
+//        console.log($scope.CESTDTC_displayDate.substr(3));
+//        console.log(parseInt($scope.CESTDTC_displayDate.substr(0,2))-1);
+//        console.log(new Date($scope.CESTDTC_displayDate.substr(3), parseInt($scope.CESTDTC_displayDate.substr(0,2))-1, 1));
+//        return new Date($scope.CESTDTC_displayDate.substr(3), parseInt($scope.CESTDTC_displayDate.substr(0,2))-1, 1);
+        var CESTDTC = new Date($scope.CESTDTC);
+        return CESTDTC;
     };
 
     var generateCEENDTC = function(CESTDTC) {
@@ -293,13 +299,8 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
     }
 
     $rootScope.setNewRelapseDate = function(display, CESTDTC) {
-        console.log(CESTDTC);
         $scope.CESTDTC_displayDate = display;
-        //$scope.CESTDTC = generateCESTDTC(CESTDTC);
         $scope.CESTDTC = CESTDTC;
-
-        console.log($scope.CESTDTC_displayDate);
-        console.log($scope.CESTDTC);
         $scope.datesValidated = true;
     }
 
@@ -366,6 +367,7 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
 
     var addEvent = function(CEBODYSYS, CEGRPID) {
         var newEvent = new clinicalEvent($scope.USUBJID, 'Multiple Sclerosis Relapse', 'MS Relapse');
+        console.log($scope.CESTDTC);
         //editRelapse(newRelapse);
         newEvent.CEBODSYS = CEBODYSYS;
         newEvent.CEGRPID = CEGRPID;
@@ -385,6 +387,7 @@ relapseModule.controller('relapseInfoCtrl', function ($rootScope,
         }
 
         clinicalEvents.addEvent(newEvent);
+        console.log(newEvent);
         addRelapseFinding(newEvent);
         return newEvent;
     }
