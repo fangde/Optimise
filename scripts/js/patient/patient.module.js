@@ -291,7 +291,7 @@ patientModule.service('patients',function(medicalHistory, MedicalEvent, Patient,
     }
 });
 
-patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
+patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse, $q,
                                                         $scope, $timeout,
                                                       patients, genderTerms, ethnicTerms,
                                                       findingAbout,
@@ -962,15 +962,16 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse,
 
     $scope.readPII = function() {
         var file = document.getElementById('piiFile').files;
-        console.log(file[0]);
+        if (file[0] != undefined) {
+            var urlData = getPIIData(file[0]);
 
-        var urlData = getPIIData(file[0]);
-        console.log(urlData);
+            urlData.then(function (data) {
+                var piiObjects = $.csv.toObjects(data);
+                console.log(piiObjects);
+                $scope.piiNote = Object.keys(piiObjects[0]);
 
-        urlData.then(function (data) {
-            console.log($.csv.toObjects(data));
-
-        })
+            })
+        }
     }
 
 

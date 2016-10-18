@@ -10,11 +10,13 @@ CACHE MANIFEST
 # 2016-09-13 v0.0.53
 # 2016-09-28 V0.0.54
 # 2016-09-28 V0.0.55
+# 2016-09-28 V0.0.56
 
 main.html
 scripts/css/timeline.css
 scripts/css/testLayout.css
 scripts/css/textAngular.css
+scripts/vendor/jquery.csv-0.71.min.js
 scripts/css/bootstrap-datepicker.min.css
 scripts/css/bootstrap.min.css
 scripts/css/ng-table.min.css
@@ -114,6 +116,7 @@ scripts/js/communication/communication.html
 scripts/js/communication/communication.module.js
 scripts/js/communication/reminders.module.js
 scripts/js/communication/reminder.html
+scripts/js/exporter/iMed.js
 
 scripts/js/view/config.json
 

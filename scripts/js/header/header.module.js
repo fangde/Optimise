@@ -651,14 +651,19 @@ headerModule.controller('appointmentsCtrl', function ($scope, $uibModalInstance,
                 var subjectIDs = Object.keys(reminders);
 
                 for (var s = 0; s < subjectIDs.length; s++) {
+                    //console.log(subjectIDs[s]);
                     var id = subjectIDs[s];
-                    var lastAppointment = reminders[id]['LastAppointment'];
-                    var due = reminders[id]['DueAppointment'];
-                    var notes = reminders[id]['Notes'];
+                    for (var a = 0; a < reminders[id].length; a++) {
+                        var anAppointment = reminders[id][a];
+                        var lastAppointment = anAppointment['LastAppointment'];
+                        var due = anAppointment['DueAppointment'];
+                        var notes = anAppointment['Notes'];
 
-                    var aReminder = {'id':id, 'last':lastAppointment, 'due':due, 'notes':notes};
-                    //console.log(aReminder);
-                    appointments.push(aReminder);
+                        var aReminder = {'id':id, 'last':lastAppointment, 'due':due, 'notes':notes};
+                        //console.log(aReminder);
+                        appointments.push(aReminder);
+                    }
+
                 }
                 $scope.tableParams.settings({
                     dataset: appointments
@@ -707,7 +712,7 @@ headerModule.controller('depositoryCtrl', function ($scope, $uibModalInstance, s
     $scope.selectionData = {
         selectedSubjects:[],
         actionMode:'',
-        recordSet:[],
+        recordSet:'',
         USUBJID:''
     };
 
@@ -857,8 +862,10 @@ headerModule.controller('depositoryCtrl', function ($scope, $uibModalInstance, s
             var Records = localStorage.getItem(identifier);
             if (Records != null) {
                 Records = JSON.parse(Records);
-                $scope.selectionData.recordSet.push(Records);
+                $scope.selectionData.recordSet = Records;
+                $scope.selectionData.actionMode = 'Load';
                 $scope.selectionData.USUBJID = identifier;
+                $scope.ok();
             }
         }
         else if (sourceMode == 'internet') {
@@ -869,8 +876,10 @@ headerModule.controller('depositoryCtrl', function ($scope, $uibModalInstance, s
                     alert ("Patient not found. This record will be removed");
                     $scope.deleteSubject(identifier);
                 } else {
-                    $scope.selectionData.recordSet.push(RecordSet);
+                    $scope.selectionData.recordSet = RecordSet;
+                    $scope.selectionData.actionMode = 'Load';
                     $scope.selectionData.USUBJID = identifier;
+                    $scope.ok();
                 }
             });
         }
@@ -879,7 +888,6 @@ headerModule.controller('depositoryCtrl', function ($scope, $uibModalInstance, s
     $scope.loadSubjectData = function(identifier) {
         $scope.selectionData.actionMode = 'Load';
         findSubject(identifier);
-        $scope.ok();
     }
 
     $scope.tableParams = new NgTableParams({}, { dataset: []});
@@ -889,18 +897,18 @@ headerModule.controller('depositoryCtrl', function ($scope, $uibModalInstance, s
     $scope.ok = function () {
 
 //        if ($scope.selectionData.actionMode == 'Load')  {
-//            //console.log($scope.selectionData.recordSet);
+//            console.log($scope.selectionData.recordSet);
 //        }
 //        else {
 //            for (var r = 0; r < $scope.data.length; r++) {
 //                if ($scope.data[r].selected == true) {
 //                    $scope.selectionData.selectedSubjects.push($scope.data[r].opt_id);
-//                    $scope.selectionData.actionMode = 'Download';
+//                    $scope.selectionData.actionMode = '';
 //                }
 //            }
 //        }
-
-        console.log($scope.selectionData);
+//
+//        console.log($scope.selectionData);
         $uibModalInstance.close($scope.selectionData);
     };
 
@@ -1088,6 +1096,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
                             viewService.setAuthenticated(true);
                             $scope.authenticatedStatus = "Logged In";
 
+                            //console.log(data);
                             if ((data.siteID != null)&&(data.siteID != ''))
                                 $scope.siteID = data.siteID;
 
@@ -2165,7 +2174,7 @@ headerModule.controller('headerCtrl', function ($rootScope,
             case "Visit":
             {
                 subjectVisits.setCurrentVisit(event);
-                $scope.setNewVisitDate(event.displayDate, event.SVSTDTC);
+                //$scope.setNewVisitDate(event.displayDate, event.SVSTDTC);
                 viewService.setView("Visit", false);// disable = false;
                 $scope.displayVisit();
                 $scope.displayVisitSymptoms();
@@ -2901,35 +2910,37 @@ headerModule.controller('headerCtrl', function ($rootScope,
         {
             if (selectionData.actionMode == 'Load'){
                 $scope.USUBJID = selectionData.USUBJID;
+                console.log($scope.USUBJID);
+
                 if ($scope.sourceMode=='internet') {
                     if (selectionData.recordSet.length >0 ) {
-                        populateFromDB(selectionData.recordSet[0]);
+                        populateFromDB(selectionData.recordSet);
                         populateReminders();
                     }
                 }
                 else if ($scope.sourceMode=='computer') {
-                    if (selectionData.recordSet.length >0 ) {
-                        populateFromScriptedFile(selectionData.recordSet[0]);
-                    }
+                    //if (selectionData.recordSet.length >0 ) {
+                        populateFromScriptedFile(selectionData.recordSet);
+                    //}
                 };
             }
 
-            else if (selectionData.actionMode == 'Export') {
-                for (var i = 0; i < selectionData.selectedSubjects.length; i++) {
-                    if ($scope.sourceMode=='computer') {
-                        populateFromScriptedFile(selectionData.recordSet[i]);
-                    }
-
-                    if ($scope.sourceMode=='internet'){
-                        populateFromDB(selectionData.recordSet[i]);
-                    }
-
-                    var printHeaders = false;
-                    if (i == 0)
-                        printHeaders = true;
-                    exportService.exportIDRow(printHeaders);
-                }
-            }
+//            else if (selectionData.actionMode == 'Export') {
+//                for (var i = 0; i < selectionData.selectedSubjects.length; i++) {
+//                    if ($scope.sourceMode=='computer') {
+//                        populateFromScriptedFile(selectionData.recordSet[i]);
+//                    }
+//
+//                    if ($scope.sourceMode=='internet'){
+//                        populateFromDB(selectionData.recordSet[i]);
+//                    }
+//
+//                    var printHeaders = false;
+//                    if (i == 0)
+//                        printHeaders = true;
+//                    exportService.exportIDRow(printHeaders);
+//                }
+//            }
         }, function () {
             console.log("Cancelled");
         });

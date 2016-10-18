@@ -700,6 +700,7 @@ reminderModule.service('remindersForAppointmentsDue', function($q, Reminder, rec
                 for (var s = 0; s < subjectList.length; s++) {
                     var patientRecords = JSON.parse(localStorage.getItem(subjectList[s].USUBJID)).RecordSet;
                     var reminderRecords = getRemindersForUSUBJID(patientRecords);
+
                     for (var r = 0; r < reminderRecords.length; r++) {
                         if (reminderRecords[r].REMINDERACTIVE == 'On') {
 

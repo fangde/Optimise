@@ -180,6 +180,7 @@ recordModule.factory('CONFIG', function ($resource) {
 
 recordModule.factory('USERID', function ($resource) {
 
+    //var onlineOrLocal = 'local';
     var onlineOrLocal = 'online';
 
     if (onlineOrLocal=='local')
