@@ -694,6 +694,7 @@ reminderModule.service('remindersForAppointmentsDue', function($q, Reminder, rec
         return $q(function(resolve, reject) {
             var appointmentsDue = [];
             var subjectList = getSubjectList();
+            //console.log(subjectList);
             if (subjectList != null) {
                 subjectList = JSON.parse(subjectList);
                 for (var s = 0; s < subjectList.length; s++) {
@@ -722,6 +723,7 @@ reminderModule.service('remindersForAppointmentsDue', function($q, Reminder, rec
 
                             if (reminderRecords[r].REMINDERCATEGORY == 'LB') {
                                 var uniqueAssessmentDates = getUniqueLabDatesForUSUBJID(patientRecords);
+                                console.log(uniqueAssessmentDates);
                                 var raiseAFlag = appointmentsShouldBeFlagged(reminderRecords[r], uniqueAssessmentDates);
 
                                 if (raiseAFlag) {
