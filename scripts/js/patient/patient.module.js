@@ -625,6 +625,8 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse, $q,
         clearImmunisationFields();
         clearFindingsInLocation();
         clearMedicalHistoryFields();
+        $scope.patientAddress = "";
+        $scope.GPAddress = "";
      }
 
     $rootScope.setNewPatientFields();
@@ -964,12 +966,34 @@ patientModule.controller('patientInfoCtrl', function ( $rootScope, $parse, $q,
         var file = document.getElementById('piiFile').files;
         if (file[0] != undefined) {
             var urlData = getPIIData(file[0]);
-
             urlData.then(function (data) {
                 var piiObjects = $.csv.toObjects(data);
-                console.log(piiObjects);
-                $scope.piiNote = Object.keys(piiObjects[0]);
+                for (var p = 0; p < piiObjects.length; p++) {
+                    var NHS_USUBJID = (piiObjects[p]['Other ID']);
+                    if (NHS_USUBJID == patients.getCurrentPatient().NHS_USUBJID){
+                        $scope.patientAddress = piiObjects[p]['First Name']+" "+piiObjects[p]['Last Name']+"\n";
+                        $scope.patientAddress += piiObjects[p]['Patient Address Line 1']+"\n";
+                        $scope.patientAddress += piiObjects[p]['Patient Address Line 2']+"\n";
+                        if (piiObjects[p]['Patient Address Line 3'] != '')
+                            $scope.patientAddress += piiObjects[p]['Patient Address Line 3']+"\n";
+                        $scope.patientAddress += piiObjects[p]['Patient Address Postcode']+"\n";
+                        $scope.patientAddress += piiObjects[p]['Patient Address Country'];
 
+
+                        $scope.GPAddress = piiObjects[p]['GP Name']+"\n";
+                        $scope.GPAddress += piiObjects[p]['GP Address Line 1']+"\n";
+                        $scope.GPAddress += piiObjects[p]['GP Address Line 2']+"\n";
+                        if (piiObjects[p]['GP Address Line 3'] != '')
+                            $scope.GPAddress += piiObjects[p]['GP Address Line 3']+"\n";
+                        $scope.GPAddress += piiObjects[p]['GP Address Postcode']+"\n";
+                        $scope.GPAddress += piiObjects[p]['GP Address Country'];
+
+                    }
+                }
+                if (($scope.patientAddress=='')&&($scope.GPAddress=='')) {
+                    $scope.patientAddress = 'Not Found';
+                    $scope.GPAddress = 'Not Found';
+                }
             })
         }
     }

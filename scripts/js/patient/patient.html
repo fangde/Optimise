@@ -123,16 +123,6 @@
                             </div>
                         </div>
                     </div>
-                    <!--<div class="row doubleMarginTop">-->
-                        <!--<div class="col-sm-3">-->
-                            <!--<input type="file" id="piiFile" name="piiFile" />-->
-                            <!--<button type="button" class="btn btn-default" ng-click="readPII()">Populate PII</button>-->
-                        <!--</div>-->
-                        <!--<div class="col-sm-9">-->
-                            <!--<textarea rows='2' class="form-control" ng-model="piiNote"-->
-                                      <!--ng-blur="addPIIProfile()"></textarea>-->
-                        <!--</div>-->
-                    <!--</div>-->
                 </div>
             </div>
         </div>
@@ -602,6 +592,32 @@
                     <!--<div class="row" ng-show="isMSPatient()">-->
 
                     <!--</div>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading myPanel" role="tab" id="PII">
+                <h4 class="panel-title" class="collapsed" role="button"
+                    data-toggle="collapse" data-parent="#accordion"
+                    href="#collapsePII">
+                    Patient Identifiable Information
+                </h4>
+            </div>
+            <div id="collapsePII" class="panel-collapse collapse" role="tabpanel">
+                <div class="panel-body">
+                    <div class="row marginTop">
+                        <div class="col-sm-2">
+                            <input type="file" id="piiFile" name="piiFile"/>
+                            <button type="button" class="btn btn-default" ng-click="readPII()">Populate PII</button>
+                        </div>
+                        <div class="col-sm-5">
+                            <textarea rows='5' class="form-control" ng-model="patientAddress"></textarea>
+                        </div>
+                        <div class="col-sm-5">
+                            <textarea rows='5' class="form-control" ng-model="GPAddress"></textarea>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
